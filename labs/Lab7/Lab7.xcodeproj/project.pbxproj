@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		580C50E111D0170700E270F8 /* Student.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 580C50E011D0170700E270F8 /* Student.xcdatamodel */; };
+		580C50E311D0177300E270F8 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580C50E211D0177300E270F8 /* CoreData.framework */; };
+		580C511311D01ED400E270F8 /* students.plist in Resources */ = {isa = PBXBuildFile; fileRef = 580C511211D01ED400E270F8 /* students.plist */; };
+		5856FDCD11CF96C9005E38EA /* HelloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5856FDCB11CF96C9005E38EA /* HelloViewController.m */; };
+		5856FDCE11CF96C9005E38EA /* HelloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5856FDCC11CF96C9005E38EA /* HelloViewController.xib */; };
+		5856FE2F11CFA606005E38EA /* ClassTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5856FE2D11CFA606005E38EA /* ClassTableViewController.m */; };
+		5856FE3011CFA606005E38EA /* ClassTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5856FE2E11CFA606005E38EA /* ClassTableViewController.xib */; };
+		5856FE8711CFB887005E38EA /* ClassDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5856FE8511CFB887005E38EA /* ClassDetailTableViewController.m */; };
+		5856FE8811CFB887005E38EA /* ClassDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5856FE8611CFB887005E38EA /* ClassDetailTableViewController.xib */; };
+		5856FE8A11CFB938005E38EA /* duck.png in Resources */ = {isa = PBXBuildFile; fileRef = 5856FE8911CFB938005E38EA /* duck.png */; };
+		5856FEF411CFE354005E38EA /* angry_duck.png in Resources */ = {isa = PBXBuildFile; fileRef = 5856FEF311CFE354005E38EA /* angry_duck.png */; };
+		5856FFC211CFEAAD005E38EA /* FlippingDuckTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5856FFC111CFEAAD005E38EA /* FlippingDuckTableViewCell.m */; };
+		58E2F38211D3082400E574EA /* Lab7AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E2F37F11D3082400E574EA /* Lab7AppDelegate.m */; };
+		58E2F38311D3082400E574EA /* Lab7ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E2F38111D3082400E574EA /* Lab7ViewController.m */; };
+		58E2F38711D3084400E574EA /* Lab7-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58E2F38511D3084400E574EA /* Lab7-Info.plist */; };
+		58E2F38811D3084400E574EA /* Lab7ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E2F38611D3084400E574EA /* Lab7ViewController.xib */; };
+		58E2F3D711D3102200E574EA /* RemoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E2F3D511D3102200E574EA /* RemoteViewController.m */; };
+		58E2F3D811D3102200E574EA /* RemoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E2F3D611D3102200E574EA /* RemoteViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* Lab7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lab7.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		580C50E011D0170700E270F8 /* Student.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Student.xcdatamodel; sourceTree = "<group>"; };
+		580C50E211D0177300E270F8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		580C511211D01ED400E270F8 /* students.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = students.plist; sourceTree = "<group>"; };
+		5856FDCA11CF96C9005E38EA /* HelloViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloViewController.h; sourceTree = "<group>"; };
+		5856FDCB11CF96C9005E38EA /* HelloViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloViewController.m; sourceTree = "<group>"; };
+		5856FDCC11CF96C9005E38EA /* HelloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HelloViewController.xib; path = Classes/HelloViewController.xib; sourceTree = "<group>"; };
+		5856FE2C11CFA606005E38EA /* ClassTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewController.h; sourceTree = "<group>"; };
+		5856FE2D11CFA606005E38EA /* ClassTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTableViewController.m; sourceTree = "<group>"; };
+		5856FE2E11CFA606005E38EA /* ClassTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ClassTableViewController.xib; path = Classes/ClassTableViewController.xib; sourceTree = "<group>"; };
+		5856FE8411CFB887005E38EA /* ClassDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassDetailTableViewController.h; sourceTree = "<group>"; };
+		5856FE8511CFB887005E38EA /* ClassDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassDetailTableViewController.m; sourceTree = "<group>"; };
+		5856FE8611CFB887005E38EA /* ClassDetailTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ClassDetailTableViewController.xib; path = Classes/ClassDetailTableViewController.xib; sourceTree = "<group>"; };
+		5856FE8911CFB938005E38EA /* duck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = duck.png; sourceTree = "<group>"; };
+		5856FEF311CFE354005E38EA /* angry_duck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = angry_duck.png; sourceTree = "<group>"; };
+		5856FFC011CFEAAD005E38EA /* FlippingDuckTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlippingDuckTableViewCell.h; sourceTree = "<group>"; };
+		5856FFC111CFEAAD005E38EA /* FlippingDuckTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlippingDuckTableViewCell.m; sourceTree = "<group>"; };
+		58E2F37E11D3082400E574EA /* Lab7AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lab7AppDelegate.h; sourceTree = "<group>"; };
+		58E2F37F11D3082400E574EA /* Lab7AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lab7AppDelegate.m; sourceTree = "<group>"; };
+		58E2F38011D3082400E574EA /* Lab7ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lab7ViewController.h; sourceTree = "<group>"; };
+		58E2F38111D3082400E574EA /* Lab7ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lab7ViewController.m; sourceTree = "<group>"; };
+		58E2F38411D3083000E574EA /* Lab7_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lab7_Prefix.pch; sourceTree = "<group>"; };
+		58E2F38511D3084400E574EA /* Lab7-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Lab7-Info.plist"; sourceTree = "<group>"; };
+		58E2F38611D3084400E574EA /* Lab7ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Lab7ViewController.xib; sourceTree = "<group>"; };
+		58E2F3D411D3102200E574EA /* RemoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteViewController.h; sourceTree = "<group>"; };
+		58E2F3D511D3102200E574EA /* RemoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteViewController.m; sourceTree = "<group>"; };
+		58E2F3D611D3102200E574EA /* RemoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RemoteViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				580C50E311D0177300E270F8 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				58E2F37E11D3082400E574EA /* Lab7AppDelegate.h */,
+				58E2F37F11D3082400E574EA /* Lab7AppDelegate.m */,
+				58E2F38011D3082400E574EA /* Lab7ViewController.h */,
+				58E2F38111D3082400E574EA /* Lab7ViewController.m */,
+				5856FDCA11CF96C9005E38EA /* HelloViewController.h */,
+				5856FDCB11CF96C9005E38EA /* HelloViewController.m */,
+				5856FE2C11CFA606005E38EA /* ClassTableViewController.h */,
+				5856FE2D11CFA606005E38EA /* ClassTableViewController.m */,
+				5856FE8411CFB887005E38EA /* ClassDetailTableViewController.h */,
+				5856FE8511CFB887005E38EA /* ClassDetailTableViewController.m */,
+				5856FFC011CFEAAD005E38EA /* FlippingDuckTableViewCell.h */,
+				5856FFC111CFEAAD005E38EA /* FlippingDuckTableViewCell.m */,
+				58E2F3D411D3102200E574EA /* RemoteViewController.h */,
+				58E2F3D511D3102200E574EA /* RemoteViewController.m */,
+				58E2F3D611D3102200E574EA /* RemoteViewController.xib */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* Lab7.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				58E2F38411D3083000E574EA /* Lab7_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				58E2F38511D3084400E574EA /* Lab7-Info.plist */,
+				58E2F38611D3084400E574EA /* Lab7ViewController.xib */,
+				5856FEF311CFE354005E38EA /* angry_duck.png */,
+				5856FE8911CFB938005E38EA /* duck.png */,
+				5856FE8611CFB887005E38EA /* ClassDetailTableViewController.xib */,
+				5856FE2E11CFA606005E38EA /* ClassTableViewController.xib */,
+				5856FDCC11CF96C9005E38EA /* HelloViewController.xib */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				580C50E011D0170700E270F8 /* Student.xcdatamodel */,
+				580C511211D01ED400E270F8 /* students.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				580C50E211D0177300E270F8 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* Lab7 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Lab7" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lab7;
+			productName = Lab2;
+			productReference = 1D6058910D05DD3D006BFB54 /* Lab7.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Lab7" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* Lab7 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				5856FDCE11CF96C9005E38EA /* HelloViewController.xib in Resources */,
+				5856FE3011CFA606005E38EA /* ClassTableViewController.xib in Resources */,
+				5856FE8811CFB887005E38EA /* ClassDetailTableViewController.xib in Resources */,
+				5856FE8A11CFB938005E38EA /* duck.png in Resources */,
+				5856FEF411CFE354005E38EA /* angry_duck.png in Resources */,
+				580C511311D01ED400E270F8 /* students.plist in Resources */,
+				58E2F38711D3084400E574EA /* Lab7-Info.plist in Resources */,
+				58E2F38811D3084400E574EA /* Lab7ViewController.xib in Resources */,
+				58E2F3D811D3102200E574EA /* RemoteViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				5856FDCD11CF96C9005E38EA /* HelloViewController.m in Sources */,
+				5856FE2F11CFA606005E38EA /* ClassTableViewController.m in Sources */,
+				5856FE8711CFB887005E38EA /* ClassDetailTableViewController.m in Sources */,
+				5856FFC211CFEAAD005E38EA /* FlippingDuckTableViewCell.m in Sources */,
+				580C50E111D0170700E270F8 /* Student.xcdatamodel in Sources */,
+				58E2F38211D3082400E574EA /* Lab7AppDelegate.m in Sources */,
+				58E2F38311D3082400E574EA /* Lab7ViewController.m in Sources */,
+				58E2F3D711D3102200E574EA /* RemoteViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${TARGET_NAME}_Prefix.pch";
+				INFOPLIST_FILE = "${TARGET_NAME}-Info.plist";
+				PRODUCT_NAME = "${TARGET_NAME}";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Lab2_Prefix.pch;
+				INFOPLIST_FILE = "Lab2-Info.plist";
+				PRODUCT_NAME = Lab2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.1.3;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.1.3;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Lab7" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Lab7" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

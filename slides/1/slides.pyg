@@ -1,0 +1,9 @@
+
+  typedef enum {
+    NONE = 0,
+    SOME,
+    ALL
+  } ThoseWhoPreferItHot;
+
+  ThoseWhoPreferItHot = SOME; // Use of enumerated constant
+

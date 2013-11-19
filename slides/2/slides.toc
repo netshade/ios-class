@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.07pt}
+\beamer@sectionintoc {2}{Images}{3}{0}{1}
+\beamer@sectionintoc {3}{More about UIView and Core Graphics}{19}{0}{2}
+\beamer@sectionintoc {4}{UIView Animation}{41}{0}{3}
+\beamer@sectionintoc {5}{UIView and CALayer - Coordinate systems, layer backing}{58}{0}{4}
+\beamer@sectionintoc {6}{Questions}{75}{0}{5}

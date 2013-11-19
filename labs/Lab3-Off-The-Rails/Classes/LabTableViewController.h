@@ -1,0 +1,16 @@
+//
+//  LabTableViewController.h
+//  Lab2
+//
+//  Created by Chris Zelenak on 6/22/10.
+//  Copyright 2010 Fastest Forward. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+
+@interface LabTableViewController : UITableViewController {
+	NSArray * items;
+}
+
+@end

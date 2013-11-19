@@ -1,0 +1,104 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{Oxygen}
+\usepackage{hyperref}
+\usepackage[compatibility=false]{caption}
+\usepackage{thumbpdf}
+\usepackage{wasysym}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{verbatim}
+\usepackage{listing}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{minted}
+
+\pdfinfo
+{
+  /Title       (<%= @title %>)
+  /Creator     (TeX)
+  /Author      (<%= @author %>)
+}
+
+
+\title{<%= @title %>}
+\subtitle{<%= @subtitle %>}
+\author{<%= @author %>}
+\date{<%= @date %>}
+
+\begin{document}
+
+<%= @listings %>
+
+\frame{\titlepage}
+
+\section*{}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[section=1,hidesubsections]
+\end{frame}
+
+\AtBeginSection[]
+{
+  \frame<handout:0>
+  {
+    \frametitle{Outline}
+    \tableofcontents[currentsection,hideallsubsections]
+  }
+}
+
+\AtBeginSubsection[]
+{
+  \frame<handout:0>
+  {
+    \frametitle{Outline}
+    \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
+  }
+}
+
+\newcommand<>{\highlighton}[1]{%
+  \alt#2{\structure{#1}}{{#1}}
+}
+
+\newcommand{\icon}[1]{\pgfimage[height=1em]{#1}}
+
+<%
+  def new_frame(name, content = nil)
+    content = content.is_a?(Hash) ? content["notes"] : content
+    [content ? content : ""].flatten.collect do |body|
+    <<-EOFRAME
+\\begin{frame}[fragile]
+  \\frametitle{#{name}}
+  #{body}
+\\end{frame}
+    EOFRAME
+    end.join("\n")
+end
+%> 
+<% @sections.each_with_index do |section, idx| %>
+  <% if section.is_a?(Hash) %>
+    <% section.each do |section_name, content| %>
+% BEGIN SECTION <%= section_name %>
+\section{<%= section_name %>}
+<%= new_frame(section_name, content.is_a?(Hash) ? content : "#{idx + 1}. #{section_name}") %>
+<% if content.is_a?(Array) %>
+    <% content.each do |frame| %>
+<%= frame.is_a?(Hash) ? new_frame(*frame.first) : new_frame(frame) %>
+    <% end %>
+<% end %>
+% END SECTION <%= section_name %>
+   <% end %>
+  <% elsif section.is_a?(String) %>
+% BEGIN SECTION <%= section %>
+\section{<%= section %>}
+<%= new_frame(section) %>
+% END SECTION <%= section %>
+
+  <% end %>
+<% end %>
+
+\bibliography{slides}{}
+\bibliographystyle{plain}
+
+\end{document}
