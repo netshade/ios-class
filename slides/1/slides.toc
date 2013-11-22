@@ -1,7 +1,0 @@
-\beamer@endinputifotherversion {3.07pt}
-\beamer@sectionintoc {2}{Intro to class}{3}{0}{1}
-\beamer@sectionintoc {3}{Lab 1}{5}{0}{2}
-\beamer@sectionintoc {4}{Objective C}{13}{0}{3}
-\beamer@sectionintoc {5}{iPhone App Layout Conventions}{56}{0}{4}
-\beamer@sectionintoc {6}{XCode and Interface Builder}{87}{0}{5}
-\beamer@sectionintoc {7}{Questions}{97}{0}{6}
