@@ -2,7 +2,7 @@ presentations:
 - subtitle: "Day 1"
   title: "iOS Application Development"
   author: "Chris Zelenak"
-  date: "06/22/2010"
+  date: "12/02/2013"
   sections:
   - "Intro to class":
       notes:
@@ -72,42 +72,42 @@ presentations:
                 SOME,
                 ALL
               } ThoseWhoPreferItHot;
-              
+
               ThoseWhoPreferItHot = SOME; // Use of enumerated constant
             <% end %>
           - >
            <% code_listing("C Language Elements - Structs", "c") do %>
-              // Declaring a point in space type             
+              // Declaring a point in space type
               typedef struct {
                 float x;
                 float y;
               } APointInSpace;
-              
+
               APointInSpace point;
               point.x = 20.0;
-              point.y = 410.0; 
+              point.y = 410.0;
 
-              // C99 style struct instantiation              
-              APointInSpace point2 = { .x= 21.0, .y=32.0 }; 
+              // C99 style struct instantiation
+              APointInSpace point2 = { .x= 21.0, .y=32.0 };
            <% end %>
           - >
            <% code_listing("C Language Elements - Arrays and Pointers", "c") do %>
-              // a constant byte array             
-              char * constantCharArray = "Or in other words, a string"; 
+              // a constant byte array
+              char * constantCharArray = "Or in other words, a string";
 
               // C99 style array instantiation
               int aListOfNumbers[5] = { 1, 2, 3, 4, 5 };
-              int aListOfNumbers[] = { 1, 2, 3, 4, 5}; 
+              int aListOfNumbers[] = { 1, 2, 3, 4, 5};
 
               // C99 Variable length array declaration
               float aListOfFloats[someQualifier];
 
-              // pointer declaration to NULL              
-              int * someIntegerPtr = NULL; 
+              // pointer declaration to NULL
+              int * someIntegerPtr = NULL;
               int someInteger = 5;
-              
-              // address dereference              
-              someIntegerPtr = &someInteger; 
+
+              // address dereference
+              someIntegerPtr = &someInteger;
             <% end %>
           - >
             If you've not kept abreast of changes between ANSI-92 C (a common version of C
@@ -119,10 +119,10 @@ presentations:
           <% code_listing("Some typical Objective C code", "objectivec") do %>
             NSString * anExampleString = @"This is a pointer to an NSString object";
             int strLen = [anExampleString length];
-           
+
             NSString * aSecondString = [anExampleString
               stringByAppendingString:@" that had a second string appended to it"];
-          
+
             if([anExampleString
                  compare:@"this is a pointer to an nsstring object"
                  options:NSCaseInsensitiveCompare] == NSOrderedSame){
@@ -143,13 +143,13 @@ presentations:
            [anObject theMethodName];
           <% end %>
 
-          Method names in Objective C follow the form initialMethodNameAndArgument:theSecondArgument:theThirdArgument: . 
+          Method names in Objective C follow the form initialMethodNameAndArgument:theSecondArgument:theThirdArgument: .
 
           <% block("Messages vs. Methods") do %>
             When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to
             consider these synonymous with "dispatching a message".  Objective C objects respond to
             <%= highlight("messages") %>, and as you work more with Objective C, it will be more beneficial for
-            you to perceive this as such.  
+            you to perceive this as such.
           <% end %>
     - "nil, NULL":
         notes: >
@@ -220,7 +220,7 @@ presentations:
               [privateVariable2 release];
               [super dealloc];
             }
-            
+
             @end
           <% end %>
     - "Memory management":
@@ -233,17 +233,17 @@ presentations:
             are called and the memory for the object is released back to the system.
           - >
             <% code_listing("Memory management in Objective C", "objectivec") do %>
-              // Retain count of 1            
-              NSString * foo = [[NSString alloc] initWithString:@"Foo"]; 
+              // Retain count of 1
+              NSString * foo = [[NSString alloc] initWithString:@"Foo"];
               [foo retain]; // Retain count of 2
               NSLog(@"Foo is %@", foo);
               [foo release]; // Retain count of 1
               NSLog(@"Foo is still %@", foo);
               [foo release]; // Retain count of 0,
                              // foo is released back to the system
-                             
+
               // This will crash the program (EXC_BAD_ACCESS)
-              NSLog(@"Foo crashes %@", foo); 
+              NSLog(@"Foo crashes %@", foo);
             <% end %>
             <% block("EXC BAD ACCESS ? What?") do %>
               EXC BAD ACCESS is the error message your program will output when
@@ -265,8 +265,8 @@ presentations:
                                            initWithString:@"Foo"]
                                              autorelease];
               NSLog(@"Foo will be good for now %@", foo);
-              
-              [foo retain]; 
+
+              [foo retain];
               [foo release];
               NSLog(@"Foo is still good, %@", foo);
               // You may retain and release on an autoreleased object as normal
@@ -313,9 +313,9 @@ presentations:
                 [instanceVariable release];
                 [super dealloc];
               }
-              
-              @end 
-                
+
+              @end
+
             <% end %>
           - >
             <% code_listing("Property usage", "objectivec") do %>
@@ -323,7 +323,7 @@ presentations:
               [mo setInstanceVariable:@"Test"];
               [mo setNumericVariable:20.0f];
               NSLog(@"The values I set were %@ and %f",
-                      [mo instanceVariable], 
+                      [mo instanceVariable],
                       [mo numericVariable]);
             <% end%>
           - >
@@ -350,7 +350,7 @@ presentations:
               if([foo respondsToSelector:aSelector]){
                 NSLog(@"The length of foo is %i",  [foo performSelector:aSelector]);
               }
-              
+
             <% end %>
           - >
             Selectors can be built from strings, and can refer to any Objective C message
@@ -381,21 +381,21 @@ presentations:
               @optional
 
               -(void) mayHaveThisMethod;
-              
+
               @end
             <% end %>
             <% code_listing("Protocol conformance", "objectivec") do %>
             @interface SomeObject : NSObject<TestProtocol> {
-            
+
             }
-            
-            @end 
+
+            @end
             <% end %>
           - >
             <% code_listing("Protocol usage", "objectivec") do %>
               SomeObject<TestProtocol> * oo = [[SomeObject alloc] init];
-              
-              // We assume this because the object conforms to TestProtocol              
+
+              // We assume this because the object conforms to TestProtocol
               [oo definitelyHasThisMethod];
 
               if([oo respondsToSelector:@selector(mayHaveThisMethod)]){
@@ -419,17 +419,17 @@ presentations:
           - >
             <% code_listing("Category declaration", "objectivec") do %>
               @interface NSString(FunkyStrings)
-              
+
               -(NSString *) getFunky;
-              
+
               @end
 
               @implementation NSString(FunkyStrings)
-              
+
               -(NSString *) getFunky {
                 return [self stringByAppendingString:@"...YEAH! ALL RIGHT! FEELS GOOD!"];
               }
-              
+
               @end
             <% end %>
           - >
@@ -450,13 +450,13 @@ presentations:
           - >
             NSString is an enhanced, unicode aware string class that goes far beyond the
             simple byte-array behavior of C's byte-array strings.
-            
+
             <% code_listing("NSString usage", "objectivec") do %>
               NSString * s = [[NSString alloc] initWithCString:"this is an ascii string"
                                                encoding:NSASCIIStringEncoding];
               NSMutableString * so = [[NSMutableString alloc]
                                               initWithString:@"A mutable string with..."];
-              
+
               [so appendString:s];
 
               NSLog(@"The mutable string is %@", so);
@@ -485,7 +485,7 @@ presentations:
                                                     @"The foo string", @"Foo",
                                                     @"The bar string", @"Bar",
                                                     nil];
-              
+
               NSMutableDictionary * b = [[NSMutableDictionary alloc] init];
               [b setObject:@"Another string" forKey:[NSNumber numberWithInt:20]];
 
@@ -504,7 +504,7 @@ presentations:
             NSArray is a simple way to collect NSObject inheriting classes into a sequential
             list.  NSArray automatically retains each object added to it, and releases each object
             it holds once its own retain count has reached 0.
-            
+
             <% code_listing("NSArray usage", "objectivec") do %>
               NSArray * a = [[NSArray alloc] initWithObjects:@"Foo", @"bar", @"baz", nil];
               NSMutableArray * b = [[NSMutableArray alloc] init];
@@ -514,7 +514,7 @@ presentations:
               for(NSString * obj in a){
                 NSLog(@"The array contains %@", obj);
               }
-              
+
               [a release];
               [b release];
             <% end %>
@@ -639,7 +639,7 @@ presentations:
 
           <% code_listing("Presenting a view controller modally", "objectivec") do %>
             -(IBAction) buttonClicked:(id) sender {
-              MyViewController * mvc = [[MyViewController alloc] 
+              MyViewController * mvc = [[MyViewController alloc]
                                              initWithNibName:@"TheNib"
                                              bundle:nil];
               [self presentModalViewController:mvc animated:YES];
@@ -650,7 +650,7 @@ presentations:
           You can specify the transition style with which the view controller appears via the UIViewController message
           <% code_block("objectivec") do %>
             setModalTransitionStyle:(UIModalTransitionStyle)style
-          <% end %> 
+          <% end %>
   - "XCode and Interface Builder":
     - "Capabilities":
         notes:
@@ -677,7 +677,7 @@ presentations:
             <% end %>
             <% block("The application delegate - UIApplicationDelegate") do %>
               The application delegate ( UIApplicationDelegate protocol ) is the class which will respond to overall application lifecycle events,
-              like when your application has started, resumed from suspension, or is about to shut down. 
+              like when your application has started, resumed from suspension, or is about to shut down.
             <% end %>
           - >
             Double clicking on a .xib file will open it in Interface Builder, where you can drag components from the Interface Builder
@@ -945,14 +945,14 @@ presentations:
                                  ctxt:(void *)context {
                   NSLog(@"Started fade out");
                 }
-              
+
                 -(void) animDidStop:(NSString *)animid
                            finished:(BOOL)finished
                                ctxt:(void *)context {
                   UIView * v = (UIView *) context;
                   [v removeFromSuperview];
                   NSLog(@"Removed faded view");
-                }                          
+                }
             <% end %>
     - "Lab 5":
         notes:
@@ -1083,7 +1083,7 @@ presentations:
                 [managedObjectContext save:&error];
                 if(error){
                     NSLog(@"Couldn't save objects, %@", error);
-                } 
+                }
               <% end %>
       - "NSPredicate and NSFetchRequest":
           notes:
@@ -1256,7 +1256,7 @@ presentations:
       - "Core Motion"
       - "Data Protection"
       - "Core Telephony"
-      - "Assets Library"      
+      - "Assets Library"
       - "Quick Look framework"
       - "AVFoundation update"
       - "ImageIO"
