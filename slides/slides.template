@@ -65,7 +65,7 @@
 
 <%
   def new_frame(name, content = nil)
-    content = content.is_a?(Hash) ? content["notes"] : content
+    content = content.is_a?(Hash) ? content["slides"] : content
     [content ? content : ""].flatten.collect do |body|
     <<-EOFRAME
 \\begin{frame}[fragile]
@@ -75,7 +75,7 @@
     EOFRAME
     end.join("\n")
 end
-%> 
+%>
 <% @sections.each_with_index do |section, idx| %>
   <% if section.is_a?(Hash) %>
     <% section.each do |section_name, content| %>

@@ -5,38 +5,38 @@ presentations:
   date: "12/02/2013"
   sections:
   - "Intro to class":
-      notes:
+      slides:
         - >
-          Welcome to the 4-Day iOS Application Development class.
-          Over the course of these next 4 days, we're going to be
+          Welcome to the 5-Day Bootstrapping iOS Application Development class.
+          Over the course of these next 5 days, we're going to be
           reviewing Objective C, UIKit, Core Animation, Core Data,
           and a host of other technologies you may only know by name.
         - >
           Email me two pictures of you - one serious and one silly - to  chris - at - fastestforward.com
   - "Lab 1":
     - "Create a new iPhone Project":
-        notes:
+        slides:
           - >
             Create a new View based application in XCode called Lab1
           - >
             Open Lab1ViewController.xib in Interface Builder
     - "Add a button":
-        notes:
+        slides:
           - >
             Add a button with the text "Hello iPhone"
     - "Connect the button to the view controller":
-        notes:
+        slides:
           - >
             Add an IBAction selector to the view controller
           - >
             Make it open an alert view
     - "Build and run in simulator":
-        notes:
+        slides:
           - >
             Yay!
   - "Objective C":
     - "Overview":
-        notes:
+        slides:
           - >
             Objective C is a superset of C. It tacks on to C a message-passing
             object model similar to Smalltalk's (see Ruby), with a reflective
@@ -62,7 +62,7 @@ presentations:
             and Objective C programming you do, the more your skills will benefit
             from a firm grasp of C.
     - "Review of standard C elements":
-        notes:
+        slides:
           - >
             These are items you'll commonly encouter while doing iPhone programming
             whose roots belong in the C family:
@@ -115,7 +115,7 @@ presentations:
             <%= url("http://home.datacomm.ch/t_wolf/tw/c/c9x_changes.html") %>
             <%= bibliography("C99Changes", "http://home.datacomm.ch/t_wolf/tw/c/c9x_changes.html") %>.
     - "Syntax":
-        notes: >
+        slides: >
           <% code_listing("Some typical Objective C code", "objectivec") do %>
             NSString * anExampleString = @"This is a pointer to an NSString object";
             int strLen = [anExampleString length];
@@ -130,7 +130,7 @@ presentations:
             }
           <% end %>
     - "Calling functions":
-        notes: >
+        slides: >
           Given some Objective C object, like:
 
           <% code_block("objectivec") do %>
@@ -152,7 +152,7 @@ presentations:
             you to perceive this as such.
           <% end %>
     - "nil, NULL":
-        notes: >
+        slides: >
           An object in Objective C may be nil; nil is a "special" object which may have any message at all sent to it,
           to which it will respond with a nil object.
 
@@ -166,7 +166,7 @@ presentations:
           nil is the appropriate null object when dealing with pointers to Objective C classes; NULL, on the other
           hand, is the appropriate null value to use when dealing with pointers to all other types.
     - "Classes":
-      notes:
+      slides:
         - >
           Classes in Objective C are similar to their C++ cousins in that they come in two parts: interface declaration
           and implementation. The interface declaration portion of a class follows the form:
@@ -224,7 +224,7 @@ presentations:
             @end
           <% end %>
     - "Memory management":
-        notes:
+        slides:
           - >
             Objective C's memory management model is a reference counting system
             that you can think of as an integer counter assigned to each object.
@@ -287,7 +287,7 @@ presentations:
               memory themselves, however.
             <% end %>
     - "Properties":
-        notes:
+        slides:
           - >
             Much of the interaction with Objective C objects equates to the usual getter/setter
             functionality commonly associated with Object Oriented Programming. To make it easier
@@ -338,7 +338,7 @@ presentations:
               in such cases.  Read more at <%= url("http://developer.apple.com/mac/library/documentation/cocoa/conceptual/objectivec/articles/ocProperties.html") %>.
             <% end %>
     - "Selectors":
-        notes:
+        slides:
           - >
             Selectors in Objective C are a way to provide a special type to indicate a message.
             They allow you to dynamically send a message to an object, as well as to query
@@ -364,7 +364,7 @@ presentations:
               }
             <% end %>
     - "Protocols":
-        notes:
+        slides:
           - >
             Objective C provides only single-inheritance for its objects; to
             allow for situations where a class may provide functionality outside of its
@@ -403,7 +403,7 @@ presentations:
               }
             <% end %>
     - "Categories":
-        notes:
+        slides:
           - >
             Categories allow you to mix in new code to existing classes without
             having to change the original source code for those classes.  Examples
@@ -441,7 +441,7 @@ presentations:
             }
             <% end %>
     - "Review common useful classes in Objective C / Cocoa to accomplish certain tasks":
-        notes:
+        slides:
           - >
             There are a host of useful classes in the Cocoa Touch framework that provide
             special functionality to you.  Some of the more common objects you'll use
@@ -535,7 +535,7 @@ presentations:
               [example release];
             <% end %>
     - "More learning":
-        notes:
+        slides:
           - >
             Objective C is a rich, deep language.  There are lots of resources on the web and your computer where you can learn more.
             The best is easily the XCode documentation, but there are blogs out there that can provide invaluable help: Mike Ash's
@@ -544,11 +544,11 @@ presentations:
             in learning new techniques and advanced usage for your apps.
   - "iPhone App Layout Conventions":
     - "MVC, as applied to an app":
-        notes:
+        slides:
           - >
             Apple strongly encourages you to adhere to Model View Controller pattern
     - "Application -> Window -> View Controller(s) -> View(s) + Models":
-        notes:
+        slides:
           - >
             On iOS, a UIApplication ( your app ) typically has one UIWindow, which is the primary
             UIView upon which everything else displays.  A UIView is just a rectangle upon which you draw things.
@@ -568,7 +568,7 @@ presentations:
           - >
             You provide the model
     - "UINavigationController":
-        notes:
+        slides:
           - >
             UINavigationController is a stack based manager of view controllers that the user can navigate through
           - >
@@ -585,7 +585,7 @@ presentations:
               [controller release];
             <% end %>
     - "Lab 2":
-        notes:
+        slides:
           - >
             Create a new View based project
           - >
@@ -595,7 +595,7 @@ presentations:
           - >
             Add a button to the first view controller and create an action to open the second view controller
     - "UITabBarController and UITableViewController":
-        notes:
+        slides:
           - >
             UITabBarController swaps in UIViewControllers assigned to it when users click on the associated button
           - >
@@ -615,7 +615,7 @@ presentations:
               <%= graphic("UIViewExample5.pdf", 0.30) %>
             <% end %>
     - "Lab 3":
-        notes:
+        slides:
           - >
             Add a UITableViewController to the project
           - >
@@ -653,7 +653,7 @@ presentations:
           <% end %>
   - "XCode and Interface Builder":
     - "Capabilities":
-        notes:
+        slides:
           - >
             XCode and Interface Builder combined provide a development, debugging and interface development tool for you to
             develop your iPhone apps.  It can integrate with SVN, CVS or Perforce ( and soon, Git! ), it can run automated
@@ -661,7 +661,7 @@ presentations:
             level interface to all the devices you will be debugging your code on; you can manage devices and device profiles
             through XCode as necessary.
     - "Creating an app":
-        notes:
+        slides:
           - >
             XCode provides a number of application templates for starting an app.  Most basic types of applications can get
             a fast start by using one of these app templates.
@@ -683,11 +683,11 @@ presentations:
             Double clicking on a .xib file will open it in Interface Builder, where you can drag components from the Interface Builder
             toolbox into the view.  You can easily change the orientation of objects.
     - "Documentation usage":
-        notes:
+        slides:
           - >
             <%= highlight("Help - Developer Documentation") %> is an invaluable resource for researching Cocoa internals.
     - "Protips!":
-        notes:
+        slides:
           - >
             Learn hotkeys! ( CMD+SHIFT+D  and CMD+0 will buy you hours )
           - >
@@ -698,11 +698,11 @@ presentations:
 - subtitle: "Day 2"
   title: "iOS Application Development"
   author: "Chris Zelenak"
-  date: "06/23/2010"
+  date: "12/03/2013"
   sections:
   - "Images":
     - "The UIImage":
-        notes:
+        slides:
           - >
             A way to represent a bytestream
           - >
@@ -730,7 +730,7 @@ presentations:
           - >
             But the fastest way to load and draw images will typically be with PNGs.
     - "UIImageView and UIButton":
-        notes:
+        slides:
           - >
            UIImageView provides a simple way to put an image on the screen, w/ no interaction
           - >
@@ -755,7 +755,7 @@ presentations:
               [someView addSubview:b];
             <% end %>
     - "Lab 4":
-        notes:
+        slides:
           - >
             Create a detail UITableViewController
           - >
@@ -764,7 +764,7 @@ presentations:
             Push UITableViewController onto UINavigationController stack
   - "More about UIView and Core Graphics":
     - "What comes with UIView":
-        notes:
+        slides:
           - >
             Any UIView can have its background color, overall opacity,  dimensions and overall coordinate transform (CGAffineTransform)
           - >
@@ -778,7 +778,7 @@ presentations:
           - >
             Any UIView can optionally choose to blit its contents directly to the screen with Core Graphics
     - Views and subviews:
-        notes:
+        slides:
           - >
             The subviews a UIView has are contained within the subviews property of a view
           - >
@@ -795,7 +795,7 @@ presentations:
               -(void) exchangeSubviewAtIndex:(NSInteger)idx withSubviewAtIndex:(NSInteger)idx;
             <% end %>
     - "Events and control events":
-        notes:
+        slides:
           - >
             Any UIView subclass can override the methods
 
@@ -830,7 +830,7 @@ presentations:
                  forControlEvents:UIControlEventTouchDragOutside];
             <% end %>
     - "Position, size and color of views - CGRect, CGPoint, CGSize, UIColor":
-        notes:
+        slides:
           - >
             Each UIView has a bounding frame and origin coordinate that specifies where
             in the parent view it appears; this is represented by a CGRect, which is a
@@ -866,7 +866,7 @@ presentations:
               UIColor * pt = [UIColor colorWithPatternImage:pattern];
             <% end %>
     - "drawRect:":
-        notes:
+        slides:
           - >
             Some effects aren't easily achieved through UIViews and drawn images.  To
             draw your view components manually, you can override the drawRect method
@@ -885,7 +885,7 @@ presentations:
             <% end %>
   - "UIView Animation":
     - "UIView beginAnimations / commitAnimations":
-        notes:
+        slides:
           - >
             You can easily use Core Animation to animate any of your
             UIViews by using the beginAnimations  and commiteAnimations messages.
@@ -899,7 +899,7 @@ presentations:
             Most properties that affect a view's appearance are able to be animated,
             including size, position, arrangement with respect to other subviews  and transparency.
     - "Controlling the animation":
-        notes:
+        slides:
           - >
             You can set special properties for the animation inside the animation block.
             These properties include duration, animation curve, delay for animation and
@@ -955,7 +955,7 @@ presentations:
                 }
             <% end %>
     - "Lab 5":
-        notes:
+        slides:
           - >
             Create a UITableViewCell subclass
           - >
@@ -970,7 +970,7 @@ presentations:
             Correctly adjust the cell text to make room for the new image
   - "UIView and CALayer - Coordinate systems, layer backing":
     - "UIViews each containing a layer":
-        notes:
+        slides:
           - >
             Each UIView contains an object called a CALayer; this layer
             represents the final output of the view to be rendered to
@@ -983,7 +983,7 @@ presentations:
             The coordinate system of a UIView is not identical to the
             coordinate system of a CALayer.
     - "The contents attribute of a CALayer":
-        notes:
+        slides:
           - >
             Each CALayer has a property called contents which is intended
             to hold a CGImageRef.
@@ -994,7 +994,7 @@ presentations:
             The layer that is created for each UIView has its delegate
             assigned to that UIView.
     - "How the above animation actually occurs under the hood ( brief reference to CATransaction )":
-        notes:
+        slides:
           - >
             CALayers are the lower level manifestation of UIView animation.
           - >
@@ -1007,7 +1007,7 @@ presentations:
             CATransaction on the modelLayer of a layer, and flushed to the
             presentationLayer.
     - "Similarities and differences between a CALayer and a UIView":
-        notes:
+        slides:
           - >
             Both have transform properties; CGAffineTransform for UIView,
             CATransform3D for CALayer. CALayer allows for simple depth changes
@@ -1019,7 +1019,7 @@ presentations:
             CALayers have no input model to speak of; CALayer subclasses
             need to be explicitly notified of user input.
     - "Reference to CATiledLayer and performance optimizations":
-        notes:
+        slides:
           - >
             CALayers abstract how image content is batched to the graphics
             subsystem.  With large ( greater than 2048x2048 ) image content, it becomes
@@ -1034,11 +1034,11 @@ presentations:
 - subtitle: "Day 3"
   title: "iOS Application Development"
   author: "Chris Zelenak"
-  date: "06/24/2010"
+  date: "12/04/2013"
   sections:
     - "Core Data and SQLite":
       - "NSManagedObject and beyond":
-          notes:
+          slides:
             - >
               NSManagedObject is the primary element of working with your core
               data store. It represents a single entity's worth of information
@@ -1086,7 +1086,7 @@ presentations:
                 }
               <% end %>
       - "NSPredicate and NSFetchRequest":
-          notes:
+          slides:
             - >
               Actually fetching objects from the Core Data store requires you
               to build queries using NSPredicate or NSFetchRequest.
@@ -1119,7 +1119,7 @@ presentations:
                                               @"Pwnsberry", @"LAST_NAME", nil]];
               <% end %>
       - "Lab 6":
-          notes:
+          slides:
             - >
               Create a property list with the names of the students in the class
             - >
@@ -1134,7 +1134,7 @@ presentations:
               Pass the user and image data on to the details controller
     - "Networking ( NSURLRequest )":
       - "NSURL, NSURLRequest,  NSMutableURLRequest AND NSURLConnection":
-          notes:
+          slides:
             - >
               NSURL is meant to only represent a single resource location
             - >
@@ -1163,7 +1163,7 @@ presentations:
               back to the connection delegate via the
               informal NSURLConnection delegate.
       - "Networking Lab":
-          notes:
+          slides:
             - >
               Create a new UIVIewController
             - >
@@ -1173,7 +1173,7 @@ presentations:
             - >
               Load the tableView with the new data
       - "( ASIHttpRequest, EasyURLDownloader )":
-          notes:
+          slides:
             - >
               ASIHttpRequest gives you a full-featured HTTP library
               enhancement; cookie persistence support, enhanced
@@ -1184,7 +1184,7 @@ presentations:
               perform asynchronous GET downloads in the background
               <%= url("http://github.com/netshade/EasyUrlDownloader") %>
       - "SOAP and REST Webservices":
-          notes:
+          slides:
             - >
               You can roll your own webservice access, but you
               don't have ot.
@@ -1201,7 +1201,7 @@ presentations:
               WSMakeStubs is a binary included with your SDK
     - "Getting your application on the device":
       - "Development certificates, Distribution certificates":
-          notes:
+          slides:
             - >
               Log in to the iPhone developer portal and request a developer certificate
             - >
@@ -1216,7 +1216,7 @@ presentations:
               AdHoc and Store based distribution reserved for Agents only
     - "Using Instruments":
       - "Always, always, always memory leak check":
-          notes:
+          slides:
             - >
               Opening up the Leaks tool and examining your application behavior
             - >
@@ -1224,12 +1224,12 @@ presentations:
             - >
               Understanding the Leaks tool
       - "Always, always, always activity monitor check":
-          notes:
+          slides:
             - >
               Using Activity Monitor to monitor your current system state
     - "Distributing your app to others":
       - "The process you need to know":
-          notes:
+          slides:
             - >
               Releasing your app to others in beta form
             - >
@@ -1237,7 +1237,7 @@ presentations:
             - >
               How to send your .ipa file to others
       - "The URLs you need to know":
-          notes:
+          slides:
             - >
               <%= url("http://developer.apple.com/iphone/") %> is the frontend to most
               Apple web services
@@ -1245,10 +1245,10 @@ presentations:
               <%= url("http://itunesconnect.apple.com/") %> is the URL to access the app-release
               frontend and store management services provided by Apple
     - "Questions"
-- subtitle: "Day 4.0"
+- subtitle: "Day 4"
   title: "iOS Application Development"
   author: "Chris Zelenak"
-  date: "06/25/2010"
+  date: "12/05/2013"
   sections:
     - "Overview of what's new in 4.0":
       - "Multitasking"
@@ -1283,3 +1283,9 @@ presentations:
     - "Multitasking aware"
     - "Class overview, bits of information that didn't fit anywhere else"
     - "Thanks!"
+- subtitle: "Day 5"
+  title: "iOS Application Development"
+  author: "Chris Zelenak"
+  date: "12/06/2013"
+  sections:
+    - "New Stuff"
