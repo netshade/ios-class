@@ -25,7 +25,7 @@
 \title{iOS Application Development}
 \subtitle{Day 1}
 \author{Chris Zelenak}
-\date{10/04/2010}
+\date{06/22/2010}
 
 \begin{document}
 
@@ -71,15 +71,15 @@
 \section{Intro to class}
 \begin{frame}[fragile]
   \frametitle{Intro to class}
-  Welcome to the 3-Day iOS Application Development class. Over the course of these next 3 days, we're going to be reviewing Objective C, UIKit, Core Animation, Core Data, and a host of other technologies you may only know by name.
+  Welcome to the 4-Day iOS Application Development class. Over the course of these next 4 days, we're going to be reviewing Objective C, UIKit, Core Animation, Core Data, and a host of other technologies you may only know by name.
 
 \end{frame}
 
-%\begin{frame}[fragile]
-%  \frametitle{Intro to class}
-%  Email me two pictures of you - one serious and one silly - to  chris - at - fastestforward.com
-%
-%\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Intro to class}
+  Email me two pictures of you - one serious and one silly - to  chris - at - fastestforward.com
+
+\end{frame}
 
 
 % END SECTION Intro to class
@@ -182,15 +182,15 @@
   \frametitle{Review of standard C elements}
   These are items you'll commonly encouter while doing iPhone programming whose roots belong in the C family: \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{c}
-
+  
   typedef enum {
     NONE = 0,
     SOME,
     ALL
   } ThoseWhoPreferItHot;
-
+  
   ThoseWhoPreferItHot = SOME; // Use of enumerated constant
-
+              
   \end{minted}
     \caption{C Language elements - Enumerations}
     \label{listing:1}
@@ -202,20 +202,20 @@
   \frametitle{Review of standard C elements}
   \begin{listing}[H]
      \begin{minted}[resetmargins=true,fontsize=\footnotesize]{c}
-
+   
    // Declaring a point in space type             
    typedef struct {
      float x;
      float y;
    } APointInSpace;
-
+   
    APointInSpace point;
    point.x = 20.0;
    point.y = 410.0; 
-
+   
    // C99 style struct instantiation              
    APointInSpace point2 = { .x= 21.0, .y=32.0 }; 
-
+              
    \end{minted}
      \caption{C Language Elements - Structs}
      \label{listing:2}
@@ -227,24 +227,24 @@
   \frametitle{Review of standard C elements}
   \begin{listing}[H]
      \begin{minted}[resetmargins=true,fontsize=\footnotesize]{c}
-
+   
    // a constant byte array             
    char * constantCharArray = "Or in other words, a string"; 
-
+   
    // C99 style array instantiation
    int aListOfNumbers[5] = { 1, 2, 3, 4, 5 };
    int aListOfNumbers[] = { 1, 2, 3, 4, 5}; 
-
+   
    // C99 Variable length array declaration
    float aListOfFloats[someQualifier];
-
+   
    // pointer declaration to NULL              
    int * someIntegerPtr = NULL; 
    int someInteger = 5;
-
+   
    // address dereference              
    someIntegerPtr = &someInteger; 
-
+               
    \end{minted}
      \caption{C Language Elements - Arrays and Pointers}
      \label{listing:3}
@@ -263,19 +263,19 @@
   \frametitle{Syntax}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSString * anExampleString = @"This is a pointer to an NSString object";
   int strLen = [anExampleString length];
-
+             
   NSString * aSecondString = [anExampleString
     stringByAppendingString:@" that had a second string appended to it"];
-
+            
   if([anExampleString
        compare:@"this is a pointer to an nsstring object"
        options:NSCaseInsensitiveCompare] == NSOrderedSame){
     NSLog(@"The string %@ was case insensitive equal", anExampleString);
   }
-
+            
   \end{minted}
     \caption{Some typical Objective C code}
     \label{listing:4}
@@ -288,26 +288,26 @@
   \frametitle{Calling functions}
   Given some Objective C object, like:
 \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSString * anObject = @"TheObject";
-
+            
   \end{minted}
 
 you can invoke functionality on that object via the form:
 \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+ 
  [anObject theMethodName];
-
+           
  \end{minted}
 
 Method names in Objective C follow the form initialMethodNameAndArgument:theSecondArgument:theThirdArgument: . 
 \begin{block}{Messages vs. Methods}
-
+  
   When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to
   consider these synonymous with "dispatching a message".  Objective C objects respond to
   \highlighton{messages}, and as you work more with Objective C, it will be more beneficial for
   you to perceive this as such.  
-
+            
   \end{block}
 
 \end{frame}
@@ -318,12 +318,12 @@ Method names in Objective C follow the form initialMethodNameAndArgument:theSeco
   An object in Objective C may be nil; nil is a "special" object which may have any message at all sent to it, to which it will respond with a nil object.
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSString * anObject = nil;
   if([anObject whoaThisProbablyDoesntExist] == nil){
     NSLog(@"Ah well");
   }
-
+            
   \end{minted}
     \caption{nil object responding to any message}
     \label{listing:5}
@@ -335,86 +335,8 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
 
     
 \begin{frame}[fragile]
-  \frametitle{notes}
-  Classes in Objective C are similar to their C++ cousins in that they come in two parts: interface declaration and implementation. The interface declaration portion of a class follows the form:
-\begin{listing}[H]
-    \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
-  #import <Foundation/Foundation.h>
-  @interface MyNewClass : NSObject {
-    int privateVariable1;
-    NSString * privateVariable2;
-  }
-
-  +(int) someClassMethod;
-  -(void) doSomething;
-  -(NSString *) giveMeAStringOfLength:(int)length
-                    randomizeContents:(BOOL)randomize;
-  @end
-
-  \end{minted}
-    \caption{Class interface declaration}
-    \label{listing:6}
-  \end{listing}
-
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{notes}
-  The implementation of this class follows the form:
-\begin{listing}[H]
-    \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
-  #import "MyNewClass.h"
-
-  @implementation MyNewClass
-
-  -(id) init {
-    if(self = [super init]){
-      privateVariable1 = 20;
-      privateVariable2 = [[NSString alloc] initWithString:@"Test"];
-    }
-    return self;
-  }
-
-  +(int) someClassMethod {
-    return 0;
-  }
-
-
-  \end{minted}
-    \caption{Class implementation}
-    \label{listing:7}
-  \end{listing}
-
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{notes}
-  \begin{listing}[H]
-    \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
-  -(void) doSomething {
-    NSLog(@"Something");
-  }
-
-  -(NSString *) giveMeAStringOfLength:(int)length
-                    randomizeContents:(BOOL)randomize {
-    return @"TODO: Make work";
-  }
-
-  -(void) dealloc {
-    [privateVariable2 release];
-    [super dealloc];
-  }
-
-  @end
-
-  \end{minted}
-    \caption{Class implementation pt. 2}
-    \label{listing:8}
-  \end{listing}
-
+  \frametitle{Classes}
+  
 \end{frame}
 
     
@@ -428,7 +350,7 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Memory management}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   // Retain count of 1            
   NSString * foo = [[NSString alloc] initWithString:@"Foo"]; 
   [foo retain]; // Retain count of 2
@@ -437,20 +359,20 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   NSLog(@"Foo is still %@", foo);
   [foo release]; // Retain count of 0,
                  // foo is released back to the system
-
+                 
   // This will crash the program (EXC_BAD_ACCESS)
   NSLog(@"Foo crashes %@", foo); 
-
+              
   \end{minted}
     \caption{Memory management in Objective C}
     \label{listing:9}
   \end{listing}
 \begin{block}{EXC BAD ACCESS ? What?}
-
+  
   EXC BAD ACCESS is the error message your program will output when
   it attempts to do something to a pointer to a memory location
   whose contents have previously been released to the system.
-
+              
   \end{block}
 
 \end{frame}
@@ -465,23 +387,23 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Memory management}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   // Indicate that the foo object should be managed by
   // the current NSAutoreleasePool
   NSString * foo = [[[NSString alloc]
                                initWithString:@"Foo"]
                                  autorelease];
   NSLog(@"Foo will be good for now %@", foo);
-
+  
   [foo retain]; 
   [foo release];
   NSLog(@"Foo is still good, %@", foo);
   // You may retain and release on an autoreleased object as normal
-
+  
   [foo release];
   // Calling an 'unbalanced release' like this will cause a crash
   // at some unknown point in the future
-
+              
   \end{minted}
     \caption{Memory management in Objective C}
     \label{listing:10}
@@ -493,12 +415,12 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Memory management}
   Different classes in Cocoa / Objective C have different rules about how they retain objects.  The documentation is instructive in telling you what memory management semantics you should expect from given functionality.
 \begin{block}{Mac Programmers Have All The Luck}
-
+  
   Should you be programming Mac OS applications as opposed to iOS applications,
   you can take advantage of garbage collection memory management which has been
   available since Mac OS Leopard (10.5); iOS programmers still have to manage their
   memory themselves, however.
-
+              
   \end{block}
 
 \end{frame}
@@ -514,7 +436,7 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Properties}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   @interface MyObject : NSObject {
     NSString * instanceVariable;
     float numericVariable;
@@ -522,20 +444,20 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   @property(readwrite, retain) NSString * instanceVariable;
   @property(readonly, assign) float numericVariable;
   @end
-
+  
   @implementation MyObject
-
+  
   @synthesize instanceVariable;
   @synthesize numericVariable;
-
+  
   -(void) dealloc {
     [instanceVariable release];
     [super dealloc];
   }
-
+  
   @end 
-
-
+    
+              
   \end{minted}
     \caption{Property interface declaration}
     \label{listing:11}
@@ -547,14 +469,14 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Properties}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   MyObject * mo = [[MyObject alloc] init];
   [mo setInstanceVariable:@"Test"];
   [mo setNumericVariable:20.0f];
   NSLog(@"The values I set were %@ and %f",
           [mo instanceVariable], 
           [mo numericVariable]);
-
+              
   \end{minted}
     \caption{Property usage}
     \label{listing:12}
@@ -566,12 +488,12 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Properties}
   You can specify the memory management semantics (retain, assign, copy) in the property declaration.  You can also specify the atomicity (locking behavior) of the property, and more.
 \begin{block}{More to it..}
-
+  
   Properties do not merely provide getter/setter functionality.  The use of properties
   also implicitly adds Key-Value-Observing functionality to your class, letting
   you automatically monitor classes for change events and performing specific code
   in such cases.  Read more at \url{http://developer.apple.com/mac/library/documentation/cocoa/conceptual/objectivec/articles/ocProperties.html}.
-
+              
   \end{block}
 
 \end{frame}
@@ -587,14 +509,14 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Selectors}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   SEL aSelector = @selector(length);
   NSString * foo = @"Foo";
   if([foo respondsToSelector:aSelector]){
     NSLog(@"The length of foo is %i",  [foo performSelector:aSelector]);
   }
-
-
+  
+              
   \end{minted}
     \caption{Selector usage}
     \label{listing:13}
@@ -606,14 +528,14 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Selectors}
   Selectors can be built from strings, and can refer to any Objective C message that is forwarded to an object. \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSString * aUserSuppliedString = MagicallyGetStringFromUserInput();
   SEL aSelector = NSSelectorFromString(aUserSuppliedString);
   if([someObject respondsToSelector:aSelector]){
     // NOTE: Surely nothing bad will happen
     [someObject performSelector:aSelector];
   }
-
+              
   \end{minted}
     \caption{Other selector usage}
     \label{listing:14}
@@ -632,17 +554,17 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Protocols}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   @protocol TestProtocol
-
+  
   -(void) definitelyHasThisMethod;
-
+  
   @optional
-
+  
   -(void) mayHaveThisMethod;
-
+  
   @end
-
+              
   \end{minted}
     \caption{Protocol declaration}
     \label{listing:15}
@@ -664,16 +586,16 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Protocols}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   SomeObject<TestProtocol> * oo = [[SomeObject alloc] init];
-
+  
   // We assume this because the object conforms to TestProtocol              
   [oo definitelyHasThisMethod];
-
+  
   if([oo respondsToSelector:@selector(mayHaveThisMethod)]){
     [oo mayHaveThisMethod];
   }
-
+              
   \end{minted}
     \caption{Protocol usage}
     \label{listing:17}
@@ -686,11 +608,11 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Categories}
   Categories allow you to mix in new code to existing classes without having to change the original source code for those classes.  Examples of categories include automatically adding special serialization rules to NSObject, or special data structure Queue behavior to Cocoa collection classes.
 \begin{alertblock}{Except for..}
-
+  
   You can't add instance variables to a class with categories; they are
   purely for adding new methods to a class, but cannot change the memory
   layout of a class after the fact.
-
+              
   \end{alertblock}
 
 \end{frame}
@@ -699,21 +621,21 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \frametitle{Categories}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   @interface NSString(FunkyStrings)
-
+  
   -(NSString *) getFunky;
-
+  
   @end
-
+  
   @implementation NSString(FunkyStrings)
-
+  
   -(NSString *) getFunky {
     return [self stringByAppendingString:@"...YEAH! ALL RIGHT! FEELS GOOD!"];
   }
-
+  
   @end
-
+              
   \end{minted}
     \caption{Category declaration}
     \label{listing:18}
@@ -749,19 +671,19 @@ void main(){
   NSString is an enhanced, unicode aware string class that goes far beyond the simple byte-array behavior of C's byte-array strings.
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSString * s = [[NSString alloc] initWithCString:"this is an ascii string"
                                    encoding:NSASCIIStringEncoding];
   NSMutableString * so = [[NSMutableString alloc]
                                   initWithString:@"A mutable string with..."];
-
+  
   [so appendString:s];
-
+  
   NSLog(@"The mutable string is %@", so);
-
+  
   [so release];
   [s release];
-
+              
   \end{minted}
     \caption{NSString usage}
     \label{listing:20}
@@ -774,12 +696,12 @@ void main(){
   NSNumber is a simple abstract wrapper around numeric values which allows you to automatically convert its held value to the appropriate form, as well as having an object-like representations of a numeric value.
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSNumber * n = [[NSNumber alloc] initWithFloat:20.0f];
   double d = [n doubleValue];
   int i = [n intValue];
   [n release];
-
+              
   \end{minted}
     \caption{NSNumber usage}
     \label{listing:21}
@@ -797,26 +719,26 @@ void main(){
   \frametitle{Review common useful classes in Objective C / Cocoa to accomplish certain tasks}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSDictionary * a = [[NSDictionary alloc] initWithObjectsAndKeys:
                                         @"The foo string", @"Foo",
                                         @"The bar string", @"Bar",
                                         nil];
-
+  
   NSMutableDictionary * b = [[NSMutableDictionary alloc] init];
   [b setObject:@"Another string" forKey:[NSNumber numberWithInt:20]];
-
+  
   NSLog(@"a's alue for Foo is %@, and b's value for 20 is %@",
                             [a objectForKey:@"Foo"],
                             [b objectForKey:[NSNumber numberWithInt:20]]);
-
+  
   for(id key in a){
     NSLog(@"The value for %@ is %@", key, [a objectForKey:key]);
   }
-
+  
   [b release];
   [a release];
-
+              
   \end{minted}
     \caption{NSDictionary usage}
     \label{listing:22}
@@ -829,19 +751,19 @@ void main(){
   NSArray is a simple way to collect NSObject inheriting classes into a sequential list.  NSArray automatically retains each object added to it, and releases each object it holds once its own retain count has reached 0.
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSArray * a = [[NSArray alloc] initWithObjects:@"Foo", @"bar", @"baz", nil];
   NSMutableArray * b = [[NSMutableArray alloc] init];
   [b addObject:@"Not foo"];
   NSLog(@"The contents of a are %@ and b are %@", a, b);
-
+  
   for(NSString * obj in a){
     NSLog(@"The array contains %@", obj);
   }
-
+  
   [a release];
   [b release];
-
+              
   \end{minted}
     \caption{NSArray usage}
     \label{listing:23}
@@ -859,22 +781,22 @@ void main(){
   \frametitle{Review common useful classes in Objective C / Cocoa to accomplish certain tasks}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.5]{PListExample1.png}
-
+              
   \caption{Sample Property List}
   \end{center}
   \end{figure}
 
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSDictionary * example = [[NSDictionary alloc]
                                initWithContentsOfFile:@"/path/to/sample.plist"];
   NSLog(@"The subarray contents are %@",
              [example objectForKey:"A subarray of values"]);
   [example release];
-
+              
   \end{minted}
     \caption{Property List Deserialization}
     \label{listing:24}
@@ -929,9 +851,9 @@ void main(){
   \frametitle{Application -> Window -> View Controller(s) -> View(s) + Models}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.35]{UIViewExample.pdf}
-
+              
   \caption{UIViews are everything}
   \end{center}
   \end{figure}
@@ -942,9 +864,9 @@ void main(){
   \frametitle{Application -> Window -> View Controller(s) -> View(s) + Models}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.35]{UIViewExample2.pdf}
-
+              
   \caption{UIViews are almost everythign}
   \end{center}
   \end{figure}
@@ -974,9 +896,9 @@ void main(){
   \frametitle{UINavigationController}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.35]{UIViewExample3.pdf}
-
+              
   \caption{Items managed by UINavigationController }
   \end{center}
   \end{figure}
@@ -993,12 +915,12 @@ void main(){
   \frametitle{UINavigationController}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   MyViewController * controller = [[MyViewController alloc] initWithNibName:nil
                                                             bundle:nil];
   [[self navigationController] pushViewController:controller animated:YES];
   [controller release];
-
+              
   \end{minted}
     \caption{Adding another UIViewController to the UINavigationController stack}
     \label{listing:25}
@@ -1048,9 +970,9 @@ void main(){
   \frametitle{UITabBarController and UITableViewController}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.3]{UIViewExample4.pdf}
-
+              
   \caption{UITabBarController example}
   \end{center}
   \end{figure}
@@ -1073,9 +995,9 @@ void main(){
   \frametitle{UITabBarController and UITableViewController}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.3]{UIViewExample5.pdf}
-
+              
   \caption{UITableView example}
   \end{center}
   \end{figure}
@@ -1112,9 +1034,9 @@ void main(){
   \frametitle{Modal view controllers}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.35]{UIViewExample6.pdf}
-
+            
   \caption{UIImagePickerController}
   \end{center}
   \end{figure}
@@ -1125,9 +1047,9 @@ void main(){
   \frametitle{Modal view controllers}
   \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.35]{UIViewExample7.pdf}
-
+            
   \caption{MFMailComposeViewController}
   \end{center}
   \end{figure}
@@ -1139,7 +1061,7 @@ void main(){
   You can present a view controller modally by using the presentModalViewController:animated: message
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   -(IBAction) buttonClicked:(id) sender {
     MyViewController * mvc = [[MyViewController alloc] 
                                    initWithNibName:@"TheNib"
@@ -1147,7 +1069,7 @@ void main(){
     [self presentModalViewController:mvc animated:YES];
     [mvc release];
   }
-
+            
   \end{minted}
     \caption{Presenting a view controller modally}
     \label{listing:26}
@@ -1158,9 +1080,9 @@ void main(){
 \begin{frame}[fragile]
   \frametitle{Modal view controllers}
   You can specify the transition style with which the view controller appears via the UIViewController message \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   setModalTransitionStyle:(UIModalTransitionStyle)style
-
+            
   \end{minted} 
 
 \end{frame}
@@ -1193,9 +1115,9 @@ void main(){
   \frametitle{Creating an app}
   XCode provides a number of application templates for starting an app.  Most basic types of applications can get a fast start by using one of these app templates. \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.35]{ProjectCreator.png}
-
+              
   \caption{XCode New Project window}
   \end{center}
   \end{figure}
@@ -1206,17 +1128,17 @@ void main(){
   \frametitle{Creating an app}
   Once you've selected the type of app you want to create, your project will be created with an application delegate and usually at least one view controller that will manage what goes on the screen.  It will also have a .xib file for your application, and for each view controller in the app, that is used by Interface Builder to layout the screen contents. \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.75]{ProjectFileList.png}
-
+              
   \caption{New Project File List}
   \end{center}
   \end{figure}
 \begin{block}{The application delegate - UIApplicationDelegate}
-
+  
   The application delegate ( UIApplicationDelegate protocol ) is the class which will respond to overall application lifecycle events,
   like when your application has started, resumed from suspension, or is about to shut down. 
-
+              
   \end{block}
 
 \end{frame}

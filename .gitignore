@@ -4,3 +4,11 @@ build
 *.log
 *.perspectivev3
 *.mode1v3
+*.aux
+*.bib
+*.nav
+*.out
+*.pyg
+*.snm
+*.toc
+*.vrb

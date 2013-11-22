@@ -25,7 +25,7 @@
 \title{iOS Application Development}
 \subtitle{Day 3}
 \author{Chris Zelenak}
-\date{10/06/2010}
+\date{06/24/2010}
 
 \begin{document}
 
@@ -117,11 +117,11 @@
   To get an instance of an NSManagedObject that is able to be saved to the NSPersistentStore, use:
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSManagedObject * newObject = [NSEntityDescription
                                  insertNewObjectForEntityForName:@"EntityName"
                                  inManagedObjectContext:managedObjectContext];
-
+                
   \end{minted}
     \caption{Getting a new NSManagedObject that will eventually be saved to an NSPersistentStore}
     \label{listing:39}
@@ -134,13 +134,13 @@
   To save changes to all current NSManagedObjects currently managed by an NSManagedObjectContext:
 \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSError * error = nil;
   [managedObjectContext save:&error];
   if(error){
       NSLog(@"Couldn't save objects, %@", error);
   } 
-
+                
   \end{minted}
     \caption{Saving changed objects}
     \label{listing:40}
@@ -165,21 +165,21 @@
   \frametitle{NSPredicate and NSFetchRequest}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSPredicate * searchPredicate = [NSPredicate
                            predicateWithFormat:@"(firstName = 'Chris') AND "
                                         @"(lastName BEGINSWITH 'Zel') AND "
                                         @"(age BETWEEN {%i,%i})", 20, 30];
-
+                
   \end{minted}
     \caption{NSPredicate example}
     \label{listing:41}
   \end{listing}
 \begin{block}{See more..}
-
+  
   Read more about writing NSPredicates in the "Predicate Programming Guide" in
   the XCode documentation.
-
+                
   \end{block}
 
 \end{frame}
@@ -188,9 +188,9 @@
   \frametitle{NSPredicate and NSFetchRequest}
   You can also build named NSFetchRequests in the .xcdmodel for your entities. \begin{figure}[htb]
   \begin{center}
-
+  
   \includegraphics[scale=0.5]{PredicateBuilder.png}
-
+                
   \caption{Predicate builder}
   \end{center}
   \end{figure}
@@ -201,13 +201,13 @@
   \frametitle{NSPredicate and NSFetchRequest}
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
-
+  
   NSFetchRequest * req = [managedObjectModel
                            fetchRequestFromTemplateWithName:@"requestByName"
                            substitutionVariables:[NSDictionary
                               dictionaryWithObjectsAndKeys:
                                 @"Pwnsberry", @"LAST_NAME", nil]];
-
+                
   \end{minted}
     \caption{Stored NSPredicate example}
     \label{listing:42}
@@ -346,6 +346,37 @@
 \begin{frame}[fragile]
   \frametitle{( ASIHttpRequest, EasyURLDownloader )}
   EasyURLDownloader gives you a simple library to perform asynchronous GET downloads in the background \url{http://github.com/netshade/EasyUrlDownloader}
+
+\end{frame}
+
+    
+\begin{frame}[fragile]
+  \frametitle{SOAP and REST Webservices}
+  You can roll your own webservice access, but you don't have ot.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{SOAP and REST Webservices}
+  ObjectiveResource makes accessing REST services with ObjectiveC incredibly easy.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{SOAP and REST Webservices}
+  WSMakeStubs will create stubs for you that shim out the available endpoints of a WSDL web service.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{SOAP and REST Webservices}
+  ObjectiveResource is available at \url{http://github.com/yfactorial/objectiveresource}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{SOAP and REST Webservices}
+  WSMakeStubs is a binary included with your SDK
 
 \end{frame}
 
