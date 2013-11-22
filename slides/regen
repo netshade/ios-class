@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-base_dir = File.dirname(__FILE__)
+base_dir = File.expand_path(File.dirname(__FILE__))
 
 unless ARGV[0]
-  Dir["**/*.tex"].each do |path|
-    `cd #{File.dirname(path)} && pdflatex -shell-escape #{File.basename(path)} && cd #{base_dir}`
+  Dir[File.join(base_dir, "**/*.tex")].each do |path|
+    `cd #{File.dirname(path)} && pdflatex -shell-escape #{File.basename(path)}`
   end
 else
   file = "slides.tex"
   dir = ARGV[0]
-  `cd #{dir} && pdflatex -shell-escape #{File.join(file)} && cd #{base_dir}`
+  `cd #{dir} && pdflatex -shell-escape #{File.join(file)}`
 end
