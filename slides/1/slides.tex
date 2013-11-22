@@ -25,7 +25,7 @@
 \title{iOS Application Development}
 \subtitle{Day 1}
 \author{Chris Zelenak}
-\date{06/22/2010}
+\date{12/02/2013}
 
 \begin{document}
 
@@ -203,7 +203,7 @@
   \begin{listing}[H]
      \begin{minted}[resetmargins=true,fontsize=\footnotesize]{c}
    
-   // Declaring a point in space type             
+   // Declaring a point in space type
    typedef struct {
      float x;
      float y;
@@ -211,10 +211,10 @@
    
    APointInSpace point;
    point.x = 20.0;
-   point.y = 410.0; 
+   point.y = 410.0;
    
-   // C99 style struct instantiation              
-   APointInSpace point2 = { .x= 21.0, .y=32.0 }; 
+   // C99 style struct instantiation
+   APointInSpace point2 = { .x= 21.0, .y=32.0 };
               
    \end{minted}
      \caption{C Language Elements - Structs}
@@ -228,22 +228,22 @@
   \begin{listing}[H]
      \begin{minted}[resetmargins=true,fontsize=\footnotesize]{c}
    
-   // a constant byte array             
-   char * constantCharArray = "Or in other words, a string"; 
+   // a constant byte array
+   char * constantCharArray = "Or in other words, a string";
    
    // C99 style array instantiation
    int aListOfNumbers[5] = { 1, 2, 3, 4, 5 };
-   int aListOfNumbers[] = { 1, 2, 3, 4, 5}; 
+   int aListOfNumbers[] = { 1, 2, 3, 4, 5};
    
    // C99 Variable length array declaration
    float aListOfFloats[someQualifier];
    
-   // pointer declaration to NULL              
-   int * someIntegerPtr = NULL; 
+   // pointer declaration to NULL
+   int * someIntegerPtr = NULL;
    int someInteger = 5;
    
-   // address dereference              
-   someIntegerPtr = &someInteger; 
+   // address dereference
+   someIntegerPtr = &someInteger;
                
    \end{minted}
      \caption{C Language Elements - Arrays and Pointers}
@@ -266,10 +266,10 @@
   
   NSString * anExampleString = @"This is a pointer to an NSString object";
   int strLen = [anExampleString length];
-             
+  
   NSString * aSecondString = [anExampleString
     stringByAppendingString:@" that had a second string appended to it"];
-            
+  
   if([anExampleString
        compare:@"this is a pointer to an nsstring object"
        options:NSCaseInsensitiveCompare] == NSOrderedSame){
@@ -300,13 +300,13 @@ you can invoke functionality on that object via the form:
            
  \end{minted}
 
-Method names in Objective C follow the form initialMethodNameAndArgument:theSecondArgument:theThirdArgument: . 
+Method names in Objective C follow the form initialMethodNameAndArgument:theSecondArgument:theThirdArgument: .
 \begin{block}{Messages vs. Methods}
   
   When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to
   consider these synonymous with "dispatching a message".  Objective C objects respond to
   \highlighton{messages}, and as you work more with Objective C, it will be more beneficial for
-  you to perceive this as such.  
+  you to perceive this as such.
             
   \end{block}
 
@@ -351,17 +351,17 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   \begin{listing}[H]
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
   
-  // Retain count of 1            
-  NSString * foo = [[NSString alloc] initWithString:@"Foo"]; 
+  // Retain count of 1
+  NSString * foo = [[NSString alloc] initWithString:@"Foo"];
   [foo retain]; // Retain count of 2
   NSLog(@"Foo is %@", foo);
   [foo release]; // Retain count of 1
   NSLog(@"Foo is still %@", foo);
   [foo release]; // Retain count of 0,
                  // foo is released back to the system
-                 
+  
   // This will crash the program (EXC_BAD_ACCESS)
-  NSLog(@"Foo crashes %@", foo); 
+  NSLog(@"Foo crashes %@", foo);
               
   \end{minted}
     \caption{Memory management in Objective C}
@@ -395,7 +395,7 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
                                  autorelease];
   NSLog(@"Foo will be good for now %@", foo);
   
-  [foo retain]; 
+  [foo retain];
   [foo release];
   NSLog(@"Foo is still good, %@", foo);
   // You may retain and release on an autoreleased object as normal
@@ -455,8 +455,8 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
     [super dealloc];
   }
   
-  @end 
-    
+  @end
+  
               
   \end{minted}
     \caption{Property interface declaration}
@@ -474,7 +474,7 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   [mo setInstanceVariable:@"Test"];
   [mo setNumericVariable:20.0f];
   NSLog(@"The values I set were %@ and %f",
-          [mo instanceVariable], 
+          [mo instanceVariable],
           [mo numericVariable]);
               
   \end{minted}
@@ -574,7 +574,7 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
 
 @interface SomeObject : NSObject<TestProtocol> {
 }
-@end 
+@end
 \end{minted}
   \caption{Protocol conformance}
   \label{listing:16}
@@ -589,7 +589,7 @@ nil is the appropriate null object when dealing with pointers to Objective C cla
   
   SomeObject<TestProtocol> * oo = [[SomeObject alloc] init];
   
-  // We assume this because the object conforms to TestProtocol              
+  // We assume this because the object conforms to TestProtocol
   [oo definitelyHasThisMethod];
   
   if([oo respondsToSelector:@selector(mayHaveThisMethod)]){
@@ -1063,7 +1063,7 @@ void main(){
     \begin{minted}[resetmargins=true,fontsize=\footnotesize]{objectivec}
   
   -(IBAction) buttonClicked:(id) sender {
-    MyViewController * mvc = [[MyViewController alloc] 
+    MyViewController * mvc = [[MyViewController alloc]
                                    initWithNibName:@"TheNib"
                                    bundle:nil];
     [self presentModalViewController:mvc animated:YES];
@@ -1083,7 +1083,7 @@ void main(){
   
   setModalTransitionStyle:(UIModalTransitionStyle)style
             
-  \end{minted} 
+  \end{minted}
 
 \end{frame}
 
@@ -1137,7 +1137,7 @@ void main(){
 \begin{block}{The application delegate - UIApplicationDelegate}
   
   The application delegate ( UIApplicationDelegate protocol ) is the class which will respond to overall application lifecycle events,
-  like when your application has started, resumed from suspension, or is about to shut down. 
+  like when your application has started, resumed from suspension, or is about to shut down.
               
   \end{block}
 

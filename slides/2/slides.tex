@@ -554,14 +554,14 @@ and perform their own logic when the view is touched.
                      ctxt:(void *)context {
       NSLog(@"Started fade out");
     }
-                  
+    
     -(void) animDidStop:(NSString *)animid
                finished:(BOOL)finished
                    ctxt:(void *)context {
       UIView * v = (UIView *) context;
       [v removeFromSuperview];
       NSLog(@"Removed faded view");
-    }                          
+    }
                 
     \end{minted}
       \caption{Handling animation start/stop events pt. 2}
