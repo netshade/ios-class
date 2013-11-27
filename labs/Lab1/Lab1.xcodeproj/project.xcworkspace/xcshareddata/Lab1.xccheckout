@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>00D1C818-375E-4A1B-830F-FD1045001A52</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Lab1</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CF7D39A7-1019-4B9C-913D-E9CBA8DC8465</key>
+		<string>ssh://github.com/netshade/ios-class.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>labs/Lab1/Lab1.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CF7D39A7-1019-4B9C-913D-E9CBA8DC8465</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/netshade/ios-class.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CF7D39A7-1019-4B9C-913D-E9CBA8DC8465</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CF7D39A7-1019-4B9C-913D-E9CBA8DC8465</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iphone-class</string>
+		</dict>
+	</array>
+</dict>
+</plist>
