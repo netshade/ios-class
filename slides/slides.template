@@ -1,6 +1,20 @@
-\documentclass[10pt]{beamer}
+\documentclass[ignorenonframetext,10pt]{beamer}
 
 \usetheme{Oxygen}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifxetex
+  \usepackage{fontspec,xltxtra,xunicode}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
 \usepackage{hyperref}
 \usepackage[compatibility=false]{caption}
 \usepackage{thumbpdf}
@@ -13,6 +27,33 @@
 \usepackage{url}
 \usepackage{cite}
 \usepackage{minted}
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{menukeys}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\nonstopmode
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\footnotesize,numbers=left}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textbf{{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.50,0.00,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,1.00}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,1.00}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.50,0.00,0.50}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{1.00,0.00,1.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.87,0.00,0.00}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.50,0.50,0.50}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{{#1}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.00,1.00,0.00}{\textbf{{#1}}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.50}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
 
 \pdfinfo
 {
@@ -26,6 +67,8 @@
 \subtitle{<%= @subtitle %>}
 \author{<%= @author %>}
 \date{<%= @date %>}
+
+\DeclareUnicodeCharacter{2318}{\commandbtn}
 
 \begin{document}
 
@@ -48,6 +91,7 @@
   }
 }
 
+<%#
 \AtBeginSubsection[]
 {
   \frame<handout:0>
@@ -56,6 +100,7 @@
     \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
   }
 }
+%>
 
 \newcommand<>{\highlighton}[1]{%
   \alt#2{\structure{#1}}{{#1}}
@@ -63,30 +108,15 @@
 
 \newcommand{\icon}[1]{\pgfimage[height=1em]{#1}}
 
-<%
-  def new_frame(name, content = nil)
-    content = content.is_a?(Hash) ? content["slides"] : content
-    [content ? content : ""].flatten.collect do |body|
-    <<-EOFRAME
-\\begin{frame}[fragile]
-  \\frametitle{#{name}}
-  #{body}
-\\end{frame}
-    EOFRAME
-    end.join("\n")
-end
-%>
 <% @sections.each_with_index do |section, idx| %>
   <% if section.is_a?(Hash) %>
     <% section.each do |section_name, content| %>
 % BEGIN SECTION <%= section_name %>
 \section{<%= section_name %>}
 <%= new_frame(section_name, content.is_a?(Hash) ? content : "#{idx + 1}. #{section_name}") %>
-<% if content.is_a?(Array) %>
-    <% content.each do |frame| %>
+    <% Array(content).each do |frame| %>
 <%= frame.is_a?(Hash) ? new_frame(*frame.first) : new_frame(frame) %>
     <% end %>
-<% end %>
 % END SECTION <%= section_name %>
    <% end %>
   <% elsif section.is_a?(String) %>

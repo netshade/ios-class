@@ -5,8 +5,54 @@ require 'yaml'
 require 'fileutils'
 
 
+module MarkdownFraming
+
+  def strip_front_space(markdown)
+    markdown.gsub(/^(\s)\s+/m, "\\1")
+  end
+
+  def extensions
+    [
+      "+raw_tex",
+      "+footnotes"
+    ]
+  end
+
+  def markdown_to_beamer(slide, raw = true)
+    to_format(slide, :beamer, raw)
+  end
+
+  def markdown_to_latex(content, raw = true)
+    to_format(content, :latex, raw)
+  end
+
+  def to_format(markdown, fmt = :beamer, raw = true)
+    return if markdown.nil? || markdown.strip.empty?
+    unless raw
+      markdown = strip_front_space(markdown).chomp
+    end
+    content = nil
+    IO.popen("pandoc -f markdown_github#{extensions.join("")} -t #{fmt.to_s.inspect} --highlight-style kate", "r+") do |process|
+      process.puts markdown
+      process.close_write
+      content = process.readlines.join("")
+      process.close
+    end
+    content
+  end
+
+  def new_frame(name, content = nil)
+    content = content.is_a?(Hash) ? content["slides"] : content
+    Array(content).flatten.compact.map do |body|
+      markdown_to_beamer(body.strip)
+    end.compact.join("")
+  end
+
+end
 
 class ERBTemplate
+  include MarkdownFraming
+
   attr_accessor :title, :subtitle, :author, :date, :sections, :filename, :listings, :bibliographies, :output_buffer
 
   def initialize
@@ -23,11 +69,13 @@ class ERBTemplate
     output_buffer
   ensure
     self.output_buffer = old_buffer
-  end  
+  end
 
 end
 
 class ERBYamlTemplate
+  include MarkdownFraming
+
   attr_accessor :listings, :bibliographies, :filename, :output_buffer, :listing_count, :assets
 
   def initialize
@@ -42,21 +90,19 @@ class ERBYamlTemplate
     ERB.new(File.read(@filename || "schedule.yml"), nil, nil, '@output_buffer').result(binding)
   end
 
-
-
   def auto_indent(indented_content, &block)
     sanitized = indented_content.gsub(/(^[\n\r]+|[\n\r]+$)/m, "\n")
     if sanitized =~ /^([ \t]+)/
       prelude = $1
       line_num = 0
       yield(sanitized).split(/[\n\r]/).collect do |line|
-        (( (line_num += 1) == 1) || line.index(prelude)) ? line : prelude + line 
+        (( (line_num += 1) == 1) || line.index(prelude)) ? line : prelude + line
       end.join("\n")
     else
       yield(sanitized)
     end
   end
-  
+
   def listing(caption, name = nil, &block)
     self.listing_count += 1
     name ||= "listing:#{listing_count}"
@@ -123,7 +169,7 @@ class ERBYamlTemplate
   end
 
   def itemize(*items)
-    output = items.collect { |item| "\\item #{item}\n" }.join("\n")
+    output = items.collect { |item| "\\item #{markdown_to_latex(item)}\n" }.join("\n")
     <<-EOS
 \\begin{itemize}
 #{output}
@@ -166,18 +212,17 @@ class ERBYamlTemplate
   end
 
   def block(name, &block)
-    content = with_output_buffer(&block)    
-    self.output_buffer += auto_indent(content) do |str|
-      <<-EOS
+    content = with_output_buffer(&block)
+    self.output_buffer += auto_indent(content) do <<-EOS
 \\begin{block}{#{name}}
-#{str}
+#{markdown_to_latex(content, false)}
 \\end{block}
-    EOS
+EOS
     end
   end
 
   def alertblock(name, &block)
-    content = with_output_buffer(&block)        
+    content = with_output_buffer(&block)
     self.output_buffer += auto_indent(content) do |str|
       <<-EOS
 \\begin{alertblock}{#{name}}
@@ -190,7 +235,7 @@ class ERBYamlTemplate
   def url(href)
     "\\url{#{href}}"
   end
-  
+
   def with_output_buffer(buf = '') #:nodoc:
     self.output_buffer, old_buffer = buf, output_buffer
     yield
@@ -198,7 +243,7 @@ class ERBYamlTemplate
   ensure
     self.output_buffer = old_buffer
   end
-  
+
 end
 
 config = ERBYamlTemplate.new
@@ -208,11 +253,11 @@ data["presentations"].each_with_index do |data, index|
   base_dir = File.join("slides", (index+1).to_s)
   target = File.join(base_dir, "slides.tex")
   bib = File.join(base_dir, "slides.bib")
-  
+
   FileUtils.mkdir_p(base_dir)
   File.delete(target) if File.exists?(target)
   File.delete(bib) if File.exists?(bib)
-  
+
   template = ERBTemplate.new
   template.listings = config.listing_data
   template.bibliographies = config.bibliographies
