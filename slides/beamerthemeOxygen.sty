@@ -2,26 +2,42 @@
 
 \RequirePackage{pgf}
 
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{helvet}
+
 \pgfdeclareimage[width=1.0\paperwidth]{oxygen-header}{oxygen-header}
 
-\setbeamertemplate{blocks}[rounded][shadow=true]
+%% Helvetica
+%\setmainfont{Helvetica}                % Beamer ignores "main font" in favor of sans font
+%\setsansfont{Helvetica}     % This is the font that beamer will use by default
+%\setbeamerfont{title}{family=\fontspec{Helvetica}}
+
+%\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
 \setbeamercovered{transparent}
 
 \beamer@headheight=0.13\paperwidth
 
 \definecolor{oxygenorange}{HTML}{F7800A}
+\definecolor{ios7orange}{HTML}{FF9500}
+\definecolor{ios7lightblue}{HTML}{1AD6FD}
+\definecolor{ios7darkblue}{HTML}{1D62F0}
+\definecolor{ios7lightgray}{HTML}{C7C7CC}
+\definecolor{ios7verylightgray}{HTML}{F7F7F7}
+\definecolor{ios7darkgray}{HTML}{8E8E93}
+\definecolor{ios7aqua}{HTML}{34AADC}
 \definecolor{oxygengray}{HTML}{686868}
 \definecolor{oxygenlightgray}{HTML}{EEEEEE}
 \definecolor{oxygenblue}{HTML}{236EAF}
 \setbeamercolor*{Title bar}{fg=white}
-\setbeamercolor*{Location bar}{fg=oxygenorange,bg=oxygenlightgray}
+\setbeamercolor*{Location bar}{fg=ios7aqua,bg=ios7verylightgray}
 \setbeamercolor*{frametitle}{parent=Title bar}
-\setbeamercolor*{block title}{bg=oxygenblue,fg=white}
-\setbeamercolor*{block body}{bg=oxygenlightgray,fg=oxygengray}
+\setbeamercolor*{block title}{bg=ios7aqua,fg=white}
+\setbeamercolor*{block body}{bg=ios7verylightgray,fg=ios7darkgray}
 \setbeamercolor*{normal text}{bg=white,fg=oxygengray}
 \setbeamercolor*{section in head/foot}{bg=oxygenblue,fg=white}
 
-\usecolortheme[named=oxygenorange]{structure}
+\usecolortheme[named=ios7aqua]{structure}
 
 \setbeamerfont{section in head/foot}{size=\tiny,series=\normalfont}
 \setbeamerfont{frametitle}{size=\normalsize}
@@ -30,29 +46,12 @@
 %\setbeamertemplate{headline}
 \setbeamertemplate{frametitle}
 {
-  \vskip-0.25\beamer@headheight
-  \vskip-\baselineskip
-  \vskip-0.2cm
-  \hskip0.7cm\usebeamerfont*{frametitle}\insertframetitle
-  \vskip-0.10em
-  \hskip0.7cm\usebeamerfont*{framesubtitle}\insertframesubtitle
+
 }
 
 \setbeamertemplate{headline}
 {
-  \pgfuseimage{oxygen-header}
-  \vskip -1.95cm
-  \linethickness{0.25pt}
 
-  \framelatex{
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.3\beamer@headheight]{Title bar}
-    \usebeamerfont{section in head/foot}%
-    \insertsectionnavigationhorizontal{0pt}{\hskip0.22cm}{}%
-  \end{beamercolorbox}}
-
-  \framelatex{
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.7\beamer@headheight]{Title bar}
-  \end{beamercolorbox}}
 }
 
 \setbeamertemplate{footline}
