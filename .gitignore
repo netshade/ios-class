@@ -12,3 +12,9 @@ build
 *.snm
 *.toc
 *.vrb
+*.xcuserstate
+*.xcuserdatad
+slides/*/*.png
+slides/*/*.jpg
+slides/*/*.sty
+slides/*/*.tex
