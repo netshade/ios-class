@@ -1,82 +1,124 @@
 presentations:
 - subtitle: "Day 1"
-  title: "iOS Application Development"
+  title: "Bootstrapping iOS Application Development"
   author: "Chris Zelenak"
   date: "12/02/2013"
   sections:
   - "Intro to class":
       slides:
         - >
-          Welcome to the 5-Day Bootstrapping iOS Application Development class.
-          Over the course of these next 5 days, we're going to be
-          reviewing Objective C, UIKit, Core Animation, Core Data,
-          and a host of other technologies you may only know by name.
+          Welcome to the 5-Day Bootstrapping iOS Application Development class. Over the course of these next 5 days, we're going to be reviewing Objective C, UIKit, Core Animation, Core Data, and a host of other technologies you may only know by name.
         - >
           Email me two pictures of you - one serious and one silly - to  chris - at - fastestforward.com
   - "Lab 1":
     - "Create a new iPhone Project":
         slides:
           - >
-            Create a new View based application in XCode called Lab1
+            Create a new Single View based application in XCode called Lab1 \menu{File > New > Project}
+
+            <% figure("New Projects") do %>
+              <%= graphic("NewProject.png", 0.5) %>
+            <% end %>
           - >
-            Open Lab1ViewController.xib in Interface Builder
+            Open Main.storyboard in Interface Builder
+
+            <% figure("Main Storyboard") do %>
+              <%= graphic("MainStoryboard.png", 0.5) %>
+            <% end %>
     - "Add a button":
         slides:
           - >
             Add a button with the text "Hello iPhone"
+
+            <% figure("Drag Button to Storyboard") do %>
+              <%= graphic("DragButtonToStoryboard.png", 0.5) %>
+            <% end %>
     - "Connect the button to the view controller":
         slides:
           - >
             Add an IBAction selector to the view controller
+
+            ```objectivec
+              // In the ViewController.h file
+              -(IBAction) helloWorldTapped:(id)sender;
+            ```
           - >
             Make it open an alert view
+
+            ```objectivec
+              // In the ViewController.m file
+              -(IBAction) helloWorldTapped:(id)sender {
+                  [[[UIAlertView alloc] initWithTitle:@"Hello World"
+                                              message:@"Yay it worked"
+                                             delegate:nil
+                                    cancelButtonTitle:@"Dismiss"
+                                    otherButtonTitles: nil] show];
+              }
+            ```
+          - >
+            Connect the `IBAction` to the Button's `Touch Up Inside` action.
+
+            <% figure("Connect Touch Up Inside event to IBAction") do %>
+              <%= graphic("ConnectTouchUpToHelloWorld.png", 0.5) %>
+            <% end %>
     - "Build and run in simulator":
         slides:
           - >
-            Yay!
+            Run the simulator with \keys{\cmd + R}, the \menu{Product > Run} menu, or the Play button
+
+            <% figure("Launch Simulator") do %>
+              <%= graphic("LaunchInSimulator.png", 0.5) %>
+            <% end %>
+          - >
+            <% figure("It Worked!") do %>
+              <%= graphic("YayItWorked.png", 0.5) %>
+            <% end %>
   - "Objective C":
     - "Overview":
         slides:
           - >
-            Objective C is a superset of C. It tacks on to C a message-passing
-            object model similar to Smalltalk's (see Ruby), with a reflective
-            class model built in.
+            Objective C is a superset of C. It tacks on to C a message-passing object model similar to Smalltalk's (see Ruby), with support for reflection and limited runtime dynamic programming.
           - >
-            In a more understandable form, Objective C allows you to use weak
-            and dynamicly typed language features along with the static typing
-            of C; it also allows you to take advantage of runtime method
-            resolution, so that your object's implementation of certain messages
-            may be determined at call-time rather than at compile-time.
+            Objective C allows you to use weak and dynamicly typed language features along with the static typing of C; it also allows you to take advantage of runtime method resolution, so that your object's implementation of certain messages may be determined at call-time rather than at compile-time.
           - >
-            The language is still physically identical to C in many ways, in that
-            the bulk of your development will be alternating between
-            header files (.h files) and implementation files (.m files). You will
-            also be doing a lot of memory management, which may fill you with
-            either fear or joy, depending on your experience with garbage
-            collected languages.
+            The language is still physically identical to C in many ways, in that the bulk of your development will be alternating between header files (.h files) and implementation files (.m files). You will also be doing a lot of memory management, which may fill you with either fear or joy, depending on your experience with garbage collected languages.
           - >
-            You will also be dealing a lot with many other C-family familiars,
-            such as enumerated integer constants (enums), structs, pass-by-reference v.
-            pass-by-value semantics and pointers.  You don't need to have a
-            very strong grasp on these things immediately, but the more iPhone programming
-            and Objective C programming you do, the more your skills will benefit
-            from a firm grasp of C.
+            You will also be dealing a lot with many other C-family familiars, such as enumerated integer constants (enums), structs, pass-by-reference v. pass-by-value semantics and pointers.  You don't need to have a very strong grasp on these things immediately, but the more iPhone programming and Objective C programming you do, the more your skills will benefit from a firm grasp of C.
+        notes: |
+          Objective C is a language similar in many ways to Smalltalk or Ruby. This similarity lies primarily in its object system; objects receive "messages", and may respond to them through statically known methods or runtime selected methods.
+          What many people refer to as "Objective C" is actually the various Cocoa family frameworks that Apple has provided, and enhancements to the tooling infrastructure. You could think of Apple's frameworks as the _Standard Library_ of Objective C, much like Ruby or C++'s  standard library.
     - "Review of standard C elements":
         slides:
           - >
-            These are items you'll commonly encouter while doing iPhone programming
-            whose roots belong in the C family:
-            <% code_listing("C Language elements - Enumerations", "c") do %>
+            # C Language Elements - Variables
+
+            Variable declaration in C follows the form `TYPE_DESCRIPTION NAME`, eg:
+
+            ```c
+              int i = -1; // just an integer
+              unsigned int k = 0; // an unsigned integer
+              const unsigned int j = 0; // a constant unsigned integer, no reassignment
+              const char c = 'c'; // a constant char
+              const char * s = "a constant string"; // a pointer to a read-only char array
+            ```
+          - >
+            These are items you'll commonly encouter while doing iPhone programming whose roots belong in the C family:
+
+            ```c
               typedef enum {
                 NONE = 0,
                 SOME,
                 ALL
-              } ThoseWhoPreferItHot;
+              } HowMany;
 
-              ThoseWhoPreferItHot = SOME; // Use of enumerated constant
-            <% end %>
+              HowMany i = SOME; // Use of enumerated constant
+            ```
+
+            Note the `typedef` in this example, which is creating a type alias to be used later.
           - >
-           <% code_listing("C Language Elements - Structs", "c") do %>
+            # C Language Elements - Structs
+
+            ```c
               // Declaring a point in space type
               typedef struct {
                 float x;
@@ -89,9 +131,11 @@ presentations:
 
               // C99 style struct instantiation
               APointInSpace point2 = { .x= 21.0, .y=32.0 };
-           <% end %>
+            ```
           - >
-           <% code_listing("C Language Elements - Arrays and Pointers", "c") do %>
+            # C Language Elements - Arrays and Pointers
+
+            ```c
               // a constant byte array
               char * constantCharArray = "Or in other words, a string";
 
@@ -108,15 +152,56 @@ presentations:
 
               // address dereference
               someIntegerPtr = &someInteger;
-            <% end %>
+            ```
           - >
-            If you've not kept abreast of changes between ANSI-92 C (a common version of C
-            taught in universities and in many books about C) and C99, read more at
-            <%= url("http://home.datacomm.ch/t_wolf/tw/c/c9x_changes.html") %>
-            <%= bibliography("C99Changes", "http://home.datacomm.ch/t_wolf/tw/c/c9x_changes.html") %>.
+            # C Language Elements - Functions and Function Pointers
+
+            ```c
+              float aSimpleAdditionMethod(float a, float b){
+                return a + b;
+              }
+
+              float aSimpleSubtractionMethod(float a, float b){
+                return a - b;
+              }
+
+              int aFloatAdditionThatReturnsAnInt(float a, float b){
+                return (int) (a + b);
+              }
+
+              float (*anFnPtr)(float, float) = aSimpleAdditionMethod;
+              anFnPtr(1, 1); // returns 2
+              anFnPtr = aSimpleSubtractionMethod;
+              anFnPtr(1, 1); // returns 0
+            ```
+          - >
+            # C Language Elements - Preprocessor Statements
+
+            ```c
+              #include <stdio.h>
+              #define FOO 1
+              #define IS_ZERO(n) (n == 0)
+
+              int main(){
+                printf("FOO is %i", FOO);
+                if(IS_ZERO(0)) {
+                  printf("This code is very useful.")
+                }
+              }
+            ```
+          - >
+            If you never learned C or it's been a long time, a fantastic book for you is ["The C Programming Language"](http://www.amazon.com/C-Programming-Language-2nd-Edition-ebook/dp/B009ZUZ9FW/ref=dp_kinw_strp_1). It doesn't cover many of the newer items in [C99](http://en.wikipedia.org/wiki/C99), but it is a thorough reference to the language fundamentals.
+
+            If you'd like to read more about the new features introduced by C99, read more at [C99Changes](http://home.datacomm.ch/t_wolf/tw/c/c9x_changes.html).
+        notes: |
+          While it would be disinegenuous to say that C is "easy", its syntax is simple to learn. The underlying concepts and dearth of a 'modern' standard library is where a large part of the perceived difficulty may lie.
+          It is important to realize that through the course of your career writing Objective C, a large part of the code and concepts you will be using come from the C world; in reality they are not unique to C at all, but are a closer representation to how a computer models memory and computation.
+          An effective way to think about C is as a high level portable assembler; while the output is not portable to different architectures, the source may be cross compiled in a cross platform manner. ( With the understanding that you did not add any platform specificity to your code. :) )
     - "Syntax":
         slides: >
-          <% code_listing("Some typical Objective C code", "objectivec") do %>
+          # Some typical Objective C code
+
+          ```objectivec
             NSString * anExampleString = @"This is a pointer to an NSString object";
             int strLen = [anExampleString length];
 
@@ -128,50 +213,51 @@ presentations:
                  options:NSCaseInsensitiveCompare] == NSOrderedSame){
               NSLog(@"The string %@ was case insensitive equal", anExampleString);
             }
-          <% end %>
+          ```
     - "Calling functions":
         slides: >
           Given some Objective C object, like:
 
-          <% code_block("objectivec") do %>
+          ```objectivec
             NSString * anObject = @"TheObject";
-          <% end %>
+          ```
 
           you can invoke functionality on that object via the form:
 
-          <% code_block("objectivec") do %>
+          ```objectivec
            [anObject theMethodName];
-          <% end %>
+          ```
 
-          Method names in Objective C follow the form initialMethodNameAndArgument:theSecondArgument:theThirdArgument: .
+          Method names in Objective C follow the form `initialMethodNameAndArgument:theSecondArgument:theThirdArgument:` .
 
-          <% block("Messages vs. Methods") do %>
-            When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to
-            consider these synonymous with "dispatching a message".  Objective C objects respond to
-            <%= highlight("messages") %>, and as you work more with Objective C, it will be more beneficial for
-            you to perceive this as such.
-          <% end %>
+          \begin{block}{Messages vs. Methods}
+          When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to consider these synonymous with "dispatching a message".
+
+          Objective C objects respond to **messages**, and as you work more with Objective C, it will be more beneficial for you to perceive this as such.
+          \end{block}
     - "nil, NULL":
         slides: >
-          An object in Objective C may be nil; nil is a "special" object which may have any message at all sent to it,
-          to which it will respond with a nil object.
+          An object in Objective C may be nil; nil is a "special" object which may have any message at all sent to it, to which it will respond with a nil object.
 
-          <% code_listing("nil object responding to any message", "objectivec") do %>
+          ```objectivec
             NSString * anObject = nil;
             if([anObject whoaThisProbablyDoesntExist] == nil){
               NSLog(@"Ah well");
             }
-          <% end %>
+          ```
 
-          nil is the appropriate null object when dealing with pointers to Objective C classes; NULL, on the other
-          hand, is the appropriate null value to use when dealing with pointers to all other types.
+          nil is the appropriate null object when dealing with pointers to Objective C classes; NULL, on the other hand, is the appropriate null value to use when dealing with pointers to all other types.
+        notes: |
+          Of course, there is also the unfortunately necessary NSNull object, which pops up in cases where the framework needs to formally recognize a deserialized NULL value (see Property Lists, JSON, etc.). You can test if an object is an NSNull object by comparing it `[NSNull null]`.
     - "Classes":
       slides:
         - >
-          Classes in Objective C are similar to their C++ cousins in that they come in two parts: interface declaration
-          and implementation. The interface declaration portion of a class follows the form:
+          # Class interface declaration
 
-          <% code_listing("Class interface declaration", "objectivec") do %>
+          Classes in Objective C are similar to their C++ cousins in that they come in two parts: interface declaration and implementation. The interface declaration portion of a class follows the form:
+
+
+          ```objectivec
             #import <Foundation/Foundation.h>
             @interface MyNewClass : NSObject {
               int privateVariable1;
@@ -183,17 +269,20 @@ presentations:
             -(NSString *) giveMeAStringOfLength:(int)length
                               randomizeContents:(BOOL)randomize;
             @end
-          <% end %>
+          ```
         - >
+          # Class implementation
+
           The implementation of this class follows the form:
 
-          <% code_listing("Class implementation", "objectivec") do %>
+          ```objectivec
             #import "MyNewClass.h"
 
             @implementation MyNewClass
 
             -(id) init {
-              if(self = [super init]){
+              self = [super init];
+              if(self){
                 privateVariable1 = 20;
                 privateVariable2 = [[NSString alloc] initWithString:@"Test"];
               }
@@ -204,9 +293,11 @@ presentations:
               return 0;
             }
 
-          <% end %>
+          ```
         - >
-          <% code_listing("Class implementation pt. 2", "objectivec") do %>
+          # Class implementation pt. 2
+
+          ```objectivec
             -(void) doSomething {
               NSLog(@"Something");
             }
@@ -216,40 +307,103 @@ presentations:
               return @"TODO: Make work";
             }
 
-            -(void) dealloc {
-              [privateVariable2 release];
-              [super dealloc];
-            }
-
             @end
-          <% end %>
+          ```
     - "Memory management":
         slides:
           - >
-            Objective C's memory management model is a reference counting system
-            that you can think of as an integer counter assigned to each object.
-            Each object, when initialized, starts with a counter equal to 1.  When
-            this counter reaches 0, the cleanup functions (dealloc) on the object
-            are called and the memory for the object is released back to the system.
+            <% figure("Memory Management circa 1973") do %>
+              <%= graphic("1973.jpg", 0.5) %>
+            <% end %>
           - >
-            <% code_listing("Memory management in Objective C", "objectivec") do %>
-              // Retain count of 1
-              NSString * foo = [[NSString alloc] initWithString:@"Foo"];
-              [foo retain]; // Retain count of 2
-              NSLog(@"Foo is %@", foo);
-              [foo release]; // Retain count of 1
-              NSLog(@"Foo is still %@", foo);
-              [foo release]; // Retain count of 0,
-                             // foo is released back to the system
+            C based languages have traditionally used `malloc` and `free` as the means by which memory was allocated on demand. This code looked something like:
 
-              // This will crash the program (EXC_BAD_ACCESS)
-              NSLog(@"Foo crashes %@", foo);
+            ```c
+              #include <stdio.h>
+              #include <stdlib.h>
+
+              int main(){
+                int * anInteger = malloc(sizeof(int));
+                *anInteger = 10;
+                printf("Integer value is %i", *anInteger);
+                free(anInteger);
+                return 0;
+              }
+            ```
+          - >
+            `malloc` and `free` allocated memory on the heap; it was the programmer's responsibility to indicate when a particular item was ready to be released back to the operating system.
+          - >
+            <% figure("Memory Management circa 1983") do %>
+              <%= graphic("1983.jpg", 0.5) %>
             <% end %>
-            <% block("EXC BAD ACCESS ? What?") do %>
-              EXC BAD ACCESS is the error message your program will output when
-              it attempts to do something to a pointer to a memory location
-              whose contents have previously been released to the system.
+          - >
+            Objective C used an "easier" means of managing the memory for its objects: reference counting.
+
+            Reference counting allowed Objective C programmers to write code that looked like this:
+
+            ```objectivec
+              NSString * c = [[NSString alloc] initWithString:@"This is a string allocated on the heap"];
+              NSLog(@"String is %@", c);
+              [someOtherObject setString:c];
+              [c release];
+            ```
+          - >
+            Each object would respond to two methods: `retain` and `release`. Retain would increment an object's retain count, and release would decrement. When an object's retain count reached 0, it was considered "deallocated", and its memory on the heap would be available for use by other objects.
+          - >
+            Objects could also be flagged as `autorelease`, which would send a release to an object at some point in the future. Typically this meant after one main NSRunLoop cycle (one UI loop).
+          - >
+            <% figure("Memory Management circa 2006 - Apple adds Garbage Collection to Objective C") do %>
+              <%= graphic("2006.jpg", 0.5) %>
             <% end %>
+          - >
+            <% figure("Memory Management circa 2008 - The iOS SDK 2.0 and App Store launch. The iPhone does not support Garbage Collection due to performance concerns.") do %>
+              <%= graphic("2008.jpg", 0.5) %>
+            <% end %>
+          - >
+            <% figure("Memory Management circa 2011 - ARC") do %>
+              <%= graphic("2011.jpg", 0.5) %>
+            <% end %>
+          - >
+            Apple introduces a new tool called [ARC](http://en.wikipedia.org/wiki/Automatic_Reference_Counting) (_Automatic Reference Counting_). Improvements in static code analysis allow Apple to detect and automatically insert retain/release calls for most code.
+
+            In other words, _most of the basic memory management is now done for you_.
+          - >
+            What ARC _will do_ for you:
+
+            * Let you avoid calling `retain` or `release` on Objective C objects
+
+
+            What ARC __will not do__ for you:
+
+            * Prevent cyclic memory ownership
+
+            * Allow you to ignore `malloc` or `free` when using C-based apis
+
+            * Allow you to ignore memory management
+
+          - >
+            # Working With Arc Part 1
+
+            ```objectivec
+              NSString * s = [[NSString alloc] initWithString:@"Some string"];
+              NSLog(@"My string is %@", s);
+              // That's it.
+            ```
+          - >
+            # Working With Arc Part 2
+
+            ```objectivec
+              NSString * s = [[NSString alloc] initWithString:@"Some string"];
+              [someOtherObject setString:s];
+
+              // and in the someOtherObject's implementation
+
+              @interface SomeOtherObject
+
+              @property(strong,nonatomic) NSString * string;
+
+              @end
+            ```
           - >
             You can indicate you don't want to manage the release of an object by
             indicating an object should be autoreleased objects.  Autoreleased objects
@@ -258,7 +412,9 @@ presentations:
             release the object "at some unknown point in the future"* once all  retains on
             the object have been released.
           - >
-            <% code_listing("Memory management in Objective C", "objectivec") do %>
+            # Memory management in Objective C
+
+            ```objectivec
               // Indicate that the foo object should be managed by
               // the current NSAutoreleasePool
               NSString * foo = [[[NSString alloc]
@@ -274,28 +430,22 @@ presentations:
               [foo release];
               // Calling an 'unbalanced release' like this will cause a crash
               // at some unknown point in the future
-            <% end %>
+            ```
           - >
-            Different classes in Cocoa / Objective C have different rules about how they retain
-            objects.  The documentation is instructive in telling you what memory management
-            semantics you should expect from given functionality.
+            Different classes in Cocoa / Objective C have different rules about how they retain objects.  The documentation is instructive in telling you what memory management semantics you should expect from given functionality.
 
             <% block("Mac Programmers Have All The Luck") do %>
-              Should you be programming Mac OS applications as opposed to iOS applications,
-              you can take advantage of garbage collection memory management which has been
-              available since Mac OS Leopard (10.5); iOS programmers still have to manage their
+              Should you be programming Mac OS applications as opposed to iOS applications, you can take advantage of garbage collection memory management which has been available since Mac OS Leopard (10.5); iOS programmers still have to manage their
               memory themselves, however.
             <% end %>
     - "Properties":
         slides:
           - >
-            Much of the interaction with Objective C objects equates to the usual getter/setter
-            functionality commonly associated with Object Oriented Programming. To make it easier
-            for programmers to declare this functionality, properties were introduced as a way
-            to eschew all the boilerplate code and provide a common framework upon which to
-            enhance Objective C objects.
+            Much of the interaction with Objective C objects equates to the usual getter/setter functionality commonly associated with Object Oriented Programming. To make it easier for programmers to declare this functionality, properties were introduced as a way to eschew all the boilerplate code and provide a common framework upon which to enhance Objective C objects.
           - >
-            <% code_listing("Property interface declaration", "objectivec") do %>
+            # Property interface declaration
+
+            ```objectivec
               @interface MyObject : NSObject {
                 NSString * instanceVariable;
                 float numericVariable;
@@ -315,65 +465,59 @@ presentations:
               }
 
               @end
-
-            <% end %>
+            ```
           - >
-            <% code_listing("Property usage", "objectivec") do %>
+            # Property usage
+
+            ```objectivec
               MyObject * mo = [[MyObject alloc] init];
               [mo setInstanceVariable:@"Test"];
               [mo setNumericVariable:20.0f];
               NSLog(@"The values I set were %@ and %f",
                       [mo instanceVariable],
                       [mo numericVariable]);
-            <% end%>
+            ```
           - >
-            You can specify the memory management semantics (retain, assign, copy) in the property
-            declaration.  You can also specify the atomicity (locking behavior) of the property,
-            and more.
+            You can specify the memory management semantics (retain, assign, copy) in the property declaration.  You can also specify the atomicity (locking behavior) of the property, and more.
 
             <% block("More to it..") do %>
-              Properties do not merely provide getter/setter functionality.  The use of properties
-              also implicitly adds Key-Value-Observing functionality to your class, letting
-              you automatically monitor classes for change events and performing specific code
-              in such cases.  Read more at <%= url("http://developer.apple.com/mac/library/documentation/cocoa/conceptual/objectivec/articles/ocProperties.html") %>.
+              Properties do not merely provide getter/setter functionality.  The use of properties also implicitly adds Key-Value-Observing functionality to your class, letting you automatically monitor classes for change events and performing specific code in such cases.  Read more at <%= url("http://developer.apple.com/mac/library/documentation/cocoa/conceptual/objectivec/articles/ocProperties.html") %>.
             <% end %>
     - "Selectors":
         slides:
           - >
-            Selectors in Objective C are a way to provide a special type to indicate a message.
-            They allow you to dynamically send a message to an object, as well as to query
-            an object to see if it responds to a given message.
+            Selectors in Objective C are a way to provide a special type to indicate a message. They allow you to dynamically send a message to an object, as well as to query an object to see if it responds to a given message.
           - >
-            <% code_listing("Selector usage", "objectivec") do %>
+            # Selector usage
+
+            ```objectivec
               SEL aSelector = @selector(length);
               NSString * foo = @"Foo";
               if([foo respondsToSelector:aSelector]){
                 NSLog(@"The length of foo is %i",  [foo performSelector:aSelector]);
               }
-
-            <% end %>
+            ```
           - >
-            Selectors can be built from strings, and can refer to any Objective C message
-            that is forwarded to an object.
-            <% code_listing("Other selector usage", "objectivec") do %>
+            # Other selector usage
+
+            Selectors can be built from strings, and can refer to any Objective C message that is forwarded to an object.
+
+            ```objectivec
               NSString * aUserSuppliedString = MagicallyGetStringFromUserInput();
               SEL aSelector = NSSelectorFromString(aUserSuppliedString);
               if([someObject respondsToSelector:aSelector]){
                 // NOTE: Surely nothing bad will happen
                 [someObject performSelector:aSelector];
               }
-            <% end %>
+            ```
     - "Protocols":
         slides:
           - >
-            Objective C provides only single-inheritance for its objects; to
-            allow for situations where a class may provide functionality outside of its
-            inheritance chain, the language provides Protocols, which are roughly analogous
-            to interfaces in Java and C\#.  There are informal protocols (only referred to in
-            documentation) and formal protocols, which are compiler checked.  The majority of
-            protocol usage in iOS programming is formal protocols.
+            Objective C provides only single-inheritance for its objects; to allow for situations where a class may provide functionality outside of its inheritance chain, the language provides Protocols, which are roughly analogous to interfaces in Java and C\#.  There are informal protocols (only referred to in documentation) and formal protocols, which are compiler checked.  The majority of protocol usage in iOS programming is formal protocols.
           - >
-            <% code_listing("Protocol declaration", "objectivec") do %>
+            # Protocol declaration
+
+            ```objectivec
               @protocol TestProtocol
 
               -(void) definitelyHasThisMethod;
@@ -383,16 +527,17 @@ presentations:
               -(void) mayHaveThisMethod;
 
               @end
-            <% end %>
-            <% code_listing("Protocol conformance", "objectivec") do %>
-            @interface SomeObject : NSObject<TestProtocol> {
 
-            }
+              @interface SomeObject : NSObject<TestProtocol> {
 
-            @end
-            <% end %>
+              }
+
+              @end
+            ```
           - >
-            <% code_listing("Protocol usage", "objectivec") do %>
+            # Protocol usage
+
+            ```objectivec
               SomeObject<TestProtocol> * oo = [[SomeObject alloc] init];
 
               // We assume this because the object conforms to TestProtocol
@@ -401,23 +546,19 @@ presentations:
               if([oo respondsToSelector:@selector(mayHaveThisMethod)]){
                 [oo mayHaveThisMethod];
               }
-            <% end %>
+            ```
     - "Categories":
         slides:
           - >
-            Categories allow you to mix in new code to existing classes without
-            having to change the original source code for those classes.  Examples
-            of categories include automatically adding special serialization rules
-            to NSObject, or special data structure Queue behavior to Cocoa collection
-            classes.
+            Categories allow you to mix in new code to existing classes without having to change the original source code for those classes.  Examples of categories include automatically adding special serialization rules to NSObject, or special data structure Queue behavior to Cocoa collection classes.
 
             <% alertblock("Except for..") do %>
-              You can't add instance variables to a class with categories; they are
-              purely for adding new methods to a class, but cannot change the memory
-              layout of a class after the fact.
+              You can't add instance variables to a class with categories; they are purely for adding new methods to a class, but cannot change the memory layout of a class after the fact.
             <% end %>
           - >
-            <% code_listing("Category declaration", "objectivec") do %>
+            # Category declaration
+
+            ```objectivec
               @interface NSString(FunkyStrings)
 
               -(NSString *) getFunky;
@@ -431,27 +572,27 @@ presentations:
               }
 
               @end
-            <% end %>
+            ```
           - >
-            <% code_listing("Category usage", "objectivec") do %>
+            # Category usage
+
+            ```objectivec
             #import "NSString+FunkyStrings.h"
 
             void main(){
               NSLog(@"The funkiest string by far is %@", [@"James Brown" getFunky]);
             }
-            <% end %>
+            ```
     - "Review common useful classes in Objective C / Cocoa to accomplish certain tasks":
         slides:
           - >
-            There are a host of useful classes in the Cocoa Touch framework that provide
-            special functionality to you.  Some of the more common objects you'll use
-            in your programming are NSArray, NSDictionary, NSNumber and NSString.  Each of these objects
-            have mutable versions that allow you to modify them after instantiation.
+            There are a host of useful classes in the Cocoa Touch framework that provide special functionality to you.  Some of the more common objects you'll use in your programming are NSArray, NSDictionary, NSNumber and NSString.  Each of these objects have mutable versions that allow you to modify them after instantiation.
           - >
-            NSString is an enhanced, unicode aware string class that goes far beyond the
-            simple byte-array behavior of C's byte-array strings.
+            # NSString usage
 
-            <% code_listing("NSString usage", "objectivec") do %>
+            NSString is an enhanced, unicode aware string class that goes far beyond the simple byte-array behavior of C's byte-array strings.
+
+            ```objectivec
               NSString * s = [[NSString alloc] initWithCString:"this is an ascii string"
                                                encoding:NSASCIIStringEncoding];
               NSMutableString * so = [[NSMutableString alloc]
@@ -463,24 +604,24 @@ presentations:
 
               [so release];
               [s release];
-            <% end %>
+            ```
           - >
-            NSNumber is a simple abstract wrapper around numeric values which allows you to
-            automatically convert its held value to the appropriate form, as well as having
-            an object-like representations of a numeric value.
+            # NSNumber usage
 
-            <% code_listing("NSNumber usage", "objectivec") do %>
+            NSNumber is a simple abstract wrapper around numeric values which allows you to automatically convert its held value to the appropriate form, as well as having an object-like representations of a numeric value.
+
+            ```objectivec
               NSNumber * n = [[NSNumber alloc] initWithFloat:20.0f];
               double d = [n doubleValue];
               int i = [n intValue];
               [n release];
-            <% end %>
+            ```
           - >
-            NSDictionary is a generic dictionary object that you can use to hold key/value associations.
-            A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your
-            keys will be either NSString or NSNumber objects.
+            NSDictionary is a generic dictionary object that you can use to hold key/value associations. A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your keys will be either NSString or NSNumber objects.
           - >
-            <% code_listing("NSDictionary usage", "objectivec") do %>
+            # NSDictionary usage
+
+            ```objectivec
               NSDictionary * a = [[NSDictionary alloc] initWithObjectsAndKeys:
                                                     @"The foo string", @"Foo",
                                                     @"The bar string", @"Bar",
@@ -499,13 +640,13 @@ presentations:
 
               [b release];
               [a release];
-            <% end %>
+            ```
           - >
-            NSArray is a simple way to collect NSObject inheriting classes into a sequential
-            list.  NSArray automatically retains each object added to it, and releases each object
-            it holds once its own retain count has reached 0.
+            # NSArray usage
 
-            <% code_listing("NSArray usage", "objectivec") do %>
+            NSArray is a simple way to collect NSObject inheriting classes into a sequential list.  NSArray automatically retains each object added to it, and releases each object it holds once its own retain count has reached 0.
+
+            ```objectivec
               NSArray * a = [[NSArray alloc] initWithObjects:@"Foo", @"bar", @"baz", nil];
               NSMutableArray * b = [[NSMutableArray alloc] init];
               [b addObject:@"Not foo"];
@@ -517,31 +658,27 @@ presentations:
 
               [a release];
               [b release];
-            <% end %>
+            ```
           - >
-            NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of
-            a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full
-            of the property list contents by using the initialization method <%= highlight("initWithContentsOfFile:") %>
+            NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full of the property list contents by using the initialization method `initWithContentsOfFile:`
           - >
+            # Property List Deserialization
+
             <% figure("Sample Property List") do %>
               <%= graphic("PListExample1.png", 0.5) %>
             <% end %>
 
-            <% code_listing("Property List Deserialization", "objectivec") do %>
+            ```objectivec
               NSDictionary * example = [[NSDictionary alloc]
                                            initWithContentsOfFile:@"/path/to/sample.plist"];
               NSLog(@"The subarray contents are %@",
                          [example objectForKey:"A subarray of values"]);
               [example release];
-            <% end %>
+            ```
     - "More learning":
         slides:
           - >
-            Objective C is a rich, deep language.  There are lots of resources on the web and your computer where you can learn more.
-            The best is easily the XCode documentation, but there are blogs out there that can provide invaluable help: Mike Ash's
-            NSBlog <%= url("http://www.mikeash.com/pyblog/") %>,  Cocoa With Love <%= url("http://cocoawithlove.com/") %>,
-            and the Apple Developer Forums <%= url("http://developer.apple.com/devforums/") %> can all provide invaluable help
-            in learning new techniques and advanced usage for your apps.
+            Objective C is a rich, deep language.  There are lots of resources on the web and your computer where you can learn more. The best is easily the XCode documentation, but there are blogs out there that can provide invaluable help: Mike Ash's [NSBlog](http://www.mikeash.com/pyblog/),  [Cocoa With Love](http://cocoawithlove.com/) , and the [Apple Developer Forums](http://developer.apple.com/devforums/) can all provide invaluable help in learning new techniques and advanced usage for your apps.
   - "iPhone App Layout Conventions":
     - "MVC, as applied to an app":
         slides:
@@ -550,8 +687,7 @@ presentations:
     - "Application -> Window -> View Controller(s) -> View(s) + Models":
         slides:
           - >
-            On iOS, a UIApplication ( your app ) typically has one UIWindow, which is the primary
-            UIView upon which everything else displays.  A UIView is just a rectangle upon which you draw things.
+            On iOS, a UIApplication ( your app ) typically has one UIWindow, which is the primary UIView upon which everything else displays.  A UIView is just a rectangle upon which you draw things.
           - >
             Almost everything visual is a UIView (except the things that aren't).
           - >
@@ -563,8 +699,7 @@ presentations:
               <%= graphic("UIViewExample2.pdf", 0.35) %>
             <% end %>
           - >
-            UIViewControllers are objects that manage what the views on screen are currently doing; typically
-            where you write event handling code and user interaction code.
+            UIViewControllers are objects that manage what the views on screen are currently doing; typically where you write event handling code and user interaction code.
           - >
             You provide the model
     - "UINavigationController":
@@ -578,12 +713,14 @@ presentations:
           - >
             Every UIViewController managed by a UINavigationController has a reference to that UINavigationController
           - >
-            <% code_listing("Adding another UIViewController to the UINavigationController stack", "objectivec") do %>
+            # Adding another UIViewController to the UINavigationController stack
+
+            ```objectivec
               MyViewController * controller = [[MyViewController alloc] initWithNibName:nil
                                                                         bundle:nil];
               [[self navigationController] pushViewController:controller animated:YES];
               [controller release];
-            <% end %>
+            ```
     - "Lab 2":
         slides:
           - >
@@ -605,11 +742,9 @@ presentations:
               <%= graphic("UIViewExample4.pdf", 0.30) %>
             <% end %>
           - >
-            UITableViewController instructs a UITableView about the number of rows it contains, what to do when
-            clicked, the number of sections, and other information
+            UITableViewController instructs a UITableView about the number of rows it contains, what to do when clicked, the number of sections, and other information
           - >
-            UITableViewController is just a convenience class that saves you from manually conforming an object
-            to the UITableViewDataSource and UITableViewDelegate protocols
+            UITableViewController is just a convenience class that saves you from manually conforming an object to the UITableViewDataSource and UITableViewDelegate protocols
           - >
             <% figure("UITableView example") do %>
               <%= graphic("UIViewExample5.pdf", 0.30) %>
@@ -635,9 +770,11 @@ presentations:
             <%= graphic("UIViewExample7.pdf", 0.35) %>
           <% end %>
         - >
-          You can present a view controller modally by using the presentModalViewController:animated: message
+          # Presenting a view controller modally
 
-          <% code_listing("Presenting a view controller modally", "objectivec") do %>
+          You can present a view controller modally by using the `presentModalViewController:animated:` message
+
+          ```objectivec
             -(IBAction) buttonClicked:(id) sender {
               MyViewController * mvc = [[MyViewController alloc]
                                              initWithNibName:@"TheNib"
@@ -645,43 +782,31 @@ presentations:
               [self presentModalViewController:mvc animated:YES];
               [mvc release];
             }
-          <% end %>
+          ```
         - >
-          You can specify the transition style with which the view controller appears via the UIViewController message
-          <% code_block("objectivec") do %>
-            setModalTransitionStyle:(UIModalTransitionStyle)style
-          <% end %>
+          You can specify the transition style with which the view controller appears via the UIViewController message `setModalTransitionStyle:(UIModalTransitionStyle)style`
   - "XCode and Interface Builder":
     - "Capabilities":
         slides:
           - >
-            XCode and Interface Builder combined provide a development, debugging and interface development tool for you to
-            develop your iPhone apps.  It can integrate with SVN, CVS or Perforce ( and soon, Git! ), it can run automated
-            tests on your code, provide inline documentation assist, code completion and a lot more. It also provides a developer
-            level interface to all the devices you will be debugging your code on; you can manage devices and device profiles
-            through XCode as necessary.
+            XCode and Interface Builder combined provide a development, debugging and interface development tool for you to develop your iPhone apps.  It can integrate with SVN, CVS or Perforce ( and soon, Git! ), it can run automated tests on your code, provide inline documentation assist, code completion and a lot more. It also provides a developer level interface to all the devices you will be debugging your code on; you can manage devices and device profiles through XCode as necessary.
     - "Creating an app":
         slides:
           - >
-            XCode provides a number of application templates for starting an app.  Most basic types of applications can get
-            a fast start by using one of these app templates.
+            XCode provides a number of application templates for starting an app.  Most basic types of applications can get a fast start by using one of these app templates.
             <% figure("XCode New Project window") do %>
               <%= graphic("ProjectCreator.png", 0.35) %>
             <% end %>
           - >
-            Once you've selected the type of app you want to create, your project will be created with an application delegate
-            and usually at least one view controller that will manage what goes on the screen.  It will also have a .xib file
-            for your application, and for each view controller in the app, that is used by Interface Builder to layout the screen contents.
+            Once you've selected the type of app you want to create, your project will be created with an application delegate and usually at least one view controller that will manage what goes on the screen.  It will also have a .xib file for your application, and for each view controller in the app, that is used by Interface Builder to layout the screen contents.
             <% figure("New Project File List") do %>
               <%= graphic("ProjectFileList.png", 0.75) %>
             <% end %>
             <% block("The application delegate - UIApplicationDelegate") do %>
-              The application delegate ( UIApplicationDelegate protocol ) is the class which will respond to overall application lifecycle events,
-              like when your application has started, resumed from suspension, or is about to shut down.
+              The application delegate ( UIApplicationDelegate protocol ) is the class which will respond to overall application lifecycle events, like when your application has started, resumed from suspension, or is about to shut down.
             <% end %>
           - >
-            Double clicking on a .xib file will open it in Interface Builder, where you can drag components from the Interface Builder
-            toolbox into the view.  You can easily change the orientation of objects.
+            Double clicking on a .xib file will open it in Interface Builder, where you can drag components from the Interface Builder toolbox into the view.  You can easily change the orientation of objects.
     - "Documentation usage":
         slides:
           - >
