@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+CFLAGS="-I."
+EXIT_STATUS=0
+function build_files {
+  local retval=0
+  local binfile
+  local cmd
+  local exit
+  local status
+  for f in *.${1}
+  do
+    binfile=$(basename -s .${1} ${f})
+    cmd="gcc ${2} -o ${binfile} ${f}"
+    $(${cmd})
+    exit=$?
+    status="OK"
+    if [ $exit -ne 0 ]; then
+      status="FAIL(${exit})"
+      retval=$exit
+    fi
+    echo "BUILD ${cmd}: ${status}"
+    ./${binfile} &> /dev/null
+    exit=$?
+    if [ $exit -ne 0 ]; then
+      status="FAIL(${exit})"
+      retval=$exit
+    fi
+    echo "RUN ${binfile}: ${status}"
+  done
+  if [ $retval -ne 0 ]; then
+    exit $retval
+  fi
+}
+
+build_files "c" "-I. -std=c99"
+build_files "m" "-I. -std=c99 -framework Foundation -lobjc"

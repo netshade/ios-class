@@ -18,3 +18,7 @@ slides/*/*.png
 slides/*/*.jpg
 slides/*/*.sty
 slides/*/*.tex
+code/*
+!code/*.c
+!code/*.m
+!code/build
