@@ -136,15 +136,18 @@ presentations:
             # C Language Elements - Arrays and Pointers
 
             ```c
+              #include <stddef.h>
+
               // a constant byte array
               char * constantCharArray = "Or in other words, a string";
 
               // C99 style array instantiation
               int aListOfNumbers[5] = { 1, 2, 3, 4, 5 };
-              int aListOfNumbers[] = { 1, 2, 3, 4, 5};
+              int aListOfNumbers2[] = { 1, 2, 3, 4, 5};
 
               // C99 Variable length array declaration
-              float aListOfFloats[someQualifier];
+              int someLength = 5;
+              float aListOfFloats[someLength];
 
               // pointer declaration to NULL
               int * someIntegerPtr = NULL;
@@ -183,9 +186,9 @@ presentations:
               #define IS_ZERO(n) (n == 0)
 
               int main(){
-                printf("FOO is %i", FOO);
+                printf("FOO is %i\n", FOO);
                 if(IS_ZERO(0)) {
-                  printf("This code is very useful.")
+                  printf("This code is very useful.\n");
                 }
               }
             ```
@@ -215,26 +218,25 @@ presentations:
             }
           ```
     - "Calling functions":
-        slides: >
-          Given some Objective C object, like:
+        slides:
+          - >
+            Given some Objective C object, like:
 
-          ```objectivec
-            NSString * anObject = @"TheObject";
-          ```
+            ```objectivec
+              NSString * anObject = @"TheObject";
+            ```
 
-          you can invoke functionality on that object via the form:
+            you can invoke functionality on that object via the form:
 
-          ```objectivec
-           [anObject theMethodName];
-          ```
+            ```objectivec
+             [anObject theMethodName];
+            ```
 
-          Method names in Objective C follow the form `initialMethodNameAndArgument:theSecondArgument:theThirdArgument:` .
+            Method names in Objective C follow the form `initialMethodNameAndArgument:theSecondArgument:theThirdArgument:` .
+          - >
+            # Method calling behavior
 
-          \begin{block}{Messages vs. Methods}
-          When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to consider these synonymous with "dispatching a message".
-
-          Objective C objects respond to **messages**, and as you work more with Objective C, it will be more beneficial for you to perceive this as such.
-          \end{block}
+            When you see references to "calling a method" or "calling a function" on an object in Objective C, it's best to consider these synonymous with "dispatching a message". Objective C objects respond to __messages__, and as you work more with Objective C, it will be more beneficial for you to perceive this as such.
     - "nil, NULL":
         slides: >
           An object in Objective C may be nil; nil is a "special" object which may have any message at all sent to it, to which it will respond with a nil object.
@@ -249,6 +251,109 @@ presentations:
           nil is the appropriate null object when dealing with pointers to Objective C classes; NULL, on the other hand, is the appropriate null value to use when dealing with pointers to all other types.
         notes: |
           Of course, there is also the unfortunately necessary NSNull object, which pops up in cases where the framework needs to formally recognize a deserialized NULL value (see Property Lists, JSON, etc.). You can test if an object is an NSNull object by comparing it `[NSNull null]`.
+    - "Basic Types":
+      slides:
+        - >
+          There are a host of useful classes in the Cocoa Touch framework that provide special functionality to you.  Some of the more common objects you'll use in your programming are NSArray, NSDictionary, NSNumber and NSString.  Each of these objects have mutable versions that allow you to modify them after instantiation.
+        - >
+          # The id type
+
+          The special type `id` refers to any valid NSObject or its subclass. You can use the `id` type when you're not sure what sort of object you may be given.
+        - >
+          # NSString usage
+
+          NSString is an enhanced, unicode aware string class that goes far beyond the simple byte-array behavior of C's byte-array strings.
+
+          ```objectivec
+            NSString * s = @"This is an NSString";
+            NSMutableString * so = [[NSMutableString alloc]
+                                            initWithString:@"This is a mutable string"];
+
+            [so appendString:s];
+
+            NSLog(@"The mutable string is %@", so);
+          ```
+        - >
+          # NSNumber usage
+
+          NSNumber is a simple abstract wrapper around numeric values which allows you to automatically convert its held value to the appropriate form, as well as having an object-like representations of a numeric value.
+
+          ```objectivec
+            NSNumber * n = @(20.0f);
+            double d = [n doubleValue];
+            int i = [n intValue];
+            NSNumber * b = @(YES);
+            NSLog(@"Number is %@, double value is %f, int value is %i", n, d, i);
+            NSLog(@"Boolean number is %@, bool value is %i", b, [b boolValue]);
+          ```
+        - >
+          NSDictionary is a generic dictionary object that you can use to hold key/value associations. A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your keys will be either NSString or NSNumber objects.
+        - >
+          # NSDictionary usage
+
+          ```objectivec
+            NSDictionary * a = @{
+              @"Foo": @"The Foo string",
+              @"Bar": @"The Bar string"
+            };
+
+            NSMutableDictionary * b = [[NSMutableDictionary alloc] init];
+            [b setObject:@"Another string" forKey:@(20)];
+
+            NSLog(@"a's value for Foo is %@, and b's value for 20 is %@",
+                                      [a objectForKey:@"Foo"],
+                                      [b objectForKey:@(20)]);
+
+            for(id key in a){
+              NSLog(@"The value for %@ is %@", key, [a objectForKey:key]);
+            }
+          ```
+        - >
+          # NSArray usage
+
+          NSArray is a simple way to collect NSObject inheriting classes into a sequential list.  NSArray automatically retains each object added to it, and releases each object it holds once its own retain count has reached 0.
+
+          ```objectivec
+            NSArray * a = @[@"Foo", @"bar", @"baz"];
+            NSMutableArray * b = [[NSMutableArray alloc] init];
+            [b addObject:@"Not foo"];
+            NSLog(@"The contents of a are %@ and b are %@", a, b);
+
+            for(id obj in a){
+              NSLog(@"The array contains %@", obj);
+            }
+          ```
+        - >
+          NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full of the property list contents by using the initialization method `initWithContentsOfFile:`
+        - >
+          # Property List Deserialization
+
+          <% figure("Sample Property List") do %>
+            <%= graphic("PListExample1.png", 0.5) %>
+          <% end %>
+
+          ```objectivec
+            NSDictionary * example = [[NSDictionary alloc]
+                                         initWithContentsOfFile:@"/path/to/sample.plist"];
+            NSLog(@"The subarray contents are %@",
+                       [example objectForKey:"A subarray of values"]);
+          ```
+        - >
+          Apple also provides JSON serialize/deserialize capability in the `NSJSONSerialization` class. This class can decode NSString, NSNumber, NSArray and NSDictionary values much like property lists.
+
+          ```objectivec
+            NSDictionary * dict = @{ @"foo": @"bar" };
+            NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                                options:0
+                                                                  error:nil];
+            if([jsonData writeToFile:@"./test.json" atomically:YES]){
+              NSData * inputJsonData = [NSData dataWithContentsOfFile:@"./test.json"];
+              id jsonDict = [NSJSONSerialization JSONObjectWithData:inputJsonData
+                                                              options:0
+                                                                error:&error];
+              NSLog(@"Foo's value is %@", [jsonDict objectForKey:@"foo"]);
+            }
+          ```
     - "Classes":
       slides:
         - >
@@ -309,6 +414,168 @@ presentations:
 
             @end
           ```
+    - "Properties":
+        slides:
+          - >
+            Much of the interaction with Objective C objects equates to the usual getter/setter functionality commonly associated with Object Oriented Programming. To make it easier for programmers to declare this functionality, properties were introduced as a way to eschew all the boilerplate code and provide a common framework upon which to enhance Objective C objects.
+          - >
+            # Property interface declaration
+
+            ```objectivec
+              @interface MyObject : NSObject {
+
+              }
+              @property(strong) NSString * instanceVariable;
+              @property float numericVariable;
+              @end
+
+              @implementation MyObject
+
+              @end
+            ```
+          - >
+            # Property usage
+
+            ```objectivec
+              MyObject * mo = [[MyObject alloc] init];
+
+              // Bracket Syntax
+              [mo setInstanceVariable:@"Test"];
+              [mo setNumericVariable:20.0f];
+              NSLog(@"The values I set were %@ and %f",
+                      [mo instanceVariable],
+                      [mo numericVariable]);
+
+              // Dot Syntax
+              mo.instanceVariable = @"Test 2";
+              mo.numericVariable = 25.0f;
+              NSLog(@"The values I set were %@ and %f",
+                      mo.instanceVariable,
+                      mo.numericVariable);
+            ```
+          - >
+            You can specify the memory management semantics (strong, weak, copy), atomicity (locking behavior), and access level in the property declaration. You can also specify your own implementation of the getter and setter methods.
+
+            ```objectivec
+              @property(readonly) NSString * privateName;
+              @property(weak, nonatomic, setter=myAgeSetter:) NSNumber * age;
+            ```
+          - >
+            # Key Value Observing
+
+            Properties do not merely provide getter/setter functionality.  The use of properties also implicitly adds Key-Value-Observing functionality to your class, letting you automatically monitor classes for change events and performing specific code in such cases.  Read more in the [SDK Documentation on properties](https://developer.apple.com/library/mac/documentation/cocoa/conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html) and [Key Value Observing](https://developer.apple.com/library/mac/documentation/cocoa/conceptual/KeyValueCoding/Articles/KeyValueCoding.html#//apple_ref/doc/uid/10000107i).
+    - "Selectors":
+        slides:
+          - >
+            Selectors in Objective C are a way to indicate a message as a variable. They allow you to dynamically send a message to an object, as well as to query an object to see if it responds to a given message.
+          - >
+            # Selector usage
+
+            ```objectivec
+              SEL aSelector = @selector(length);
+              NSString * foo = @"Foo";
+              if([foo respondsToSelector:aSelector]){
+                NSLog(@"The length of foo is %i",  [foo performSelector:aSelector]);
+              }
+            ```
+          - >
+            # Other selector usage
+
+            Selectors can be built from strings, and can refer to any Objective C message that is forwarded to an object.
+
+            ```objectivec
+              NSString * anAllCapsString = @"THIS STRING SHOULD BE LOWERCASE";
+              NSString * theMessageToSend = @"lowercaseString";
+              SEL aSelector = NSSelectorFromString(theMessageToSend);
+              if([anAllCapsString respondsToSelector:aSelector]){
+                NSLog(@"All caps string (%@) converted: %@",
+                            anAllCapsString,
+                            [anAllCapsString performSelector:aSelector]);
+              }
+            ```
+    - "Protocols":
+        slides:
+          - >
+            Objective C provides only single-inheritance for its objects; to allow for situations where a class may provide functionality outside of its inheritance chain, the language provides Protocols, which are roughly analogous to interfaces in Java and C#.  There are informal protocols (only referred to in documentation) and formal protocols, which are compiler checked.  The majority of protocol usage in iOS programming is formal protocols.
+          - >
+            # Protocol declaration
+
+            ```objectivec
+              @protocol CameraDevice
+
+              -(NSString *) manufacturerName;
+
+              @optional
+
+              -(int) flashStrength;
+
+              @end
+
+              @interface AnExpensiveCanonCamera : NSObject<CameraDevice>
+              @end
+
+              @interface TheCheapestCameraEver : NSObject<CameraDevice>
+              @end
+            ```
+          - >
+            # Protocol usage
+
+            ```objectivec
+              NSArray * cameras = @[
+                [[AnExpensiveCanonCamera alloc] init],
+                [[TheCheapestCameraEver alloc] init]
+              ];
+              for(NSObject<CameraDevice> * camera in cameras){
+                if([camera respondsToSelector:@selector(flashStrength)]){
+                  NSLog(@"%@ camera has flash strength %i",
+                                [camera manufacturerName],
+                                [camera flashStrength]);
+                } else {
+                  NSLog(@"%@ camera has no flash", [camera manufacturerName]);
+                }
+              }
+            ```
+    - "Categories":
+        slides:
+          - >
+            Categories allow you to mix in new code to existing classes without having to change the original source code for those classes.  Examples of categories include automatically adding special serialization rules to NSObject.
+          - >
+            You "can't" add instance variables to a class with categories; they are purely for adding new methods to a class, but cannot change the memory layout of a class after the fact.
+          - >
+            # Category declaration
+
+            ```objectivec
+              @interface NSDictionary(AsJson)
+
+              -(NSString *) asJson;
+
+              @end
+
+              @implementation NSDictionary(AsJson)
+
+              -(NSString *) asJson {
+                  NSData * jsonData = [NSJSONSerialization dataWithJSONObject:self
+                                                                      options:0
+                                                                        error:nil];
+                  return [[NSString alloc] initWithData:jsonData
+                                               encoding:NSUTF8StringEncoding];
+              }
+
+              @end
+            ```
+          - >
+            # Category usage
+
+            ```objectivec
+              #import "NSDictionary+AsJson.h"
+
+              void main(){
+                NSLog(@"Dictionary as json: %@",
+                            [@{ @"A string": @"String!",
+                                @"A number": @(20),
+                                @"An Array": @[@(1), @(2), @(3)]} asJson]);
+              }
+            ```
     - "Memory management":
         slides:
           - >
@@ -342,7 +609,7 @@ presentations:
             Reference counting allowed Objective C programmers to write code that looked like this:
 
             ```objectivec
-              NSString * c = [[NSString alloc] initWithString:@"This is a string allocated on the heap"];
+              NSString * c = [[NSString alloc] initWithString:@"This is a string"];
               NSLog(@"String is %@", c);
               [someOtherObject setString:c];
               [c release];
@@ -379,10 +646,10 @@ presentations:
 
             * Allow you to ignore `malloc` or `free` when using C-based apis
 
-            * Allow you to ignore memory management
+            * Allow you to totally ignore memory management
 
           - >
-            # Working With Arc Part 1
+            # Working With Arc
 
             ```objectivec
               NSString * s = [[NSString alloc] initWithString:@"Some string"];
@@ -390,7 +657,7 @@ presentations:
               // That's it.
             ```
           - >
-            # Working With Arc Part 2
+            # Working With Arc
 
             ```objectivec
               NSString * s = [[NSString alloc] initWithString:@"Some string"];
@@ -405,280 +672,22 @@ presentations:
               @end
             ```
           - >
-            You can indicate you don't want to manage the release of an object by
-            indicating an object should be autoreleased objects.  Autoreleased objects
-            are managed by an object called an NSAutoreleasePool, and are intermittently
-            checked to see how many references have been claimed on them.  The pool will
-            release the object "at some unknown point in the future"* once all  retains on
-            the object have been released.
-          - >
-            # Memory management in Objective C
+            # Working With Arc
 
-            ```objectivec
-              // Indicate that the foo object should be managed by
-              // the current NSAutoreleasePool
-              NSString * foo = [[[NSString alloc]
-                                           initWithString:@"Foo"]
-                                             autorelease];
-              NSLog(@"Foo will be good for now %@", foo);
-
-              [foo retain];
-              [foo release];
-              NSLog(@"Foo is still good, %@", foo);
-              // You may retain and release on an autoreleased object as normal
-
-              [foo release];
-              // Calling an 'unbalanced release' like this will cause a crash
-              // at some unknown point in the future
-            ```
-          - >
-            Different classes in Cocoa / Objective C have different rules about how they retain objects.  The documentation is instructive in telling you what memory management semantics you should expect from given functionality.
-
-            <% block("Mac Programmers Have All The Luck") do %>
-              Should you be programming Mac OS applications as opposed to iOS applications, you can take advantage of garbage collection memory management which has been available since Mac OS Leopard (10.5); iOS programmers still have to manage their
-              memory themselves, however.
-            <% end %>
-    - "Properties":
-        slides:
-          - >
-            Much of the interaction with Objective C objects equates to the usual getter/setter functionality commonly associated with Object Oriented Programming. To make it easier for programmers to declare this functionality, properties were introduced as a way to eschew all the boilerplate code and provide a common framework upon which to enhance Objective C objects.
-          - >
-            # Property interface declaration
-
-            ```objectivec
-              @interface MyObject : NSObject {
-                NSString * instanceVariable;
-                float numericVariable;
-              }
-              @property(readwrite, retain) NSString * instanceVariable;
-              @property(readonly, assign) float numericVariable;
-              @end
-
-              @implementation MyObject
-
-              @synthesize instanceVariable;
-              @synthesize numericVariable;
-
-              -(void) dealloc {
-                [instanceVariable release];
-                [super dealloc];
-              }
-
-              @end
-            ```
-          - >
-            # Property usage
-
-            ```objectivec
-              MyObject * mo = [[MyObject alloc] init];
-              [mo setInstanceVariable:@"Test"];
-              [mo setNumericVariable:20.0f];
-              NSLog(@"The values I set were %@ and %f",
-                      [mo instanceVariable],
-                      [mo numericVariable]);
-            ```
-          - >
-            You can specify the memory management semantics (retain, assign, copy) in the property declaration.  You can also specify the atomicity (locking behavior) of the property, and more.
-
-            <% block("More to it..") do %>
-              Properties do not merely provide getter/setter functionality.  The use of properties also implicitly adds Key-Value-Observing functionality to your class, letting you automatically monitor classes for change events and performing specific code in such cases.  Read more at <%= url("http://developer.apple.com/mac/library/documentation/cocoa/conceptual/objectivec/articles/ocProperties.html") %>.
-            <% end %>
-    - "Selectors":
-        slides:
-          - >
-            Selectors in Objective C are a way to provide a special type to indicate a message. They allow you to dynamically send a message to an object, as well as to query an object to see if it responds to a given message.
-          - >
-            # Selector usage
-
-            ```objectivec
-              SEL aSelector = @selector(length);
-              NSString * foo = @"Foo";
-              if([foo respondsToSelector:aSelector]){
-                NSLog(@"The length of foo is %i",  [foo performSelector:aSelector]);
-              }
-            ```
-          - >
-            # Other selector usage
-
-            Selectors can be built from strings, and can refer to any Objective C message that is forwarded to an object.
-
-            ```objectivec
-              NSString * aUserSuppliedString = MagicallyGetStringFromUserInput();
-              SEL aSelector = NSSelectorFromString(aUserSuppliedString);
-              if([someObject respondsToSelector:aSelector]){
-                // NOTE: Surely nothing bad will happen
-                [someObject performSelector:aSelector];
-              }
-            ```
-    - "Protocols":
-        slides:
-          - >
-            Objective C provides only single-inheritance for its objects; to allow for situations where a class may provide functionality outside of its inheritance chain, the language provides Protocols, which are roughly analogous to interfaces in Java and C\#.  There are informal protocols (only referred to in documentation) and formal protocols, which are compiler checked.  The majority of protocol usage in iOS programming is formal protocols.
-          - >
-            # Protocol declaration
-
-            ```objectivec
-              @protocol TestProtocol
-
-              -(void) definitelyHasThisMethod;
-
-              @optional
-
-              -(void) mayHaveThisMethod;
-
-              @end
-
-              @interface SomeObject : NSObject<TestProtocol> {
-
-              }
-
-              @end
-            ```
-          - >
-            # Protocol usage
-
-            ```objectivec
-              SomeObject<TestProtocol> * oo = [[SomeObject alloc] init];
-
-              // We assume this because the object conforms to TestProtocol
-              [oo definitelyHasThisMethod];
-
-              if([oo respondsToSelector:@selector(mayHaveThisMethod)]){
-                [oo mayHaveThisMethod];
-              }
-            ```
-    - "Categories":
-        slides:
-          - >
-            Categories allow you to mix in new code to existing classes without having to change the original source code for those classes.  Examples of categories include automatically adding special serialization rules to NSObject, or special data structure Queue behavior to Cocoa collection classes.
-
-            <% alertblock("Except for..") do %>
-              You can't add instance variables to a class with categories; they are purely for adding new methods to a class, but cannot change the memory layout of a class after the fact.
-            <% end %>
-          - >
-            # Category declaration
-
-            ```objectivec
-              @interface NSString(FunkyStrings)
-
-              -(NSString *) getFunky;
-
-              @end
-
-              @implementation NSString(FunkyStrings)
-
-              -(NSString *) getFunky {
-                return [self stringByAppendingString:@"...YEAH! ALL RIGHT! FEELS GOOD!"];
-              }
-
-              @end
-            ```
-          - >
-            # Category usage
-
-            ```objectivec
-            #import "NSString+FunkyStrings.h"
-
-            void main(){
-              NSLog(@"The funkiest string by far is %@", [@"James Brown" getFunky]);
-            }
-            ```
-    - "Review common useful classes in Objective C / Cocoa to accomplish certain tasks":
-        slides:
-          - >
-            There are a host of useful classes in the Cocoa Touch framework that provide special functionality to you.  Some of the more common objects you'll use in your programming are NSArray, NSDictionary, NSNumber and NSString.  Each of these objects have mutable versions that allow you to modify them after instantiation.
-          - >
-            # NSString usage
-
-            NSString is an enhanced, unicode aware string class that goes far beyond the simple byte-array behavior of C's byte-array strings.
-
-            ```objectivec
-              NSString * s = [[NSString alloc] initWithCString:"this is an ascii string"
-                                               encoding:NSASCIIStringEncoding];
-              NSMutableString * so = [[NSMutableString alloc]
-                                              initWithString:@"A mutable string with..."];
-
-              [so appendString:s];
-
-              NSLog(@"The mutable string is %@", so);
-
-              [so release];
-              [s release];
-            ```
-          - >
-            # NSNumber usage
-
-            NSNumber is a simple abstract wrapper around numeric values which allows you to automatically convert its held value to the appropriate form, as well as having an object-like representations of a numeric value.
-
-            ```objectivec
-              NSNumber * n = [[NSNumber alloc] initWithFloat:20.0f];
-              double d = [n doubleValue];
-              int i = [n intValue];
-              [n release];
-            ```
-          - >
-            NSDictionary is a generic dictionary object that you can use to hold key/value associations. A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your keys will be either NSString or NSNumber objects.
-          - >
-            # NSDictionary usage
-
-            ```objectivec
-              NSDictionary * a = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                    @"The foo string", @"Foo",
-                                                    @"The bar string", @"Bar",
-                                                    nil];
-
-              NSMutableDictionary * b = [[NSMutableDictionary alloc] init];
-              [b setObject:@"Another string" forKey:[NSNumber numberWithInt:20]];
-
-              NSLog(@"a's alue for Foo is %@, and b's value for 20 is %@",
-                                        [a objectForKey:@"Foo"],
-                                        [b objectForKey:[NSNumber numberWithInt:20]]);
-
-              for(id key in a){
-                NSLog(@"The value for %@ is %@", key, [a objectForKey:key]);
-              }
-
-              [b release];
-              [a release];
-            ```
-          - >
-            # NSArray usage
-
-            NSArray is a simple way to collect NSObject inheriting classes into a sequential list.  NSArray automatically retains each object added to it, and releases each object it holds once its own retain count has reached 0.
-
-            ```objectivec
-              NSArray * a = [[NSArray alloc] initWithObjects:@"Foo", @"bar", @"baz", nil];
-              NSMutableArray * b = [[NSMutableArray alloc] init];
-              [b addObject:@"Not foo"];
-              NSLog(@"The contents of a are %@ and b are %@", a, b);
-
-              for(NSString * obj in a){
-                NSLog(@"The array contains %@", obj);
-              }
-
-              [a release];
-              [b release];
-            ```
-          - >
-            NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full of the property list contents by using the initialization method `initWithContentsOfFile:`
-          - >
-            # Property List Deserialization
-
-            <% figure("Sample Property List") do %>
-              <%= graphic("PListExample1.png", 0.5) %>
-            <% end %>
-
-            ```objectivec
-              NSDictionary * example = [[NSDictionary alloc]
-                                           initWithContentsOfFile:@"/path/to/sample.plist"];
-              NSLog(@"The subarray contents are %@",
-                         [example objectForKey:"A subarray of values"]);
-              [example release];
-            ```
+            Usage of ARC is by default on all new iOS projects. You can choose to disable it and manually manage memory. You can also still manually manage memory created through `malloc` and `free` if necessary.
     - "More learning":
         slides:
           - >
-            Objective C is a rich, deep language.  There are lots of resources on the web and your computer where you can learn more. The best is easily the XCode documentation, but there are blogs out there that can provide invaluable help: Mike Ash's [NSBlog](http://www.mikeash.com/pyblog/),  [Cocoa With Love](http://cocoawithlove.com/) , and the [Apple Developer Forums](http://developer.apple.com/devforums/) can all provide invaluable help in learning new techniques and advanced usage for your apps.
+            Objective C is a deep language.  There are lots of resources on the web and your computer where you can learn more. The best is easily the XCode documentation, but there are blogs out there that can provide invaluable help:
+
+            * Mike Ash's [NSBlog](http://www.mikeash.com/pyblog/)
+
+            * [objc.io](http://www.objc.io/)
+
+            * [NSHipster](http://nshipster.com/)
+
+            * [Apple Developer Forums](http://developer.apple.com/devforums/)
+
   - "iPhone App Layout Conventions":
     - "MVC, as applied to an app":
         slides:
@@ -695,13 +704,13 @@ presentations:
               <%= graphic("UIViewExample.pdf", 0.35) %>
             <% end %>
           - >
-            <% figure("UIViews are almost everythign") do %>
+            <% figure("UIViews are almost everything") do %>
               <%= graphic("UIViewExample2.pdf", 0.35) %>
             <% end %>
           - >
             UIViewControllers are objects that manage what the views on screen are currently doing; typically where you write event handling code and user interaction code.
           - >
-            You provide the model
+            There is no "official" model object in this pattern. Your business objects are the models, however you decide to implement them.
     - "UINavigationController":
         slides:
           - >
