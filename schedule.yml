@@ -693,10 +693,13 @@ presentations:
         slides:
           - >
             Apple strongly encourages you to adhere to Model View Controller pattern
+            <% figure("Model, View and Controller") do %>
+              <%= graphic("mvc.jpg", 0.5) %>
+            <% end %>
     - "Application -> Window -> View Controller(s) -> View(s) + Models":
         slides:
           - >
-            On iOS, a UIApplication ( your app ) typically has one UIWindow, which is the primary UIView upon which everything else displays.  A UIView is just a rectangle upon which you draw things.
+            On iOS, a UIApplication ( your app ) typically has one UIWindow, which is the primary UIView upon which everything else displays.  A UIView is "just" a rectangle upon which you draw things.
           - >
             Almost everything visual is a UIView (except the things that aren't).
           - >
@@ -708,9 +711,84 @@ presentations:
               <%= graphic("UIViewExample2.pdf", 0.35) %>
             <% end %>
           - >
-            UIViewControllers are objects that manage what the views on screen are currently doing; typically where you write event handling code and user interaction code.
+            UIViewControllers are objects that manage what the views on screen are currently doing; typically where you write event handling code, user interaction code, and interact with your models.
           - >
             There is no "official" model object in this pattern. Your business objects are the models, however you decide to implement them.
+    - "Storyboards":
+        slides:
+          - >
+            Storyboards let you visualize the interaction between UIViewControllers. You can design both the UIView layout and the interaction between UIViewControllers using the Storyboard designer.
+              <% figure("The Storyboard designer") do %>
+                <%= graphic("storyboard.jpg", 0.5) %>
+              <% end %>
+          - >
+            Storyboards are comprised of __scenes__ and __segues__. A __scene__ represents a UIViewController's presentation. A __segue__ is the transition between __scenes__, and can package essential information about how that transition occurred.
+    - "Lab 2":
+        slides:
+          - >
+            Create a new "Single View" project
+            <% figure("Create a new project") do %>
+              <%= graphic("NewProject.png", 0.5) %>
+            <% end %>
+          - >
+            Add a new NSObject subclass of "UIVIewController" to the project named "DetailViewController"
+            <% figure("New Objective C class") do %>
+              <%= graphic("NewObjectiveCClass.png", 0.5) %>
+            <% end %>
+            <% figure("Subclassing UIViewController") do %>
+              <%= graphic("DetailViewController.png", 0.5) %>
+            <% end %>
+          - >
+            Add a "UIViewController" object from the Object library on to your storyboard.
+            <% figure("The UIViewController object in the Library") do %>
+              <%= graphic("SelectViewControllerFromLibrary.png", 0.25) %>
+            <% end %>
+            <% figure("Drop UIViewController on Storyboard") do %>
+              <%= graphic("DropViewControllerOnToStoryboard.png", 0.5) %>
+            <% end %>
+          - >
+            Set the subclass of the UIViewController to "DetailViewController".
+            <% figure("Setting the UIViewController subclass") do %>
+              <%= graphic("ChooseViewControllerSubclass.png", 0.5) %>
+            <% end %>
+          - >
+            Double click on the first UIViewController in the stoyrboard and add a button with the text "Show Detail" to its scene.
+            <% figure("Drag a button to the scene") do %>
+              <%= graphic("DragButtonToStoryboard.png", 0.5) %>
+            <% end %>
+          - >
+            Select the button, and view its outlets in the inspector pane. Drag from the `action` outlet under `Triggered Segues` to the "Detail View Controller" scene in your storyboard. Choose "Modal" when asked what sort of segue style will be used.
+            <% figure("Connect the action to the Detail View Controller") do %>
+              <%= graphic("ConnectionActionToDetailController.png", 0.5) %>
+            <% end %>
+          - >
+            Double click on the Detail View Controller and add a button to its scene with the text "Close".
+          - >
+            Add the following code to `DetailViewController.h`
+
+            ```objectivec
+              -(IBAction) dismissDetailView:(id) sender;
+            ```
+          - >
+            Add the following code to `DetailViewController.m`
+
+            ```objectivec
+              -(IBAction) dismissDetailView:(id) sender {
+                [self dismissViewControllerAnimated:YES completion:nil];
+              }
+            ```
+          - >
+            In your Storyboard, select the "Close" button you added to the Detail View Controller, and connect its "Touch Up Inside" outlet to the Detail View Controller. Select the "dismissDetailView:" selector when prompted which selector to connect to.
+
+            <% figure("Connect the action to the dismiss selector") do %>
+              <%= graphic("ConnectToDismissSelector.png", 0.5) %>
+            <% end %>
+          - >
+            Run the project!
+
+            <% figure("Yay, it works!") do %>
+              <%= graphic("yay.jpg", 0.5) %>
+            <% end %>
     - "UINavigationController":
         slides:
           - >
@@ -730,16 +808,6 @@ presentations:
               [[self navigationController] pushViewController:controller animated:YES];
               [controller release];
             ```
-    - "Lab 2":
-        slides:
-          - >
-            Create a new View based project
-          - >
-            Add a UINavigationController to MainWindow.xib
-          - >
-            Create a new view controller
-          - >
-            Add a button to the first view controller and create an action to open the second view controller
     - "UITabBarController and UITableViewController":
         slides:
           - >
