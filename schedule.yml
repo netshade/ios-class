@@ -8,8 +8,6 @@ presentations:
       slides:
         - >
           Welcome to the 5-Day Bootstrapping iOS Application Development class. Over the course of these next 5 days, we're going to be reviewing Objective C, UIKit, Core Animation, Core Data, and a host of other technologies you may only know by name.
-        - >
-          Email me two pictures of you - one serious and one silly - to  chris - at - fastestforward.com
   - "Lab 1":
     - "Create a new iPhone Project":
         slides:
@@ -48,8 +46,8 @@ presentations:
             ```objectivec
               // In the ViewController.m file
               -(IBAction) helloWorldTapped:(id)sender {
-                  [[[UIAlertView alloc] initWithTitle:@"Hello World"
-                                              message:@"Yay it worked"
+                  [[[UIAlertView alloc] initWithTitle:@"Yay it worked"
+                                              message:@"Hello World"
                                              delegate:nil
                                     cancelButtonTitle:@"Dismiss"
                                     otherButtonTitles: nil] show];
@@ -789,6 +787,8 @@ presentations:
             <% figure("Yay, it works!") do %>
               <%= graphic("yay.jpg", 0.5) %>
             <% end %>
+          - >
+            _One more thing_: Add another button on the Detail View controller that opens another View Controller as a modal, and this new view controller has a button on it that when tapped opens an alert box that says "Hello World".
     - "UINavigationController":
         slides:
           - >
@@ -898,10 +898,18 @@ presentations:
             <% figure("Put it on the App Store!") do %>
               <%= graphic("distinguishedyay.jpg", 0.5) %>
             <% end %>
-    - "UITabBarController and UITableViewController":
+          - >
+            _One more thing_: Add a button on your Detail View Controller that opens up a new View Controller that shows an image.
+    - "UITabBarController":
         slides:
           - >
-            UITabBarController swaps in UIViewControllers assigned to it when users click on the associated button
+            A UITabBar is the control that sits at the bottom of a screen, and allows you to switch between different views based on the button you click.
+
+            <% figure("UITabBar examples") do %>
+              <%= graphic("tabbar.png", 0.25) %>
+            <% end %>
+          - >
+            A UITabBarController swaps in UIViewControllers assigned to it when users click on the associated button
           - >
             Each UIViewController has a tabBarItem property that UITabBarController uses to populate its UITabBar
           - >
@@ -909,21 +917,159 @@ presentations:
               <%= graphic("UIViewExample4.pdf", 0.30) %>
             <% end %>
           - >
-            UITableViewController instructs a UITableView about the number of rows it contains, what to do when clicked, the number of sections, and other information
+            <% figure("Sir Not Appearing In This Class") do %>
+              <%= graphic("sir.jpg", 0.35) %>
+            <% end %>
+    - "UITableViewController":
           - >
-            UITableViewController is just a convenience class that saves you from manually conforming an object to the UITableViewDataSource and UITableViewDelegate protocols
+            UITableViews make up the majority of navigational aids in most iOS apps. If you see a vertical list of selectable items, it is almost certainly a UITableView.
+
+            <% figure("UITableView examples") do %>
+              <%= graphic("tableview.png", 0.35) %>
+            <% end %>
           - >
+            A UITableView presents data in two dimensions: __sections__ and __rows__. For any section __N__, there may be __M__ rows of information to present.
+          - >
+            Each cell in a UITableView is represented by a UITableViewCell. A UITableViewCell in its default implementation allows for a title label, a left aligned image view, and an optional accessory view that is right aligned.
+
+            <% figure("UITableViewCell default style") do %>
+              <%= graphic("UITableViewCell.png", 0.35) %>
+            <% end %>
+          - >
+            A UITableView has special code that allows it to only create as many UITableViewCells as are currently on the screen, as opposed to the number of rows in your source data.  This allows you to easily support paging through many thousands of items w/ negligible performance impact.
+          - >
+            A UITableViewController has many pre-filled methods to make interacting with UITableViews easier. It is a subclass of UIViewController, and is merely a convenience to the programmer.
+
             <% figure("UITableView example") do %>
               <%= graphic("UIViewExample5.pdf", 0.30) %>
             <% end %>
-    - "Lab 3":
+    - "Lab 4":
         slides:
           - >
-            Add a UITableViewController to the project
+            Create a new "Single View" project
+            <% figure("Create a new project") do %>
+              <%= graphic("NewProject.png", 0.5) %>
+            <% end %>
           - >
-            Add an NSArray containing names from the class to the controller
+            Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+            <% figure("Select UINavigationController in the Object library") do %>
+              <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+            <% end %>
           - >
-            Change the Interface builder reference to the UITableViewController
+            Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+            <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+              <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+            <% end %>
+          - >
+            Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+            <% figure("Add a new subclass of UITableViewController") do %>
+              <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+            <% end %>
+          - >
+            Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+            <% figure("Change subclass to new UITableViewController") do %>
+              <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+            <% end %>
+          - >
+            Add the following code to PCTableViewController.h:
+
+            ```objectivec
+              @property NSArray * items;
+            ```
+
+            Add the following code to PCTableViewController.m:
+
+            ```objectivec
+              -(void) viewDidLoad {
+                [super viewDidLoad];
+                self.items = @[@"One", @"Two", @"Three"];
+              }
+            ```
+          - >
+            Change the method `numberOfSectionsInTableView:(UITableView *) tableView` in PCTableViewController.m to return 1.
+          - >
+            Change the method `tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) path` to return `self.items.count`.
+          - >
+            Change the method `tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath` to:
+
+            ```objectivec
+              UITableViewCell *cell = [tableView
+                 dequeueReusableCellWithIdentifier:@"DefaultCell"
+                                      forIndexPath:indexPath];
+
+              cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
+
+              return cell;
+            ```
+          - >
+            Double click on the table view controller in Storyboard and select the prototype UITableViewCell. Change its reuse identifier to "DefaultCell".
+
+            <% figure("Change Reuse Identifier") do %>
+              <%= graphic("ChangeReuseIdentifier.png", 0.5) %>
+            <% end %>
+          - >
+            In the `PCViewController.h`, add the following code.
+
+            ```objectivec
+              @property NSString * name;
+              @property IBOutlet UILabel * nameLabel;
+            ```
+          - >
+            In Storyboard, drag a UILabel to PCViewController and connect it to the nameLabel outlet.
+
+            <% figure("Connect the UILabel to the nameLabel outlet") do %>
+              <%= graphic("ConnectLabelToOutlet.png", 0.5) %>
+            <% end %>
+          - >
+            In PCViewController.m, add the following code:
+
+            ```objectivec
+              -(void) viewDidLoad {
+                [super viewDidLoad];
+                self.nameLabel.text = [NSString stringWithFormat:@"Name: %@", self.name];
+              }
+            ```
+          - >
+            In Storyboard, select the prototype cell in the table view controller and connect its "selection" triggered segue to the PCViewController and choose "Push".
+
+            <% figure("Connect the selection segue of the UITableViewCell") do %>
+              <%= graphic("ConnectSelectionSegue.png", 0.5) %>
+            <% end %>
+          - >
+            In PCTableViewController.m, uncomment the method `prepareForSegue:sender:` and add the following code:
+
+            ```objectivec
+              PCViewController * c = (PCViewController *)[segue destinationViewController];
+              c.name = [self.items objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+            ```
+
+            Add the following line to the top of the file:
+
+            ```objectivec
+              #import "PCViewController.h"
+            ```
+          - >
+            Run it!
+            <% figure("Time to get pumped") do %>
+              <%= graphic("hulk.jpg", 0.5) %>
+            <% end %>
+          - >
+            _One more thing_: Add a JSON file to your project that is an array of items. Deserialize it in your UITableViewController, and use the information from the JSON file to populate your UITableView and UIViewController.
+    - "An Aside: The Delegate Pattern":
+        - >
+          You may have noticed that UITableViewController had odd methods like `- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section`. Why does the UITableViewController need to have a UITableView passed to its numberOfRowsInsection method?
+        - >
+          The delegate pattern allows for a weak binding between two objects, such that a "delegate" can be queried for configuration information and special behavior from an acting object.
+        - >
+          Objective C formal protocols are typically how a delegate can indicate at compile time that it provides certain functionality. See UITableViewDelegate and UITableViewDataSource
+        - >
+          The delegate pattern is used widely throughout Apple frameworks.
+
+          <% figure("Delegate usage throughout the documentation") do %>
+            <%= graphic("DelegateGrep.png", 0.5) %>
+          <% end %>
     - "Modal view controllers":
         - >
           Not all view controllers fit within the "display in UINavigationController" or "display in UITabBarController"
