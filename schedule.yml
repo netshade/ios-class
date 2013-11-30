@@ -722,7 +722,7 @@ presentations:
                 <%= graphic("storyboard.jpg", 0.5) %>
               <% end %>
           - >
-            Storyboards are comprised of __scenes__ and __segues__. A __scene__ represents a UIViewController's presentation. A __segue__ is the transition between __scenes__, and can package essential information about how that transition occurred.
+            Storyboards are comprised of __scenes__ and __segues__. A __scene__ represents a UIViewController's presentation. A __segue__ is the transition between __scenes__, and carry information about the transition origin and destination, as well as the nature of the transition.
     - "Lab 2":
         slides:
           - >
@@ -792,22 +792,112 @@ presentations:
     - "UINavigationController":
         slides:
           - >
-            UINavigationController is a stack based manager of view controllers that the user can navigate through
+            UINavigationController is a stack based manager of view controllers that the user can navigate through. The tiny left-facing back arrow present in most iOS apps is its most obvious characteristic.
+
+            <% figure("UINavigationController at work") do %>
+              <%= graphic("UINavigationControllerInAction.png", 0.5) %>
+            <% end %>
           - >
             <% figure("Items managed by UINavigationController ") do %>
               <%= graphic("UIViewExample3.pdf", 0.35) %>
             <% end %>
           - >
-            Every UIViewController managed by a UINavigationController has a reference to that UINavigationController
+            Every UIViewController managed by a UINavigationController has a reference to that UINavigationController in `[self navigationController]`.
+
+            ```objectivec
+              -(void) viewDidLoad {
+                [super viewDidLoad];
+                NSLog(@"There are currently %i controllers in the navigation stack",
+                        self.navigationController.childViewControllers.count);
+              }
+            ```
           - >
-            # Adding another UIViewController to the UINavigationController stack
+            You can add another UIViewController to the navigation stack by using the `push` segue when connecting view controllers in Storyboard.
+
+            <% figure("Selecting the push segue") do %>
+              <%= graphic("SelectPushSegue.png", 0.5) %>
+            <% end %>
+
+            _Note:_ This segue will only work if you've already set up a UINavigationController, it will not automatically create a UINavigationController for you.
+          - >
+            You can also push UIViewControllers on the stack manually.
 
             ```objectivec
               MyViewController * controller = [[MyViewController alloc] initWithNibName:nil
                                                                         bundle:nil];
               [[self navigationController] pushViewController:controller animated:YES];
-              [controller release];
             ```
+    - "Lab 3":
+        slides:
+          - >
+            Create a new "Single View" project
+            <% figure("Create a new project") do %>
+              <%= graphic("NewProject.png", 0.5) %>
+            <% end %>
+          - >
+            Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+            <% figure("Select UINavigationController in the Object library") do %>
+              <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+            <% end %>
+          - >
+            Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+            <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+              <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+            <% end %>
+          - >
+            Drag the "root view controller" outlet from the UINavigationController to the default view controller in the storyboard.
+            <% figure("Change the root view controller outlet") do %>
+              <%= graphic("ChangeRootViewController.png", 0.25) %>
+            <% end %>
+          - >
+            Add a new NSObject subclass of "UIVIewController" to the project named "DetailViewController"
+            <% figure("New Objective C class") do %>
+              <%= graphic("NewObjectiveCClass.png", 0.5) %>
+            <% end %>
+            <% figure("Subclassing UIViewController") do %>
+              <%= graphic("DetailViewController.png", 0.5) %>
+            <% end %>
+          - >
+            Add a "UIViewController" object from the Object library on to your storyboard.
+            <% figure("The UIViewController object in the Library") do %>
+              <%= graphic("SelectViewControllerFromLibrary.png", 0.25) %>
+            <% end %>
+            <% figure("Drop UIViewController on Storyboard") do %>
+              <%= graphic("DropViewControllerOnToStoryboard.png", 0.5) %>
+            <% end %>
+          - >
+            Set the subclass of the UIViewController to "DetailViewController".
+            <% figure("Setting the UIViewController subclass") do %>
+              <%= graphic("ChooseViewControllerSubclass.png", 0.5) %>
+            <% end %>
+          - >
+            Double click on the first UIViewController in the stoyrboard and add a button with the text "Show Detail" to its scene.
+            <% figure("Drag a button to the scene") do %>
+              <%= graphic("DragButtonToStoryboard.png", 0.5) %>
+            <% end %>
+          - >
+            Select the button, and view its outlets in the inspector pane. Drag from the `action` outlet under `Triggered Segues` to the "Detail View Controller" scene in your storyboard. Choose "Push" when asked what sort of segue style will be used.
+            <% figure("Connect the action to the Detail View Controller") do %>
+              <%= graphic("ConnectionActionToDetailController.png", 0.5) %>
+            <% end %>
+          - >
+            Double click on the Detail View Controller and add a label to its scene with the text "Valuable Detail".
+            <% figure("Select and place the Label control") do %>
+              <%= graphic("SelectLabelControl.png", 0.5) %>
+            <% end %>
+          - >
+            Select the navigation bar in the detail view controller, and change its title attribute to "My Detail View".
+            <% figure("Select UINavigationItem in controller") do %>
+              <%= graphic("SelectUINavigationItem.png", 0.5) %>
+            <% end %>
+            <% figure("Change UINavigationItem title") do %>
+              <%= graphic("ChangeUINavigationItemTitle.png", 0.5) %>
+            <% end %>
+          - >
+            Run the app!
+            <% figure("Put it on the App Store!") do %>
+              <%= graphic("distinguishedyay.jpg", 0.5) %>
+            <% end %>
     - "UITabBarController and UITableViewController":
         slides:
           - >
