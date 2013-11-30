@@ -15,5 +15,5 @@ Instructions:
 
 Install the above packages, then run `bundle install` to install any required Ruby gems.  You can rebuild all slides by executing `rebuild.sh`, or you can use `guard` to regenerate the slides as you make changes.
 
-
+Server code has class instructions as well as test URLs for class code to hit. Push to heroku via `git subtree push --prefix server heroku master`
 
