@@ -1,5 +1,5 @@
 presentations:
-- subtitle: "Day 1"
+- subtitle: ""
   title: "Bootstrapping iOS Application Development"
   author: "Chris Zelenak"
   date: "12/02/2013"
@@ -97,8 +97,10 @@ presentations:
               unsigned int k = 0; // an unsigned integer
               const unsigned int j = 0; // a constant unsigned integer, no reassignment
               const char c = 'c'; // a constant char
-              const char * s = "a constant string"; // a pointer to a read-only char array
+              const char * s = "a constant string"; // a read only pointer to a char array
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{001\_variables.c}\end{center}\end{figure}
           - >
             These are items you'll commonly encouter while doing iPhone programming whose roots belong in the C family:
 
@@ -111,6 +113,8 @@ presentations:
 
               HowMany i = SOME; // Use of enumerated constant
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{002\_enumerations.c}\end{center}\end{figure}
 
             Note the `typedef` in this example, which is creating a type alias to be used later.
           - >
@@ -130,6 +134,8 @@ presentations:
               // C99 style struct instantiation
               APointInSpace point2 = { .x= 21.0, .y=32.0 };
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{003\_typedef.c}\end{center}\end{figure}
           - >
             # C Language Elements - Arrays and Pointers
 
@@ -154,6 +160,8 @@ presentations:
               // address dereference
               someIntegerPtr = &someInteger;
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{004\_arrays\_and\_pointers.c}\end{center}\end{figure}
           - >
             # C Language Elements - Functions and Function Pointers
 
@@ -175,6 +183,8 @@ presentations:
               anFnPtr = aSimpleSubtractionMethod;
               anFnPtr(1, 1); // returns 0
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{005\_functions.c}\end{center}\end{figure}
           - >
             # C Language Elements - Preprocessor Statements
 
@@ -190,6 +200,8 @@ presentations:
                 }
               }
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{006\_preprocessor.c}\end{center}\end{figure}
           - >
             If you never learned C or it's been a long time, a fantastic book for you is ["The C Programming Language"](http://www.amazon.com/C-Programming-Language-2nd-Edition-ebook/dp/B009ZUZ9FW/ref=dp_kinw_strp_1). It doesn't cover many of the newer items in [C99](http://en.wikipedia.org/wiki/C99), but it is a thorough reference to the language fundamentals.
 
@@ -215,6 +227,8 @@ presentations:
               NSLog(@"The string %@ was case insensitive equal", anExampleString);
             }
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{007\_basic\_objc\_example.m}\end{center}\end{figure}
     - "Calling functions":
         slides:
           - >
@@ -246,6 +260,8 @@ presentations:
             }
           ```
 
+          \begin{figure}[htb]\begin{center}\caption{008\_calling\_methods\_on\_nil.m}\end{center}\end{figure}
+
           nil is the appropriate null object when dealing with pointers to Objective C classes; NULL, on the other hand, is the appropriate null value to use when dealing with pointers to all other types.
         notes: |
           Of course, there is also the unfortunately necessary NSNull object, which pops up in cases where the framework needs to formally recognize a deserialized NULL value (see Property Lists, JSON, etc.). You can test if an object is an NSNull object by comparing it `[NSNull null]`.
@@ -271,6 +287,8 @@ presentations:
 
             NSLog(@"The mutable string is %@", so);
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{008\_nsstring\_example.m}\end{center}\end{figure}
         - >
           # NSNumber usage
 
@@ -284,6 +302,8 @@ presentations:
             NSLog(@"Number is %@, double value is %f, int value is %i", n, d, i);
             NSLog(@"Boolean number is %@, bool value is %i", b, [b boolValue]);
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{009\_nsnumber\_example.m}\end{center}\end{figure}
         - >
           NSDictionary is a generic dictionary object that you can use to hold key/value associations. A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your keys will be either NSString or NSNumber objects.
         - >
@@ -306,6 +326,8 @@ presentations:
               NSLog(@"The value for %@ is %@", key, [a objectForKey:key]);
             }
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{010\_nsdictionary\_example.m}\end{center}\end{figure}
         - >
           # NSArray usage
 
@@ -321,6 +343,8 @@ presentations:
               NSLog(@"The array contains %@", obj);
             }
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{011\_nsarray\_example.m}\end{center}\end{figure}
         - >
           NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full of the property list contents by using the initialization method `initWithContentsOfFile:`
         - >
@@ -336,6 +360,8 @@ presentations:
             NSLog(@"The subarray contents are %@",
                        [example objectForKey:"A subarray of values"]);
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{012\_plist\_example.m}\end{center}\end{figure}
         - >
           Apple also provides JSON serialize/deserialize capability in the `NSJSONSerialization` class. This class can decode NSString, NSNumber, NSArray and NSDictionary values much like property lists.
 
@@ -352,6 +378,8 @@ presentations:
               NSLog(@"Foo's value is %@", [jsonDict objectForKey:@"foo"]);
             }
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{013\_json\_example.m}\end{center}\end{figure}
     - "Classes":
       slides:
         - >
@@ -373,6 +401,8 @@ presentations:
                               randomizeContents:(BOOL)randomize;
             @end
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 1}\end{center}\end{figure}
         - >
           # Class implementation
 
@@ -397,6 +427,8 @@ presentations:
             }
 
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 2}\end{center}\end{figure}
         - >
           # Class implementation pt. 2
 
@@ -412,6 +444,8 @@ presentations:
 
             @end
           ```
+
+          \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 3}\end{center}\end{figure}
     - "Properties":
         slides:
           - >
@@ -431,6 +465,8 @@ presentations:
 
               @end
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{015\_properties.m part 1}\end{center}\end{figure}
           - >
             # Property usage
 
@@ -451,6 +487,8 @@ presentations:
                       mo.instanceVariable,
                       mo.numericVariable);
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{015\_properties.m part 2}\end{center}\end{figure}
           - >
             You can specify the memory management semantics (strong, weak, copy), atomicity (locking behavior), and access level in the property declaration. You can also specify your own implementation of the getter and setter methods.
 
@@ -458,6 +496,8 @@ presentations:
               @property(readonly) NSString * privateName;
               @property(weak, nonatomic, setter=myAgeSetter:) NSNumber * age;
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{016\_advanced\_properties.m}\end{center}\end{figure}
           - >
             # Key Value Observing
 
@@ -476,6 +516,8 @@ presentations:
                 NSLog(@"The length of foo is %i",  [foo performSelector:aSelector]);
               }
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{017\_selectors.m}\end{center}\end{figure}
           - >
             # Other selector usage
 
@@ -491,6 +533,8 @@ presentations:
                             [anAllCapsString performSelector:aSelector]);
               }
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{018\_advanced\_selectors.m}\end{center}\end{figure}
     - "Protocols":
         slides:
           - >
@@ -515,6 +559,8 @@ presentations:
               @interface TheCheapestCameraEver : NSObject<CameraDevice>
               @end
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{019\_protocols.m part 1}\end{center}\end{figure}
           - >
             # Protocol usage
 
@@ -533,6 +579,8 @@ presentations:
                 }
               }
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{019\_protocols.m part 2}\end{center}\end{figure}
     - "Categories":
         slides:
           - >
@@ -561,6 +609,8 @@ presentations:
 
               @end
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{020\_categories.m part 1}\end{center}\end{figure}
           - >
             # Category usage
 
@@ -574,6 +624,8 @@ presentations:
                                 @"An Array": @[@(1), @(2), @(3)]} asJson]);
               }
             ```
+
+            \begin{figure}[htb]\begin{center}\caption{020\_categories.m part 2}\end{center}\end{figure}
     - "Memory management":
         slides:
           - >
@@ -1063,7 +1115,7 @@ presentations:
         - >
           The delegate pattern allows for a weak binding between two objects, such that a "delegate" can be queried for configuration information and special behavior from an acting object.
         - >
-          Objective C formal protocols are typically how a delegate can indicate at compile time that it provides certain functionality. See UITableViewDelegate and UITableViewDataSource
+          Objective C formal protocols are typically how a delegate can indicate at compile time that it provides certain functionality. See UITableViewDelegate and UITableViewDataSource.
         - >
           The delegate pattern is used widely throughout Apple frameworks.
 
