@@ -1,4 +1,5 @@
 #!/usr/bin/env bash -e -x
+rm -r build/*
 cp slides/1/slides.pdf build/ClassSlides.pdf
 for i in labs/Lab*; do 
   LABNAME=$(basename $i)
