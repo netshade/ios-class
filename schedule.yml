@@ -88,7 +88,7 @@ presentations:
     - "Review of standard C elements":
         slides:
           - >
-            # C Language Elements - Variables
+            # Variables
 
             Variable declaration in C follows the form `TYPE_DESCRIPTION NAME`, eg:
 
@@ -118,7 +118,7 @@ presentations:
 
             Note the `typedef` in this example, which is creating a type alias to be used later.
           - >
-            # C Language Elements - Structs
+            # Structs
 
             ```c
               // Declaring a point in space type
@@ -137,7 +137,7 @@ presentations:
 
             \begin{figure}[htb]\begin{center}\caption{003\_typedef.c}\end{center}\end{figure}
           - >
-            # C Language Elements - Arrays and Pointers
+            # Arrays and Pointers
 
             ```c
               #include <stddef.h>
@@ -163,7 +163,7 @@ presentations:
 
             \begin{figure}[htb]\begin{center}\caption{004\_arrays\_and\_pointers.c}\end{center}\end{figure}
           - >
-            # C Language Elements - Functions and Function Pointers
+            # Functions and Function Pointers
 
             ```c
               float aSimpleAdditionMethod(float a, float b){
@@ -186,7 +186,7 @@ presentations:
 
             \begin{figure}[htb]\begin{center}\caption{005\_functions.c}\end{center}\end{figure}
           - >
-            # C Language Elements - Preprocessor Statements
+            # Preprocessor Statements
 
             ```c
               #include <stdio.h>
@@ -266,186 +266,186 @@ presentations:
         notes: |
           Of course, there is also the unfortunately necessary NSNull object, which pops up in cases where the framework needs to formally recognize a deserialized NULL value (see Property Lists, JSON, etc.). You can test if an object is an NSNull object by comparing it `[NSNull null]`.
     - "Basic Types":
-      slides:
-        - >
-          There are a host of useful classes in the Cocoa Touch framework that provide special functionality to you.  Some of the more common objects you'll use in your programming are NSArray, NSDictionary, NSNumber and NSString.  Each of these objects have mutable versions that allow you to modify them after instantiation.
-        - >
-          # The id type
+        slides:
+          - >
+            There are a host of useful classes in the Cocoa Touch framework that provide special functionality to you.  Some of the more common objects you'll use in your programming are NSArray, NSDictionary, NSNumber and NSString.  Each of these objects have mutable versions that allow you to modify them after instantiation.
+          - >
+            # The id type
 
-          The special type `id` refers to any valid NSObject or its subclass. You can use the `id` type when you're not sure what sort of object you may be given.
-        - >
-          # NSString usage
+            The special type `id` refers to any valid NSObject or its subclass. You can use the `id` type when you're not sure what sort of object you may be given.
+          - >
+            # NSString usage
 
-          NSString is an enhanced, unicode aware string class that goes far beyond the simple byte-array behavior of C's byte-array strings.
+            NSString is an enhanced, unicode aware string class that goes far beyond the simple byte-array behavior of C's byte-array strings.
 
-          ```objectivec
-            NSString * s = @"This is an NSString";
-            NSMutableString * so = [[NSMutableString alloc]
-                                            initWithString:@"This is a mutable string"];
+            ```objectivec
+              NSString * s = @"This is an NSString";
+              NSMutableString * so = [[NSMutableString alloc]
+                                              initWithString:@"This is a mutable string"];
 
-            [so appendString:s];
+              [so appendString:s];
 
-            NSLog(@"The mutable string is %@", so);
-          ```
+              NSLog(@"The mutable string is %@", so);
+            ```
 
-          \begin{figure}[htb]\begin{center}\caption{008\_nsstring\_example.m}\end{center}\end{figure}
-        - >
-          # NSNumber usage
+            \begin{figure}[htb]\begin{center}\caption{008\_nsstring\_example.m}\end{center}\end{figure}
+          - >
+            # NSNumber usage
 
-          NSNumber is a simple abstract wrapper around numeric values which allows you to automatically convert its held value to the appropriate form, as well as having an object-like representations of a numeric value.
+            NSNumber is a simple abstract wrapper around numeric values which allows you to automatically convert its held value to the appropriate form, as well as having an object-like representations of a numeric value.
 
-          ```objectivec
-            NSNumber * n = @(20.0f);
-            double d = [n doubleValue];
-            int i = [n intValue];
-            NSNumber * b = @(YES);
-            NSLog(@"Number is %@, double value is %f, int value is %i", n, d, i);
-            NSLog(@"Boolean number is %@, bool value is %i", b, [b boolValue]);
-          ```
+            ```objectivec
+              NSNumber * n = @(20.0f);
+              double d = [n doubleValue];
+              int i = [n intValue];
+              NSNumber * b = @(YES);
+              NSLog(@"Number is %@, double value is %f, int value is %i", n, d, i);
+              NSLog(@"Boolean number is %@, bool value is %i", b, [b boolValue]);
+            ```
 
-          \begin{figure}[htb]\begin{center}\caption{009\_nsnumber\_example.m}\end{center}\end{figure}
-        - >
-          NSDictionary is a generic dictionary object that you can use to hold key/value associations. A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your keys will be either NSString or NSNumber objects.
-        - >
-          # NSDictionary usage
+            \begin{figure}[htb]\begin{center}\caption{009\_nsnumber\_example.m}\end{center}\end{figure}
+          - >
+            NSDictionary is a generic dictionary object that you can use to hold key/value associations. A key can be any NSObject that responds to isEqual: and NSCopying; in most cases, your keys will be either NSString or NSNumber objects.
+          - >
+            # NSDictionary usage
 
-          ```objectivec
-            NSDictionary * a = @{
-              @"Foo": @"The Foo string",
-              @"Bar": @"The Bar string"
-            };
+            ```objectivec
+              NSDictionary * a = @{
+                @"Foo": @"The Foo string",
+                @"Bar": @"The Bar string"
+              };
 
-            NSMutableDictionary * b = [[NSMutableDictionary alloc] init];
-            [b setObject:@"Another string" forKey:@(20)];
+              NSMutableDictionary * b = [[NSMutableDictionary alloc] init];
+              [b setObject:@"Another string" forKey:@(20)];
 
-            NSLog(@"a's value for Foo is %@, and b's value for 20 is %@",
-                                      [a objectForKey:@"Foo"],
-                                      [b objectForKey:@(20)]);
+              NSLog(@"a's value for Foo is %@, and b's value for 20 is %@",
+                                        [a objectForKey:@"Foo"],
+                                        [b objectForKey:@(20)]);
 
-            for(id key in a){
-              NSLog(@"The value for %@ is %@", key, [a objectForKey:key]);
-            }
-          ```
-
-          \begin{figure}[htb]\begin{center}\caption{010\_nsdictionary\_example.m}\end{center}\end{figure}
-        - >
-          # NSArray usage
-
-          NSArray is a simple way to collect NSObject inheriting classes into a sequential list.  NSArray automatically retains each object added to it, and releases each object it holds once its own retain count has reached 0.
-
-          ```objectivec
-            NSArray * a = @[@"Foo", @"bar", @"baz"];
-            NSMutableArray * b = [[NSMutableArray alloc] init];
-            [b addObject:@"Not foo"];
-            NSLog(@"The contents of a are %@ and b are %@", a, b);
-
-            for(id obj in a){
-              NSLog(@"The array contains %@", obj);
-            }
-          ```
-
-          \begin{figure}[htb]\begin{center}\caption{011\_nsarray\_example.m}\end{center}\end{figure}
-        - >
-          NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full of the property list contents by using the initialization method `initWithContentsOfFile:`
-        - >
-          # Property List Deserialization
-
-          <% figure("Sample Property List") do %>
-            <%= graphic("PListExample1.png", 0.5) %>
-          <% end %>
-
-          ```objectivec
-            NSDictionary * example = [[NSDictionary alloc]
-                                         initWithContentsOfFile:@"/path/to/sample.plist"];
-            NSLog(@"The subarray contents are %@",
-                       [example objectForKey:"A subarray of values"]);
-          ```
-
-          \begin{figure}[htb]\begin{center}\caption{012\_plist\_example.m}\end{center}\end{figure}
-        - >
-          Apple also provides JSON serialize/deserialize capability in the `NSJSONSerialization` class. This class can decode NSString, NSNumber, NSArray and NSDictionary values much like property lists.
-
-          ```objectivec
-            NSDictionary * dict = @{ @"foo": @"bar" };
-            NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                                options:0
-                                                                  error:nil];
-            if([jsonData writeToFile:@"./test.json" atomically:YES]){
-              NSData * inputJsonData = [NSData dataWithContentsOfFile:@"./test.json"];
-              id jsonDict = [NSJSONSerialization JSONObjectWithData:inputJsonData
-                                                              options:0
-                                                                error:&error];
-              NSLog(@"Foo's value is %@", [jsonDict objectForKey:@"foo"]);
-            }
-          ```
-
-          \begin{figure}[htb]\begin{center}\caption{013\_json\_example.m}\end{center}\end{figure}
-    - "Classes":
-      slides:
-        - >
-          # Class interface declaration
-
-          Classes in Objective C are similar to their C++ cousins in that they come in two parts: interface declaration and implementation. The interface declaration portion of a class follows the form:
-
-
-          ```objectivec
-            #import <Foundation/Foundation.h>
-            @interface MyNewClass : NSObject {
-              int privateVariable1;
-              NSString * privateVariable2;
-            }
-
-            +(int) someClassMethod;
-            -(void) doSomething;
-            -(NSString *) giveMeAStringOfLength:(int)length
-                              randomizeContents:(BOOL)randomize;
-            @end
-          ```
-
-          \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 1}\end{center}\end{figure}
-        - >
-          # Class implementation
-
-          The implementation of this class follows the form:
-
-          ```objectivec
-            #import "MyNewClass.h"
-
-            @implementation MyNewClass
-
-            -(id) init {
-              self = [super init];
-              if(self){
-                privateVariable1 = 20;
-                privateVariable2 = [[NSString alloc] initWithString:@"Test"];
+              for(id key in a){
+                NSLog(@"The value for %@ is %@", key, [a objectForKey:key]);
               }
-              return self;
-            }
+            ```
 
-            +(int) someClassMethod {
-              return 0;
-            }
+            \begin{figure}[htb]\begin{center}\caption{010\_nsdictionary\_example.m}\end{center}\end{figure}
+          - >
+            # NSArray usage
 
-          ```
+            NSArray is a simple way to collect NSObject inheriting classes into a sequential list.  NSArray automatically retains each object added to it, and releases each object it holds once its own retain count has reached 0.
 
-          \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 2}\end{center}\end{figure}
-        - >
-          # Class implementation pt. 2
+            ```objectivec
+              NSArray * a = @[@"Foo", @"bar", @"baz"];
+              NSMutableArray * b = [[NSMutableArray alloc] init];
+              [b addObject:@"Not foo"];
+              NSLog(@"The contents of a are %@ and b are %@", a, b);
 
-          ```objectivec
-            -(void) doSomething {
-              NSLog(@"Something");
-            }
+              for(id obj in a){
+                NSLog(@"The array contains %@", obj);
+              }
+            ```
 
-            -(NSString *) giveMeAStringOfLength:(int)length
-                              randomizeContents:(BOOL)randomize {
-              return @"TODO: Make work";
-            }
+            \begin{figure}[htb]\begin{center}\caption{011\_nsarray\_example.m}\end{center}\end{figure}
+          - >
+            NSArray, NSDictionary, NSString and NSNumber may all be represented by the contents of a property list file ( Plist ).  You can easily rebuild an NSArray or NSDictionary full of the property list contents by using the initialization method `initWithContentsOfFile:`
+          - >
+            # Property List Deserialization
 
-            @end
-          ```
+            <% figure("Sample Property List") do %>
+              <%= graphic("PListExample1.png", 0.5) %>
+            <% end %>
 
-          \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 3}\end{center}\end{figure}
+            ```objectivec
+              NSDictionary * example = [[NSDictionary alloc]
+                                           initWithContentsOfFile:@"/path/to/sample.plist"];
+              NSLog(@"The subarray contents are %@",
+                         [example objectForKey:"A subarray of values"]);
+            ```
+
+            \begin{figure}[htb]\begin{center}\caption{012\_plist\_example.m}\end{center}\end{figure}
+          - >
+            Apple also provides JSON serialize/deserialize capability in the `NSJSONSerialization` class. This class can decode NSString, NSNumber, NSArray and NSDictionary values much like property lists.
+
+            ```objectivec
+              NSDictionary * dict = @{ @"foo": @"bar" };
+              NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                                  options:0
+                                                                    error:nil];
+              if([jsonData writeToFile:@"./test.json" atomically:YES]){
+                NSData * inputJsonData = [NSData dataWithContentsOfFile:@"./test.json"];
+                id jsonDict = [NSJSONSerialization JSONObjectWithData:inputJsonData
+                                                                options:0
+                                                                  error:&error];
+                NSLog(@"Foo's value is %@", [jsonDict objectForKey:@"foo"]);
+              }
+            ```
+
+            \begin{figure}[htb]\begin{center}\caption{013\_json\_example.m}\end{center}\end{figure}
+    - "Classes":
+        slides:
+          - >
+            # Class interface declaration
+
+            Classes in Objective C are similar to their C++ cousins in that they come in two parts: interface declaration and implementation. The interface declaration portion of a class follows the form:
+
+
+            ```objectivec
+              #import <Foundation/Foundation.h>
+              @interface MyNewClass : NSObject {
+                int privateVariable1;
+                NSString * privateVariable2;
+              }
+
+              +(int) someClassMethod;
+              -(void) doSomething;
+              -(NSString *) giveMeAStringOfLength:(int)length
+                                randomizeContents:(BOOL)randomize;
+              @end
+            ```
+
+            \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 1}\end{center}\end{figure}
+          - >
+            # Class implementation
+
+            The implementation of this class follows the form:
+
+            ```objectivec
+              #import "MyNewClass.h"
+
+              @implementation MyNewClass
+
+              -(id) init {
+                self = [super init];
+                if(self){
+                  privateVariable1 = 20;
+                  privateVariable2 = [[NSString alloc] initWithString:@"Test"];
+                }
+                return self;
+              }
+
+              +(int) someClassMethod {
+                return 0;
+              }
+
+            ```
+
+            \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 2}\end{center}\end{figure}
+          - >
+            # Class implementation pt. 2
+
+            ```objectivec
+              -(void) doSomething {
+                NSLog(@"Something");
+              }
+
+              -(NSString *) giveMeAStringOfLength:(int)length
+                                randomizeContents:(BOOL)randomize {
+                return @"TODO: Make work";
+              }
+
+              @end
+            ```
+
+            \begin{figure}[htb]\begin{center}\caption{014\_objects.m part 3}\end{center}\end{figure}
     - "Properties":
         slides:
           - >
@@ -738,7 +738,7 @@ presentations:
 
             * [Apple Developer Forums](http://developer.apple.com/devforums/)
 
-  - "iPhone App Layout Conventions":
+  - "iPhone App Basics: UIViewControllers":
     - "MVC, as applied to an app":
         slides:
           - >
@@ -746,7 +746,7 @@ presentations:
             <% figure("Model, View and Controller") do %>
               <%= graphic("mvc.jpg", 0.5) %>
             <% end %>
-    - "Application -> Window -> View Controller(s) -> View(s) + Models":
+    - "Application \\Rightarrow Window \\Rightarrow View Controller(s) \\Rightarrow View(s) + Models":
         slides:
           - >
             On iOS, a UIApplication ( your app ) typically has one UIWindow, which is the primary UIView upon which everything else displays.  A UIView is "just" a rectangle upon which you draw things.
@@ -1122,660 +1122,3 @@ presentations:
           <% figure("Delegate usage throughout the documentation") do %>
             <%= graphic("DelegateGrep.png", 0.5) %>
           <% end %>
-    - "Modal view controllers":
-        - >
-          Not all view controllers fit within the "display in UINavigationController" or "display in UITabBarController"
-          model.
-        - >
-          <% figure("UIImagePickerController") do %>
-            <%= graphic("UIViewExample6.pdf", 0.35) %>
-          <% end %>
-        - >
-          <% figure("MFMailComposeViewController") do %>
-            <%= graphic("UIViewExample7.pdf", 0.35) %>
-          <% end %>
-        - >
-          # Presenting a view controller modally
-
-          You can present a view controller modally by using the `presentModalViewController:animated:` message
-
-          ```objectivec
-            -(IBAction) buttonClicked:(id) sender {
-              MyViewController * mvc = [[MyViewController alloc]
-                                             initWithNibName:@"TheNib"
-                                             bundle:nil];
-              [self presentModalViewController:mvc animated:YES];
-              [mvc release];
-            }
-          ```
-        - >
-          You can specify the transition style with which the view controller appears via the UIViewController message `setModalTransitionStyle:(UIModalTransitionStyle)style`
-  - "XCode and Interface Builder":
-    - "Capabilities":
-        slides:
-          - >
-            XCode and Interface Builder combined provide a development, debugging and interface development tool for you to develop your iPhone apps.  It can integrate with SVN, CVS or Perforce ( and soon, Git! ), it can run automated tests on your code, provide inline documentation assist, code completion and a lot more. It also provides a developer level interface to all the devices you will be debugging your code on; you can manage devices and device profiles through XCode as necessary.
-    - "Creating an app":
-        slides:
-          - >
-            XCode provides a number of application templates for starting an app.  Most basic types of applications can get a fast start by using one of these app templates.
-            <% figure("XCode New Project window") do %>
-              <%= graphic("ProjectCreator.png", 0.35) %>
-            <% end %>
-          - >
-            Once you've selected the type of app you want to create, your project will be created with an application delegate and usually at least one view controller that will manage what goes on the screen.  It will also have a .xib file for your application, and for each view controller in the app, that is used by Interface Builder to layout the screen contents.
-            <% figure("New Project File List") do %>
-              <%= graphic("ProjectFileList.png", 0.75) %>
-            <% end %>
-            <% block("The application delegate - UIApplicationDelegate") do %>
-              The application delegate ( UIApplicationDelegate protocol ) is the class which will respond to overall application lifecycle events, like when your application has started, resumed from suspension, or is about to shut down.
-            <% end %>
-          - >
-            Double clicking on a .xib file will open it in Interface Builder, where you can drag components from the Interface Builder toolbox into the view.  You can easily change the orientation of objects.
-    - "Documentation usage":
-        slides:
-          - >
-            <%= highlight("Help - Developer Documentation") %> is an invaluable resource for researching Cocoa internals.
-    - "Protips!":
-        slides:
-          - >
-            Learn hotkeys! ( CMD+SHIFT+D  and CMD+0 will buy you hours )
-          - >
-            Make XCode fit you ( Single window interface, XCode themes, application templates )
-          - >
-            XCode plugins ( Code Pilot <%= url("http://mac.brothersoft.com/code-pilot-for-xcode.html") %>, Accessorizer <%= url("http://www.kevincallahan.org/software/accessorizer.html") %> )
-  - "Questions"
-- subtitle: "Day 2"
-  title: "iOS Application Development"
-  author: "Chris Zelenak"
-  date: "12/03/2013"
-  sections:
-  - "Images":
-    - "The UIImage":
-        slides:
-          - >
-            A way to represent a bytestream
-          - >
-            Does NOT give you access to the underlying image data
-          - >
-            Can be made from any given iPhone UI screen
-          - >
-            Carries with it a lower level CGImageRef object
-            <% code_block("objectivec") do %>
-              CGImageRef theImage = [aUIImage CGImage];
-            <% end %>
-          - >
-            Can be loaded in cache form with
-            <% code_block("objectivec") do %>
-              UIImage * img = [UIImage imageNamed:@"ImageFilename.png"];
-            <% end %>
-            or loaded in no-cache form with
-            <% code_block("objectivec") do %>
-              NSBundle * bnd = [NSBundle mainBundle];
-              NSString * path = [bnd pathForResource:@"ImageFilename" ofType:@"png"];
-              UIImage * img = [[UIImage alloc] initWithContentsOfFile:path];
-            <% end %>
-          - >
-            UIImage can handle most basic image types: PNG, JEPG, GIF, ICO, BMP, TIF..
-          - >
-            But the fastest way to load and draw images will typically be with PNGs.
-    - "UIImageView and UIButton":
-        slides:
-          - >
-           UIImageView provides a simple way to put an image on the screen, w/ no interaction
-          - >
-            <% code_listing("Loading a UIImageView with an image", "objectivec") do %>
-              UIImageView * v = [[UIImageView alloc]
-                                  initWithFrame:CGRectMake(0.0, 0.0, 200.0, 200.0)];
-              UIImage * someImage = [UIImage imageNamed:@"screenImage.png"];
-              [v setImage:someImage];
-              [someView addSubview:v];
-              [v release];
-            <% end %>
-          - >
-            UIButton can also show an image instead of a rounded rectangle.  It can display different
-            images for both foreground and background based on its current state as well.
-          - >
-            <% code_listing("Loading a UIButton with an image", "objectivec") do %>
-              UIButton * b = [UIButton buttonWithType:UIButtonTypeCustom];
-              [b setImage:[UIImage imageNamed:@"btnImage.png"]
-                 forState:UIControlStateNormal];
-              [b setBackgroundImage:[UIImage imageNamed:@"btnImageSelectedBG.png"]
-                           forState:UIControlStateSelected];
-              [someView addSubview:b];
-            <% end %>
-    - "Lab 4":
-        slides:
-          - >
-            Create a detail UITableViewController
-          - >
-            Load in class images in header with student name
-          - >
-            Push UITableViewController onto UINavigationController stack
-  - "More about UIView and Core Graphics":
-    - "What comes with UIView":
-        slides:
-          - >
-            Any UIView can have its background color, overall opacity,  dimensions and overall coordinate transform (CGAffineTransform)
-          - >
-            Any UIView can contain any number of subviews
-          - >
-            Any UIView can have specific autoresizing behavior applied to it when its parent view changes
-          - >
-            Any UIView can automatically resize its subviews when its dimensions change
-          - >
-            Any UIView subclass can choose to respond to direct touch events
-          - >
-            Any UIView can optionally choose to blit its contents directly to the screen with Core Graphics
-    - Views and subviews:
-        slides:
-          - >
-            The subviews a UIView has are contained within the subviews property of a view
-          - >
-            You can see the subviews of a view layed out in Interface Builder by expanding the View in the Document view
-            <% figure("Expanding the contents of a UIView") do %>
-              <%= graphic("UIViewExpand.png", 0.5) %>
-            <% end %>
-          - >
-            Views overlay each other based on the order they are added to the parent view; you can swap their order by using
-            UIView methods like
-            <% code_block("objectivec") do %>
-              -(void) bringSubviewToFront:(UIView *)view;
-              -(void) sendSubviewToBack:(UIView *)view;
-              -(void) exchangeSubviewAtIndex:(NSInteger)idx withSubviewAtIndex:(NSInteger)idx;
-            <% end %>
-    - "Events and control events":
-        slides:
-          - >
-            Any UIView subclass can override the methods
-
-            <% code_listing("Touch events", "objectivec") do %>
-              - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-              - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-              - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-              - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
-            <% end %>
-
-            and perform their own logic when the view is touched.
-          - >
-            The NSSet passed to each of the event handling methods is full of
-            UITouch objects, which can give you information about where specifically
-            in a view the touch occurred.
-
-            <% alertblock("Multi-touch") do %>
-              If you want to provide multi-touch interactivity with your view,
-              ensure that you have set the multipleTouchEnabled property of your
-              view to YES.
-            <% end %>
-          - >
-            UIControl objects ( like UIButton ) offer more flexibility for responding
-            to events by allowing you to assign specific selectors to be called
-            at specific touch event times.
-
-            <% code_listing("Handling UIButton events", "objectivec") do %>
-              UIButton * b = [UIButton buttonWithType:UIButtonTypeCustom];
-              [b addTarget:self action:@selector(wasTouched:)
-                 forControlEvents:UIControlEventTouchDown];
-              [b addTarget:self action:@selector(wasDraggedOut:)
-                 forControlEvents:UIControlEventTouchDragOutside];
-            <% end %>
-    - "Position, size and color of views - CGRect, CGPoint, CGSize, UIColor":
-        slides:
-          - >
-            Each UIView has a bounding frame and origin coordinate that specifies where
-            in the parent view it appears; this is represented by a CGRect, which is a
-            combination of CGPoint and CGSize .
-          - >
-            CGRect, CGPoint and CGSize are all simple C-structs; they each have simple
-            C constructor methods which make working with them easier:
-            <% code_listing("CG struct constructor methods", "objectivec") do %>
-              CGRect myFrame = CGRectMake(0.0, 0.0, 200.0, 128.0);
-              CGPoint myPoint = CGPointMake(0.0, 10.0);
-              CGSize mySize = CGSizeMake(200.0, 128.0);
-            <% end %>
-          - >
-            They are used universally throughout UIKit whenever ascertaining the
-            location or dimensions of an object need to be queried.
-          - >
-            The CGAffineTransform of a view modifies the /at render time/ value
-            of coordinates, not the logical value you've assigned.
-          - >
-            UIColor can be used to specify any common color value combination
-            you wish to apply to an object.
-          - >
-            UIColor provides a host of simple convenience methods for accessing
-            commonly used colors.
-
-            <% code_listing("UIColor usage", "objectivec") do %>
-              UIColor * c = [UIColor blackColor];
-              UIColor * oc = [UIColor colorWithRed:1.0
-                                             green:0.0
-                                              blue:0.0
-                                             alpha:0.75];
-              UIImage * pattern = [UIImage imageNamed:@"myTileImage.png"];
-              UIColor * pt = [UIColor colorWithPatternImage:pattern];
-            <% end %>
-    - "drawRect:":
-        slides:
-          - >
-            Some effects aren't easily achieved through UIViews and drawn images.  To
-            draw your view components manually, you can override the drawRect method
-            and manually blit your graphics to the screen.
-          - >
-            When drawing your graphics manually, you need to acquire a handle to the
-            graphics surface.  In Core Graphics, this is the CGContextRef, and you can
-            get a handle to it by using UIKit to get the current valid context.
-
-            <% code_listing("Core Graphics context", "objectivec") do %>
-              -(void) drawRect:(CGRect) frame {
-                CGContextRef context = UIGraphicsGetCurrentContext();
-                CGContextSetFillColor(context, [[UIColor redColor] CGColor]);
-                CGContextFillRect(context, frame);
-              }
-            <% end %>
-  - "UIView Animation":
-    - "UIView beginAnimations / commitAnimations":
-        slides:
-          - >
-            You can easily use Core Animation to animate any of your
-            UIViews by using the beginAnimations  and commiteAnimations messages.
-          - >
-            <% code_listing("Example animation", "objectivec") do %>
-              [UIView beginAnimations:nil context:NULL];
-              [someView setAlpha:0.0];
-              [UIView commitAnimations];
-            <% end %>
-          - >
-            Most properties that affect a view's appearance are able to be animated,
-            including size, position, arrangement with respect to other subviews  and transparency.
-    - "Controlling the animation":
-        slides:
-          - >
-            You can set special properties for the animation inside the animation block.
-            These properties include duration, animation curve, delay for animation and
-            completion callbacks.
-          - >
-            The animation curve specifies the easing behavior of an animation - you can set the
-            animation to be linear, ease in, ease out or ease in and out.
-            <% code_listing("Setting easing behavior", "objectivec") do %>
-              [UIView beginAnimations:nil context:NULL];
-              [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-              [someView setFrame:CGRectMake(newX, newY, newWidth, newHeight)];
-              [UIView commitAnimations];
-            <% end %>
-          - >
-            The animation duration and delay indicate how long the animation will run,
-            and how long the animation will wait before running, respectively.
-            <% code_listing("Setting duration and delay", "objectivec") do %>
-              [UIView beginAnimations:nil context:NULL];
-              [UIView setAnimationDuration:12.0]; // 12 sec
-              [UIView setAnimationDelay:1.0]; // wait 1 sec before playing
-              [someView setAlpha:0.45];
-              [UIView commitAnimations];
-            <% end %>
-          - >
-            You can specify a delegate to receive start and stop selectors when the animation
-            first begins and when the animation ends as well.
-          - >
-            <% code_listing("Handling animation start/stop events", "objectivec") do %>
-              -(void) beginAnimation {
-                [UIView beginAnimations:nil context:(void *)theView];
-                [UIView setAnimationDelegate:self];
-                SEL didStop = @selector(animDidStop:finished:ctxt:);
-                SEL wilLStart = @selector(animWillStart:finished:ctxt:);
-                [UIView setAnimationDidStopSelector:didStop];
-                [UIView setAnimationWillStartSelector:willStart];
-                [theView setAlpha:0.0];
-                [UIView commitAnimations];
-              }
-            <% end %>
-          - >
-            <% code_listing("Handling animation start/stop events pt. 2", "objectivec") do %>
-                -(void) animWillStart:(NSString *)animid
-                                 ctxt:(void *)context {
-                  NSLog(@"Started fade out");
-                }
-
-                -(void) animDidStop:(NSString *)animid
-                           finished:(BOOL)finished
-                               ctxt:(void *)context {
-                  UIView * v = (UIView *) context;
-                  [v removeFromSuperview];
-                  NSLog(@"Removed faded view");
-                }
-            <% end %>
-    - "Lab 5":
-        slides:
-          - >
-            Create a UITableViewCell subclass
-          - >
-            Add a front and back image view to the UITableViewCell
-          - >
-            Properly use the new cell subclass in the detail view controller
-          - >
-            Add an image swap method to the subclass
-          - >
-            Swap the images when touched
-          - >
-            Correctly adjust the cell text to make room for the new image
-  - "UIView and CALayer - Coordinate systems, layer backing":
-    - "UIViews each containing a layer":
-        slides:
-          - >
-            Each UIView contains an object called a CALayer; this layer
-            represents the final output of the view to be rendered to
-            screen.
-          - >
-            The CALayer object of a UIView may contain sublayers.
-            The tree hierarchy of UIViews is functionally identical
-            to the tree hierarchy of CALayers.
-          - >
-            The coordinate system of a UIView is not identical to the
-            coordinate system of a CALayer.
-    - "The contents attribute of a CALayer":
-        slides:
-          - >
-            Each CALayer has a property called contents which is intended
-            to hold a CGImageRef.
-          - >
-            Alternatively, a CALayer may have a delegate assigned to it,
-            whose job it is to render content to a supplied CGContextRef.
-          - >
-            The layer that is created for each UIView has its delegate
-            assigned to that UIView.
-    - "How the above animation actually occurs under the hood ( brief reference to CATransaction )":
-        slides:
-          - >
-            CALayers are the lower level manifestation of UIView animation.
-          - >
-            The animation calls at the UIView level boil down to operations
-            inside a CATransaction.
-          - >
-            CATransactions imply batch operations upon a known "current state"
-            of a CALayer; once the transaction has been committed,
-            the values will be changed for the duration of the
-            CATransaction on the modelLayer of a layer, and flushed to the
-            presentationLayer.
-    - "Similarities and differences between a CALayer and a UIView":
-        slides:
-          - >
-            Both have transform properties; CGAffineTransform for UIView,
-            CATransform3D for CALayer. CALayer allows for simple depth changes
-            to a given layer's contents.
-          - >
-            The origin for CALayer's is centered; the origin for UIViews is
-            at the upper left of the view.
-          - >
-            CALayers have no input model to speak of; CALayer subclasses
-            need to be explicitly notified of user input.
-    - "Reference to CATiledLayer and performance optimizations":
-        slides:
-          - >
-            CALayers abstract how image content is batched to the graphics
-            subsystem.  With large ( greater than 2048x2048 ) image content, it becomes
-            necessary to partition the content into smaller chunks.
-          - >
-            CATiledLayer lets you build Google Maps style tiling of
-            images into manageable chunks for the graphics hardware.
-          - >
-            Automatically computes the desired tile size for a given
-            display areo and zoom level.
-  - "Questions"
-- subtitle: "Day 3"
-  title: "iOS Application Development"
-  author: "Chris Zelenak"
-  date: "12/04/2013"
-  sections:
-    - "Core Data and SQLite":
-      - "NSManagedObject and beyond":
-          slides:
-            - >
-              NSManagedObject is the primary element of working with your core
-              data store. It represents a single entity's worth of information
-              in the database that backs your app. The actual data for the
-              entity is able to be queried via the valueForKey and setValue:forKey:
-              methods of NSManagedObject.
-            - >
-              NSManagedObject changes are queued to an NSManagedObjectContext
-              which is roughly equivalent to a database transaction; it provides
-              locking, commit/rollback and undo/redo functionality for
-              object changes.
-            - >
-              NSEntityDescription describes the schema associated with
-              a specific type of NSManagedObject; a database table is similar
-              in the way that it describes the layout of its child rows.
-            - >
-              NSManagedObjectModels are created by the programmer, and are
-              collections of NSEntityDescriptions.
-            - >
-              NSPersistentStore represents the actual physical location of
-              your Core Data objects, and can be a database, an XML file,
-              or any other other physical manifestation of data for
-              which an NSPersistentStore has been written.
-            - >
-              You can create your own NSManagedObjectModel subclasses that
-              provide convenient abstractions over NSManagedObjectModel.
-            - >
-              To get an instance of an NSManagedObject that is able to be
-              saved to the NSPersistentStore, use:
-
-              <% code_listing("Getting a new NSManagedObject that will eventually be saved to an NSPersistentStore", "objectivec") do %>
-                NSManagedObject * newObject = [NSEntityDescription
-                                               insertNewObjectForEntityForName:@"EntityName"
-                                               inManagedObjectContext:managedObjectContext];
-              <% end %>
-            - >
-              To save changes to all current NSManagedObjects currently managed
-              by an NSManagedObjectContext:
-
-              <% code_listing("Saving changed objects", "objectivec") do %>
-                NSError * error = nil;
-                [managedObjectContext save:&error];
-                if(error){
-                    NSLog(@"Couldn't save objects, %@", error);
-                }
-              <% end %>
-      - "NSPredicate and NSFetchRequest":
-          slides:
-            - >
-              Actually fetching objects from the Core Data store requires you
-              to build queries using NSPredicate or NSFetchRequest.
-            - >
-              The syntax for NSPredicate and NSFetchRequest requests is
-              similar to SQL, but not identical.
-            - >
-              <% code_listing("NSPredicate example", "objectivec") do %>
-                NSPredicate * searchPredicate = [NSPredicate
-                                         predicateWithFormat:@"(firstName = 'Chris') AND "
-                                                      @"(lastName BEGINSWITH 'Zel') AND "
-                                                      @"(age BETWEEN {%i,%i})", 20, 30];
-              <% end %>
-              <% block("See more..") do %>
-                Read more about writing NSPredicates in the "Predicate Programming Guide" in
-                the XCode documentation.
-              <% end %>
-            - >
-              You can also build named NSFetchRequests in the .xcdmodel
-              for your entities.
-              <% figure("Predicate builder") do %>
-                <%= graphic("PredicateBuilder.png", 0.5) %>
-              <% end %>
-            - >
-              <% code_listing("Stored NSPredicate example", "objectivec") do %>
-                NSFetchRequest * req = [managedObjectModel
-                                         fetchRequestFromTemplateWithName:@"requestByName"
-                                         substitutionVariables:[NSDictionary
-                                            dictionaryWithObjectsAndKeys:
-                                              @"Pwnsberry", @"LAST_NAME", nil]];
-              <% end %>
-      - "Lab 6":
-          slides:
-            - >
-              Create a property list with the names of the students in the class
-            - >
-              Create the xcdmodel that describes the entities
-            - >
-              Initialize the Core Data persistence layer
-            - >
-              Use NSUserDefaults to detect whether or not the app has been started before
-            - >
-              Perform the import if the app has never been started before
-            - >
-              Pass the user and image data on to the details controller
-    - "Networking ( NSURLRequest )":
-      - "NSURL, NSURLRequest,  NSMutableURLRequest AND NSURLConnection":
-          slides:
-            - >
-              NSURL is meant to only represent a single resource location
-            - >
-              NSURL can be allocated to represent either a filesystem location,
-              or a web resource
-            - >
-              NSURLRequest and NSMutableURLRequest represent specific
-              web resources that you'd like to initiate a connection to;
-              NSURLRequest should be used for simple GET HTTP requests,
-              while NSMutableURLRequests can be used for more complex
-              HTTP requests.
-            - >
-              NSMutableURLRequest allows you to set HTTP headers,
-              the HTTP method used, and the request body.
-            - >
-              NSURLRequest and NSMutableURLRequest both by default
-              only work with HTTP requests
-            - >
-              NSURLConnection initiates the download and returns
-              the NSHTTPURLResponse which contains the body of the
-              response, as well as http status code and
-              response headers.
-            - >
-              NSURLConnection can send data both synchronously
-              or asynchronously; the response information is passed
-              back to the connection delegate via the
-              informal NSURLConnection delegate.
-      - "Networking Lab":
-          slides:
-            - >
-              Create a new UIVIewController
-            - >
-              Add an NSURLConnection object
-            - >
-              Download the plist object and deserialize it
-            - >
-              Load the tableView with the new data
-      - "( ASIHttpRequest, EasyURLDownloader )":
-          slides:
-            - >
-              ASIHttpRequest gives you a full-featured HTTP library
-              enhancement; cookie persistence support, enhanced
-              HTTP auth support, S3 support and more.
-              <%= url("http://github.com/pokeb/asi-http-request/") %>
-            - >
-              EasyURLDownloader gives you a simple library to
-              perform asynchronous GET downloads in the background
-              <%= url("http://github.com/netshade/EasyUrlDownloader") %>
-      - "SOAP and REST Webservices":
-          slides:
-            - >
-              You can roll your own webservice access, but you
-              don't have ot.
-            - >
-              ObjectiveResource makes accessing REST services
-              with ObjectiveC incredibly easy.
-            - >
-              WSMakeStubs will create stubs for you that shim out
-              the available endpoints of a WSDL web service.
-            - >
-              ObjectiveResource is available at
-              <%= url("http://github.com/yfactorial/objectiveresource") %>
-            - >
-              WSMakeStubs is a binary included with your SDK
-    - "Getting your application on the device":
-      - "Development certificates, Distribution certificates":
-          slides:
-            - >
-              Log in to the iPhone developer portal and request a developer certificate
-            - >
-              Explain Key requests
-            - >
-              Download and install certificate
-            - >
-              Create development provisioning profile with devices
-            - >
-              Assign development provisioning profile
-            - >
-              AdHoc and Store based distribution reserved for Agents only
-    - "Using Instruments":
-      - "Always, always, always memory leak check":
-          slides:
-            - >
-              Opening up the Leaks tool and examining your application behavior
-            - >
-              Examining specific leaks
-            - >
-              Understanding the Leaks tool
-      - "Always, always, always activity monitor check":
-          slides:
-            - >
-              Using Activity Monitor to monitor your current system state
-    - "Distributing your app to others":
-      - "The process you need to know":
-          slides:
-            - >
-              Releasing your app to others in beta form
-            - >
-              What is an .ipa file
-            - >
-              How to send your .ipa file to others
-      - "The URLs you need to know":
-          slides:
-            - >
-              <%= url("http://developer.apple.com/iphone/") %> is the frontend to most
-              Apple web services
-            - >
-              <%= url("http://itunesconnect.apple.com/") %> is the URL to access the app-release
-              frontend and store management services provided by Apple
-    - "Questions"
-- subtitle: "Day 4"
-  title: "iOS Application Development"
-  author: "Chris Zelenak"
-  date: "12/05/2013"
-  sections:
-    - "Overview of what's new in 4.0":
-      - "Multitasking"
-      - "Event Kit"
-      - "Core Motion"
-      - "Data Protection"
-      - "Core Telephony"
-      - "Assets Library"
-      - "Quick Look framework"
-      - "AVFoundation update"
-      - "ImageIO"
-      - "CoreMedia"
-      - "CoreVideo"
-    - "Hardware differences between devices":
-      - "iPhone 2G"
-      - "iPod Touch models"
-      - "iPhone 3G"
-      - "iPhone 3GS"
-      - "iPad"
-      - "iPhone 4"
-    - "Device coordinate systems, logical points vs. physical pixels":
-      - "Mapping points to pixels"
-      - "Image naming schemes"
-      - "iPad v. iPhone 4 v. iPhone earlier naming schems"
-    - "Blocks in Objective C":
-      - "Overview of blocks wrt function closures"
-      - "Use of blocks in new iOS"
-    - "Multiprocessing, Grand Central Dispatch":
-      - "Use of blocks and queues in GCD"
-    - "Accelerate":
-      - "Preparing your application for iOS 4.0"
-    - "Multitasking aware"
-    - "Class overview, bits of information that didn't fit anywhere else"
-    - "Thanks!"
-- subtitle: "Day 5"
-  title: "iOS Application Development"
-  author: "Chris Zelenak"
-  date: "12/06/2013"
-  sections:
-    - "New Stuff"
