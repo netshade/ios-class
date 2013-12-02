@@ -1,2 +1,2 @@
 exports.index = (req, res)->
-  res.render('index', title: 'Bootstrapping iOS')
+  res.render('index', title: 'Bootstrapping iOS', release: '0.3')
