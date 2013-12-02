@@ -48,6 +48,15 @@ module MarkdownFraming
     end.compact.join("")
   end
 
+  def string_to_title_frame(name)
+    new_frame(name, <<-EOMD)
+\\begin{center}
+\\large #{name}
+\\end{center}
+
+    EOMD
+  end
+
 end
 
 class ERBTemplate
@@ -248,6 +257,9 @@ end
 
 config = ERBYamlTemplate.new
 data = YAML.load(config.render)
+rendered_data = File.new("schedule.rendered.yml", "w+")
+rendered_data.write(config.render)
+rendered_data.close
 
 data["presentations"].each_with_index do |data, index|
   base_dir = File.join("slides", (index+1).to_s)

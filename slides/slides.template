@@ -115,7 +115,15 @@
 \section{<%= section_name %>}
 <%= new_frame(section_name, content.is_a?(Hash) ? content : "#{idx + 1}. #{section_name}") %>
     <% Array(content).each do |frame| %>
-<%= frame.is_a?(Hash) ? new_frame(*frame.first) : new_frame(frame) %>
+      <% if frame.is_a?(Hash) %>
+        <% frame.each do |name, slides| %>
+\subsection{<%= name %>}
+<%= string_to_title_frame(name) %>
+<%= new_frame(name, slides) %>
+        <% end %>
+      <% else %>
+<%= new_frame(frame) %>
+      <% end %>
     <% end %>
 % END SECTION <%= section_name %>
    <% end %>
