@@ -18,3 +18,4 @@ Install the above packages, then run `bundle install` to install any required Ru
 
 Server code has class instructions as well as test URLs for class code to hit. Push to heroku via `git subtree push --prefix server heroku master`
 
+Server currently up at: [bootstrapping-ios.com](http://bootstrapping-ios.com/)
