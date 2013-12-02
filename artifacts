@@ -1,0 +1,13 @@
+#!/usr/bin/env bash -e -x
+cp slides/1/slides.pdf build/ClassSlides.pdf
+for i in labs/Lab*; do 
+  LABNAME=$(basename $i)
+  cd labs
+  zip -r ${LABNAME}.zip ${LABNAME}
+  mv ${LABNAME}.zip ../build/
+  cd ..
+done
+zip -r Code.zip code
+mv Code.zip build
+/Applications/PDF\ to\ Keynote.app/Contents/MacOS/PDF\ to\ Keynote build/ClassSlides.pdf
+
