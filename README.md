@@ -10,6 +10,7 @@ Required to build slides:
 * pdflatex ( _likely included with a TeX distribution? I'm using http://tug.org/mactex/_ )
 * Ruby
 * Bundler
+* [PDF to Keynote](http://www.cs.hmc.edu/~oneill/freesoftware/pdftokeynote.html)
 
 Instructions:
 
