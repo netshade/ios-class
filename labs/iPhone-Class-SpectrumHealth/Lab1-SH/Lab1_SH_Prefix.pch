@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the 'Lab1-SH' target in the 'Lab1-SH' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-    #import <UIKit/UIKit.h>
-#endif
