@@ -18,6 +18,7 @@ app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
+app.use(express.bodyParser());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
@@ -29,6 +30,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/echo', routes.echoParams);
+app.post('/echo', routes.echoBody);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
