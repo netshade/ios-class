@@ -1231,4 +1231,80 @@ presentations:
                 _One more thing_: Change your request to a POST request with `application/x-www-form-urlencoded` content type, and instead of sending a querystring in the URL, send the key value pairs in the HTTP body.
               - >
                 _And another thing_: Select your TableViewController and enable "Refreshing" in its attributes. Connect the UIRefreshControl's Value Changed outlet to an IBAction method on your TableViewController that triggers a new download. Tell the refresh control to change its appearance through `[self.refreshControl beginRefreshing]` and `[self.refreshControl endRefreshing]`.
+      - "NSTimer, NSRunLoop, NSThread and the Event Loop":
+          slides:
+              - >
+                Cocoa represents application threads using the `NSThread` object. Each `NSThread` has an `NSRunLoop` associated with it, which is responsible for managing IO and timer events.
+              - >
+                The main application thread (the UI thread) is one of a set of default threads created for you.  Any operations that occur on this main thread can cause the user interface to become non-responsive; it is important that you defer long running processes to outside this thread.
+              - >
+                To perform an action at some later point, or on an interval, you can register an NSTimer with the current NSRunLoop. An NSTimer will invoke a selector you specify on a schedule you control.
+
+                ```objectivec
+                  [NSTimer scheduledTimerWithTimeInterval:10.0
+                      target:self
+                      selector:@selector(runEveryTenSeconds:)
+                      userInfo:nil
+                      repeats:YES];
+
+                  -(void) runEveryTenSeconds:(NSTimer *) {
+                    NSLog(@"Timer fired");
+                  }
+                ```
+              - >
+                These timer actions occur in the thread they were scheduled from, so be cautious about scheduling expensive operations.
+      - "Lab 6":
+          slides:
+              - >
+                Create a new "Single View" project
+                <% figure("Create a new project") do %>
+                  <%= graphic("NewProject.png", 0.5) %>
+                <% end %>
+              - >
+                Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+                <% figure("Select UINavigationController in the Object library") do %>
+                  <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+                <% end %>
+              - >
+                Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+                <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+                  <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+                <% end %>
+              - >
+                Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+                <% figure("Add a new subclass of UITableViewController") do %>
+                  <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+                <% end %>
+              - >
+                Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+                <% figure("Change subclass to new UITableViewController") do %>
+                  <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+                <% end %>
+              - >
+                In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
+
+                ```objectivec
+                  NSTimeInterval since1970 = [[NSDate date] timeIntervalSince1970];
+                  NSURL * theUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://bootstrapping-ios.com/echo?names=one-%f&names=two-%f&names=three-%f", since1970, since1970, since1970]];
+                ```
+
+                Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
+              - >
+                Create an NSTimer and schedule refreshes of the data every 10 seconds.
+
+                ```objectivec
+                  timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(doRefresh:) userInfo:nil repeats:YES];
+                ```
+
+                Add a method called dealloc that cancels the timer:
+
+                ```objectivec
+                  -(void) dealloc {
+                    [timer invalidate];
+                    timer = nil;
+                  }
+                ```
+
 
