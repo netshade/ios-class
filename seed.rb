@@ -44,7 +44,11 @@ module MarkdownFraming
   def new_frame(name, content = nil)
     content = content.is_a?(Hash) ? content["slides"] : content
     Array(content).flatten.compact.map do |body|
-      markdown_to_beamer(body.strip)
+      begin
+        markdown_to_beamer(body.strip)
+      rescue Exception => e
+        raise body.inspect
+      end
     end.compact.join("")
   end
 
