@@ -1135,176 +1135,379 @@ presentations:
           * Populates the UITableViewController rows with images specified from the JSON file
 
           * When a table row is selected, loads a detail view controller that presents the name and image that the user selected
-    - "HTTP Requests - Networking":
-      - "NSURL, NSURLRequest,  NSMutableURLRequest AND NSURLConnection":
-          slides:
-            - >
-              NSURL is meant to only represent a single resource location
 
-              ```objectivec
-                NSURL * theUrl = [NSURL URLWithString:@"http://bootstrapping-ios.com/"];
-              ```
-            - >
-              NSURL can be allocated to represent either a filesystem location, or a web resource
+    - "NSURL, NSURLRequest,  NSMutableURLRequest AND NSURLConnection":
+        - >
+          NSURL is meant to only represent a single resource location
 
-              ```objectivec
-                NSURL * aWebUrl = [NSURL URLWithString:@"http://news.ycombinator.org/"];
-                NSURL * aFileUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"json"]]];
-              ```
-            - >
-              NSURLRequest and NSMutableURLRequest represent specific web resources that you'd like to initiate a connection to; NSURLRequest should be used for simple GET HTTP requests,while NSMutableURLRequests can be used for more complex HTTP requests (POST, PUT, file uploads).
-            - >
-              NSMutableURLRequest allows you to set HTTP headers, the HTTP method used, and the request body.
-            - >
-              ```objectivec
-                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
+          ```objectivec
+            NSURL * theUrl = [NSURL URLWithString:@"http://bootstrapping-ios.com/"];
+          ```
+        - >
+          NSURL can be allocated to represent either a filesystem location, or a web resource
 
-                NSMutableURLRequest *  customRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
-                [customRequest setHTTPMethod:@"POST"];
-                [customRequest setValue:@"Some-Token" forHTTPHeaderField:@"X-Request-Token"];
-                [customRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-                [customRequest setHTTPBody:[@"some-form=values" dataUsingEncoding:NSUTF8StringEncoding]];
-              ```
-            - >
-              NSURLConnection can send data both synchronously or asynchronously. Asynchronous response information is passed back to the connection delegate via the NSURLConnectionDelegate, NSURLConnectionDataDelegate and NSURLConnectionDownloadDelegate protocols.
-            - >
-              NSURLConnection initiates the download and returns the NSHTTPURLResponse which contains the body of the response, as well as http status code and response headers.
+          ```objectivec
+            NSURL * aWebUrl = [NSURL URLWithString:@"http://news.ycombinator.org/"];
+            NSURL * aFileUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"json"]]];
+          ```
+        - >
+          NSURLRequest and NSMutableURLRequest represent specific web resources that you'd like to initiate a connection to; NSURLRequest should be used for simple GET HTTP requests,while NSMutableURLRequests can be used for more complex HTTP requests (POST, PUT, file uploads).
+        - >
+          NSMutableURLRequest allows you to set HTTP headers, the HTTP method used, and the request body.
+        - >
+          ```objectivec
+            NSURLRequest * request = [NSURLRequest
+              requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
 
-              ```objectivec
-                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
+            NSMutableURLRequest *  customRequest = [NSMutableURLRequest
+              requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
+            [customRequest setHTTPMethod:@"POST"];
+            [customRequest setValue:@"Some-Token"
+                 forHTTPHeaderField:@"X-Request-Token"];
+            [customRequest setValue:@"application/x-www-form-encoded"
+                 forHTTPHeaderField:@"Content-Type"];
+            [customRequest setHTTPBody:[@"some-form=values"
+                     dataUsingEncoding:NSUTF8StringEncoding]];
+          ```
+        - >
+          NSURLConnection can send data both synchronously or asynchronously. Asynchronous response information is passed back to the connection delegate via the NSURLConnectionDelegate, NSURLConnectionDataDelegate and NSURLConnectionDownloadDelegate protocols.
+        - >
+          NSURLConnection initiates the download and returns the NSHTTPURLResponse which contains the body of the response, as well as http status code and response headers.
 
-                NSError * error;
-                NSHTTPURLResponse * response;
-                NSData * syncResponse = [NSURLConnection sendSynchronousRequest:request
-                  returningResponse:&response
-                  error:&error];
+          ```objectivec
+            NSURLRequest * request = [NSURLRequest
+              requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
 
-                NSURLConnection * asyncConnection = [[NSURLConnection alloc] initWithRequest:request
-                  delegate:self
-                  startImmediately:YES];
-              ```
-            - >
-              NSURLSession adds conveniences for downloading content in the backgroun.
-      - "Lab 5":
-          slides:
-              - >
-                Create a new "Single View" project
-                <% figure("Create a new project") do %>
-                  <%= graphic("NewProject.png", 0.5) %>
-                <% end %>
-              - >
-                Open the project's storyboard and add a new "UINavigationController" to the storyboard.
-                <% figure("Select UINavigationController in the Object library") do %>
-                  <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
-                <% end %>
-              - >
-                Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
-                <% figure("Drag the initial scene arrow to the UINavigationController") do %>
-                  <%= graphic("DragInitialSceneArrow.png", 0.25) %>
-                <% end %>
-              - >
-                Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+            NSError * error;
+            NSHTTPURLResponse * response;
+            NSData * syncResponse = [NSURLConnection sendSynchronousRequest:request
+              returningResponse:&response
+              error:&error];
 
-                <% figure("Add a new subclass of UITableViewController") do %>
-                  <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
-                <% end %>
-              - >
-                Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+            NSURLConnection * asyncConnection = [[NSURLConnection alloc]
+              initWithRequest:request
+              delegate:self
+              startImmediately:YES];
+          ```
+        - >
+          NSURLSession adds conveniences for downloading content in the background.
+    - "Lab 5":
+        - >
+          Create a new "Single View" project
+          <% figure("Create a new project") do %>
+            <%= graphic("NewProject.png", 0.5) %>
+          <% end %>
+        - >
+          Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+          <% figure("Select UINavigationController in the Object library") do %>
+            <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+          <% end %>
+        - >
+          Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+          <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+            <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+          <% end %>
+        - >
+          Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
 
-                <% figure("Change subclass to new UITableViewController") do %>
-                  <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
-                <% end %>
-              - >
-                In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
+          <% figure("Add a new subclass of UITableViewController") do %>
+            <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
 
-                `http://bootstrapping-ios.com/echo?names=one&names=two&names=three`
+          <% figure("Change subclass to new UITableViewController") do %>
+            <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
 
-                Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
-              - >
-                You will need to have your view controller adopt specific methods from the NSURLConnectionDelegate and  NSURLConnectionDataDelegate protocols. You will also need to store the request data in something like NSMutableData.
-              - >
-                Run the app!
-                <% figure("Basically an expert") do %>
-                  <%= graphic("distinguishedyay.jpg", 0.5) %>
-                <% end %>
-              - >
-                _One more thing_: Change your request to a POST request with `application/x-www-form-urlencoded` content type, and instead of sending a querystring in the URL, send the key value pairs in the HTTP body.
-              - >
-                _And another thing_: Select your TableViewController and enable "Refreshing" in its attributes. Connect the UIRefreshControl's Value Changed outlet to an IBAction method on your TableViewController that triggers a new download. Tell the refresh control to change its appearance through `[self.refreshControl beginRefreshing]` and `[self.refreshControl endRefreshing]`.
-      - "NSTimer, NSRunLoop, NSThread and the Event Loop":
-          slides:
-              - >
-                Cocoa represents application threads using the `NSThread` object. Each `NSThread` has an `NSRunLoop` associated with it, which is responsible for managing IO and timer events.
-              - >
-                The main application thread (the UI thread) is one of a set of default threads created for you.  Any operations that occur on this main thread can cause the user interface to become non-responsive; it is important that you defer long running processes to outside this thread.
-              - >
-                To perform an action at some later point, or on an interval, you can register an NSTimer with the current NSRunLoop. An NSTimer will invoke a selector you specify on a schedule you control.
+          ```
+            http://bootstrapping-ios.com/echo?names=one&\
+                                                names=two&\
+                                                names=three
+          ```
 
-                ```objectivec
-                  [NSTimer scheduledTimerWithTimeInterval:10.0
-                      target:self
-                      selector:@selector(runEveryTenSeconds:)
-                      userInfo:nil
-                      repeats:YES];
+          Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
+        - >
+          You will need to have your view controller adopt specific methods from the NSURLConnectionDelegate and  NSURLConnectionDataDelegate protocols. You will also need to store the request data in something like NSMutableData.
+        - >
+          Run the app!
+          <% figure("Basically an expert") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
+        - >
+          _One more thing_: Change your request to a POST request with `application/x-www-form-urlencoded` content type, and instead of sending a querystring in the URL, send the key value pairs in the HTTP body.
+        - >
+          _And another thing_: Select your TableViewController and enable "Refreshing" in its attributes. Connect the UIRefreshControl's Value Changed outlet to an IBAction method on your TableViewController that triggers a new download. Tell the refresh control to change its appearance through `[self.refreshControl beginRefreshing]` and `[self.refreshControl endRefreshing]`.
+    - "NSTimer, NSRunLoop, NSThread and the Event Loop":
+        - >
+          Cocoa represents application threads using the `NSThread` object. Each `NSThread` has an `NSRunLoop` associated with it, which is responsible for managing IO and timer events.
+        - >
+          The main application thread (the UI thread) is one of a set of default threads created for you.  Any operations that occur on this main thread can cause the user interface to become non-responsive; it is important that you defer long running processes to outside this thread.
+        - >
+          To perform an action at some later point, or on an interval, you can register an NSTimer with the current NSRunLoop. An NSTimer will invoke a selector you specify on a schedule you control.
 
-                  -(void) runEveryTenSeconds:(NSTimer *) {
-                    NSLog(@"Timer fired");
-                  }
-                ```
-              - >
-                These timer actions occur in the thread they were scheduled from, so be cautious about scheduling expensive operations.
-      - "Lab 6":
-          slides:
-              - >
-                Create a new "Single View" project
-                <% figure("Create a new project") do %>
-                  <%= graphic("NewProject.png", 0.5) %>
-                <% end %>
-              - >
-                Open the project's storyboard and add a new "UINavigationController" to the storyboard.
-                <% figure("Select UINavigationController in the Object library") do %>
-                  <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
-                <% end %>
-              - >
-                Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
-                <% figure("Drag the initial scene arrow to the UINavigationController") do %>
-                  <%= graphic("DragInitialSceneArrow.png", 0.25) %>
-                <% end %>
-              - >
-                Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+          ```objectivec
+            [NSTimer scheduledTimerWithTimeInterval:10.0
+                target:self
+                selector:@selector(runEveryTenSeconds:)
+                userInfo:nil
+                repeats:YES];
 
-                <% figure("Add a new subclass of UITableViewController") do %>
-                  <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
-                <% end %>
-              - >
-                Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+            -(void) runEveryTenSeconds:(NSTimer *) {
+              NSLog(@"Timer fired");
+            }
+          ```
+        - >
+          These timer actions occur in the thread they were scheduled from, so be cautious about scheduling expensive operations.
+    - "Lab 6":
+        - >
+          Create a new "Single View" project
+          <% figure("Create a new project") do %>
+            <%= graphic("NewProject.png", 0.5) %>
+          <% end %>
+        - >
+          Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+          <% figure("Select UINavigationController in the Object library") do %>
+            <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+          <% end %>
+        - >
+          Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+          <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+            <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+          <% end %>
+        - >
+          Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
 
-                <% figure("Change subclass to new UITableViewController") do %>
-                  <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
-                <% end %>
-              - >
-                In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
+          <% figure("Add a new subclass of UITableViewController") do %>
+            <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
 
-                ```objectivec
-                  NSTimeInterval since1970 = [[NSDate date] timeIntervalSince1970];
-                  NSURL * theUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://bootstrapping-ios.com/echo?names=one-%f&names=two-%f&names=three-%f", since1970, since1970, since1970]];
-                ```
+          <% figure("Change subclass to new UITableViewController") do %>
+            <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
 
-                Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
-              - >
-                Create an NSTimer and schedule refreshes of the data every 10 seconds.
+          ```objectivec
+            NSTimeInterval since1970 = [[NSDate date] timeIntervalSince1970];
+            NSURL * theUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://bootstrapping-ios.com/echo?names=one-%f&names=two-%f&names=three-%f", since1970, since1970, since1970]];
+          ```
 
-                ```objectivec
-                  timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(doRefresh:) userInfo:nil repeats:YES];
-                ```
+          Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
+        - >
+          Create an NSTimer and schedule refreshes of the data every 10 seconds.
 
-                Add a method called dealloc that cancels the timer:
+          ```objectivec
+            timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(doRefresh:) userInfo:nil repeats:YES];
+          ```
 
-                ```objectivec
-                  -(void) dealloc {
-                    [timer invalidate];
-                    timer = nil;
-                  }
-                ```
+          Add a method called dealloc that cancels the timer:
 
+          ```objectivec
+            -(void) dealloc {
+              [timer invalidate];
+              timer = nil;
+            }
+          ```
+        - >
+          Run the app!
+          <% figure("Yay!") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
+        - >
+          _One more thing_: Add a call to sleep() (`man 3 sleep`) in your timer that intentionally delays response time of the refresh. Observe how UI suffers as the timer action takes longer to execute.
+    - "Installing on the iOS Device":
+        - >
+          So far we've been running everything on the simulator. In order to run code on our device, we need to do two things:
+
+
+          * Have a valid code signing certificate
+
+          * Have a valid provisioning profile
+
+        - >
+          A code signing certificate allows us to prove we are the trusted origin of our code. A provisioning profile creates the association between the certificate and the devices that it's allowed to run on.
+        - >
+          You will need a separate certificate and profile for:
+
+          * Development deployment
+
+          * AdHoc deployment
+
+          * AppStore deployment
+
+          * Enterprise deployment
+        - >
+          XCode will generally create the files you need, but you may manually create (and debug) the requisite files through:
+
+          * The XCode Organizer \menu{Window > Organizer}
+
+
+          <% figure("XCode Organizer") do %>
+            <%= graphic("Organizer.png", 0.5) %>
+          <% end %>
+
+
+          * iTunes Connect [http://itunesconnect.apple.com/](http://itunesconnect.apple.com/)
+    - "Lab 7":
+        - >
+          Open up "Lab 6" in XCode.
+        - >
+          Connect your iPhone to your machine.
+        - >
+          Select the iOS device in the "Destination" dropdown.
+
+          <% figure("Select your iOS device") do %>
+            <%= graphic("SelectDevice.png", 0.5) %>
+          <% end %>
+        - >
+          Run the app. If you've never actually ran a developer app on your device before, XCode should automatically create the files you need to sign code for the device.
+
+          Alternatively, you can manually set the device to be a developer device on your account by adding it to the member center in XCode Organizer.
+        - >
+          <% figure("Adding to the Member Center manually") do %>
+            <%= graphic("AddToMemberCenter.png", 0.5) %>
+          <% end %>
+        - >
+          While the app is running on your device, you can:
+
+          * Access Console output in Organizer
+
+
+          <% figure("Watching console output") do %>
+            <%= graphic("DeviceConsole.png", 0.5) %>
+          <% end %>
+        - >
+          * Set breakpoints and inspect memory in XCode
+
+
+          <% figure("Inspecting breakpoints") do %>
+            <%= graphic("InspectAtBreakpoints.png", 0.5) %>
+          <% end %>
+        - >
+          * Interactively query memory at breakpoints with LLDB
+
+
+          <% figure("Querying objects and running code via LLDB") do %>
+            <%= graphic("LLDB.png", 0.5) %>
+          <% end %>
+        - >
+          * Observe basic system metrics
+
+
+          <% figure("Watching system metrics") do %>
+            <%= graphic("AppSystemMetrics.png", 0.5) %>
+          <% end %>
+    - "Custom Views":
+        - >
+          Views are descendants of `UIView`, and have several properties that allow for some basic customization. Some commonly used attributes are:
+
+          * `.frame`, of type `CGRect`
+
+          * `.backgroundColor` of type `UIColor`
+
+          * `.alpha` of type `CGFloat`
+
+          * `.transform` of type `CGAffineTransform`
+
+          * `.hidden` of type `BOOL`
+
+        - >
+          UIView can be subclassed and customized, just like any other view. A UIView may contain other UIViews to __compose__ a higher order control. They can also draw directly to the screen if you need to manually draw certain types of graphics using an API called `Core Graphics`.
+        - >
+          Any UIViewController has a `view` attribute which represents the top level view it is currently displaying. You can programmatically add other views to this using methods like `addSubview:`, or you can modify the `view` in Storyboard as we have been doing.
+        - >
+          Views may have a `tag` associated with them, an integer identifier that allows specific views to be requested with the `viewWithTag:` method of UIView.
+
+          ```objectivec
+            UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0., 0., 20., 20.)];
+            v.tag = 100;
+
+            [self.view addSubview:v];
+
+            UIView * theView = [self.view viewWithTag:100];
+          ```
+        - >
+          UIViews may also specify certain constraints with respect to their sibling views. This is called `Auto Layout`, and allows for UIViews to change their appearance w/ respect to other views.
+
+          <% figure("Autolayout Constraints") do %>
+            <%= graphic("AutoLayoutConstraints.png", 0.5) %>
+          <% end %>
+        - >
+          Additionally, UIViews can have application wide settings applied to them using `UIApperance` objects, which set defaults for object appearance:
+
+          ```objectivec
+            [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+            [[UITableViewCell appearanceWhenContainedIn:[UITableView class], nil]
+              setBackgroundColor:[UIColor purpleColor]];
+          ```
+    - "Lab 8":
+        - >
+          Create a new "Single View" project
+          <% figure("Create a new project") do %>
+            <%= graphic("NewProject.png", 0.5) %>
+          <% end %>
+        - >
+          Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+          <% figure("Select UINavigationController in the Object library") do %>
+            <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+          <% end %>
+        - >
+          Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+          <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+            <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+          <% end %>
+        - >
+          Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+          <% figure("Add a new subclass of UITableViewController") do %>
+            <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+          <% figure("Change subclass to new UITableViewController") do %>
+            <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Populate your UITableView with data. :)
+        - >
+          In Storyboard, add the following items to the prototype cell in your UITableView:
+
+          * A UIImageView  (tag 100)
+
+
+          * A UILabel that is the "Title" label (tag 101)
+
+
+          * A UILabel that is the "Subtitle" label (tag 102)
+
+        - >
+          Add an alignment constraint to the "Title" and "Subtitle" such that they keep a strict right margin with respect to their superview.
+
+          <% figure("Set right margin") do %>
+            <%= graphic("SetRightMargin.png", 0.5) %>
+          <% end %>
+        - >
+          In the `tableView:cellForRowAtIndexPath:` method of your table view controller, retrieve the 3 views based on their tag, and set their values respectively.
+
+          ```objectivec
+            UIImageView * imageView = [cell viewWithTag:100];
+            UILabel * title = [cell viewWithTag:101];
+            UILabel * subtitle = [cell viewWithTag:102];
+            title.text = @"Title"
+            subtitle.text = @"image"
+            imageView.image = anImage;
+          ```
+        - >
+          Run the app!
+          <% figure("Put it on the App Store!") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
+        - >
+          _One more thing_: Using the UIAppearance protocol, set the default font and text color of any UILabel object when your app starts up.
 
