@@ -1122,3 +1122,113 @@ presentations:
           <% figure("Delegate usage throughout the documentation") do %>
             <%= graphic("DelegateGrep.png", 0.5) %>
           <% end %>
+    - "Review Concepts: UIViewController Basics":
+        - >
+          Build an iOS app that:
+
+          * Has a UINavigationController
+
+          * Loads a UITableViewController as its first scene
+
+          * Populates the UITableViewController rows names taken from a JSON file in the local file system
+
+          * Populates the UITableViewController rows with images specified from the JSON file
+
+          * When a table row is selected, loads a detail view controller that presents the name and image that the user selected
+    - "HTTP Requests - Networking":
+      - "NSURL, NSURLRequest,  NSMutableURLRequest AND NSURLConnection":
+          slides:
+            - >
+              NSURL is meant to only represent a single resource location
+
+              ```objectivec
+                NSURL * theUrl = [NSURL URLWithString:@"http://bootstrapping-ios.com/"];
+              ```
+            - >
+              NSURL can be allocated to represent either a filesystem location, or a web resource
+
+              ```objectivec
+                NSURL * aWebUrl = [NSURL URLWithString:@"http://news.ycombinator.org/"];
+                NSURL * aFileUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"json"]]];
+              ```
+            - >
+              NSURLRequest and NSMutableURLRequest represent specific web resources that you'd like to initiate a connection to; NSURLRequest should be used for simple GET HTTP requests,while NSMutableURLRequests can be used for more complex HTTP requests (POST, PUT, file uploads).
+            - >
+              NSMutableURLRequest allows you to set HTTP headers, the HTTP method used, and the request body.
+            - >
+              ```objectivec
+                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
+
+                NSMutableURLRequest *  customRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
+                [customRequest setHTTPMethod:@"POST"];
+                [customRequest setValue:@"Some-Token" forHTTPHeaderField:@"X-Request-Token"];
+                [customRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+                [customRequest setHTTPBody:[@"some-form=values" dataUsingEncoding:NSUTF8StringEncoding]];
+              ```
+            - >
+              NSURLConnection can send data both synchronously or asynchronously. Asynchronous response information is passed back to the connection delegate via the NSURLConnectionDelegate, NSURLConnectionDataDelegate and NSURLConnectionDownloadDelegate protocols.
+            - >
+              NSURLConnection initiates the download and returns the NSHTTPURLResponse which contains the body of the response, as well as http status code and response headers.
+
+              ```objectivec
+                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://bootstrapping-ios.com/"]];
+
+                NSError * error;
+                NSHTTPURLResponse * response;
+                NSData * syncResponse = [NSURLConnection sendSynchronousRequest:request
+                  returningResponse:&response
+                  error:&error];
+
+                NSURLConnection * asyncConnection = [[NSURLConnection alloc] initWithRequest:request
+                  delegate:self
+                  startImmediately:YES];
+              ```
+            - >
+              NSURLSession adds conveniences for downloading content in the backgroun.
+      - "Lab 5":
+          slides:
+              - >
+                Create a new "Single View" project
+                <% figure("Create a new project") do %>
+                  <%= graphic("NewProject.png", 0.5) %>
+                <% end %>
+              - >
+                Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+                <% figure("Select UINavigationController in the Object library") do %>
+                  <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+                <% end %>
+              - >
+                Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+                <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+                  <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+                <% end %>
+              - >
+                Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+                <% figure("Add a new subclass of UITableViewController") do %>
+                  <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+                <% end %>
+              - >
+                Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+                <% figure("Change subclass to new UITableViewController") do %>
+                  <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+                <% end %>
+              - >
+                In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
+
+                `http://bootstrapping-ios.com/echo?names=one&names=two&names=three`
+
+                Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
+              - >
+                You will need to have your view controller adopt specific methods from the NSURLConnectionDelegate and  NSURLConnectionDataDelegate protocols. You will also need to store the request data in something like NSMutableData.
+              - >
+                Run the app!
+                <% figure("Basically an expert") do %>
+                  <%= graphic("distinguishedyay.jpg", 0.5) %>
+                <% end %>
+              - >
+                _One more thing_: Change your request to a POST request with `application/x-www-form-urlencoded` content type, and instead of sending a querystring in the URL, send the key value pairs in the HTTP body.
+              - >
+                _And another thing_: Select your TableViewController and enable "Refreshing" in its attributes. Connect the UIRefreshControl's Value Changed outlet to an IBAction method on your TableViewController that triggers a new download. Tell the refresh control to change its appearance through `[self.refreshControl beginRefreshing]` and `[self.refreshControl endRefreshing]`.
+
