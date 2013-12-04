@@ -1,5 +1,5 @@
 exports.index = (req, res)->
-  res.render('index', title: 'Bootstrapping iOS', release: '0.5')
+  res.render('index', title: 'Bootstrapping iOS', release: '0.6')
 
 exports.echoParams = (req, res)->
   res.json(req.query)
