@@ -6,3 +6,8 @@ exports.echoParams = (req, res)->
 
 exports.echoBody = (req, res)->
   res.json(req.body)
+
+exports.echoParamsWait = (req, res)->
+  setTimeout(()->
+    res.json(req.query)
+  , 5000)

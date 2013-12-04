@@ -31,6 +31,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/echo', routes.echoParams);
+app.get('/echoWait', routes.echoParamsWait);
 app.post('/echo', routes.echoBody);
 
 http.createServer(app).listen(app.get('port'), function(){
