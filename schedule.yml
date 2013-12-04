@@ -265,6 +265,21 @@ presentations:
           nil is the appropriate null object when dealing with pointers to Objective C classes; NULL, on the other hand, is the appropriate null value to use when dealing with pointers to all other types.
         notes: |
           Of course, there is also the unfortunately necessary NSNull object, which pops up in cases where the framework needs to formally recognize a deserialized NULL value (see Property Lists, JSON, etc.). You can test if an object is an NSNull object by comparing it `[NSNull null]`.
+    - "Initializing objects":
+        slides:
+          - >
+            To initialize an Objective C object, you allocate its memory first with the `alloc` method, then initialize it with an init constructor.
+
+            ```objectivec
+              [[SomeClass alloc] init]
+            ```
+          - >
+            Objects may have several different constructors. Each may require different arguments:
+
+            ```objectivec
+              [[NSString alloc] initWithString:@"A test string"];
+              [[UIView alloc] initWithFrame:CGRectMake(0., 0., 20., 20.)];
+            ```
     - "Basic Types":
         slides:
           - >
@@ -1237,9 +1252,15 @@ presentations:
             <%= graphic("distinguishedyay.jpg", 0.5) %>
           <% end %>
         - >
-          _One more thing_: Change your request to a POST request with `application/x-www-form-urlencoded` content type, and instead of sending a querystring in the URL, send the key value pairs in the HTTP body.
+          _One more thing_: Change your request to a POST request (`NSMutableURLRequest` and `setHTTPMethod:`) with `application/x-www-form-urlencoded` content type (`setValue:forHTTPHeaderField:`), and instead of sending a querystring in the URL, send the key value pairs in the HTTP body (`setHTTPBody:`).
         - >
-          _And another thing_: Select your TableViewController and enable "Refreshing" in its attributes. Connect the UIRefreshControl's Value Changed outlet to an IBAction method on your TableViewController that triggers a new download. Tell the refresh control to change its appearance through `[self.refreshControl beginRefreshing]` and `[self.refreshControl endRefreshing]`.
+          _And another thing_: Select your TableViewController and enable "Refreshing" in its attributes. A UIRefreshControl will be added to your TableViewController.
+
+          <% figure("Select the refresh control") do %>
+            <%= graphic("RefreshControlSelected.png", 0.5) %>
+          <% end %>
+        - >
+          Connect the UIRefreshControl's Value Changed outlet to an IBAction method on your TableViewController that triggers a new download. Tell the refresh control to change its appearance through `[self.refreshControl beginRefreshing]` and `[self.refreshControl endRefreshing]`.
     - "NSTimer, NSRunLoop, NSThread and the Event Loop":
         - >
           Cocoa represents application threads using the `NSThread` object. Each `NSThread` has an `NSRunLoop` associated with it, which is responsible for managing IO and timer events.
@@ -1294,7 +1315,12 @@ presentations:
 
           ```objectivec
             NSTimeInterval since1970 = [[NSDate date] timeIntervalSince1970];
-            NSURL * theUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://bootstrapping-ios.com/echo?names=one-%f&names=two-%f&names=three-%f", since1970, since1970, since1970]];
+            NSURL * theUrl = [NSURL URLWithString:
+            [NSString
+              stringWithFormat:@"http://bootstrapping-ios.com/\echo?names=one-%f\
+                  &names=two-%f\
+                  &names=three-%f",
+            since1970, since1970, since1970]];
           ```
 
           Using NSURLConnection, asynchronously request the above JSON, deserialize it into an NSArray, and then reload your tableview.
@@ -1302,7 +1328,11 @@ presentations:
           Create an NSTimer and schedule refreshes of the data every 10 seconds.
 
           ```objectivec
-            timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(doRefresh:) userInfo:nil repeats:YES];
+            timer = [NSTimer scheduledTimerWithTimeInterval:5.0
+              target:self
+              selector:@selector(doRefresh:)
+              userInfo:nil
+              repeats:YES];
           ```
 
           Add a method called dealloc that cancels the timer:
@@ -1352,7 +1382,15 @@ presentations:
           <% end %>
 
 
-          * iTunes Connect [http://itunesconnect.apple.com/](http://itunesconnect.apple.com/)
+        - >
+          * iTunes DevCenter [https://developer.apple.com/account/overview.action](https://developer.apple.com/account/overview.action)
+
+
+          <% figure("DevCenter") do %>
+            <%= graphic("DevCenter.png", 0.5) %>
+          <% end %>
+
+
     - "Lab 7":
         - >
           Open up "Lab 6" in XCode.
@@ -1510,4 +1548,213 @@ presentations:
           <% end %>
         - >
           _One more thing_: Using the UIAppearance protocol, set the default font and text color of any UILabel object when your app starts up.
+    - "Review Concepts: Integrating With Remote Resources":
+        - >
+          Build an iOS app that:
 
+          * Uses a UITableViewController to display main content
+
+          * Loads the content for the UITableViewController from a remote JSON file
+
+          * Loads a detail view when a row in the UITableViewController is tapped on
+
+          * Customize the default appearance of UILabels using the UIAppearance class
+
+          * Has a custom UITableViewCell to display the JSON data
+    - "Revisiting Some Basics":
+        - >
+          Instantiating an Objective C object looks like:
+
+          ```objectivec
+            NSString * s = [[NSString alloc] init];
+          ```
+
+          where `alloc` generates the space for the class, and `init` may be thought of as the constructor.
+        - >
+          Each class also has the concept of a destructor. The destructor method is named `dealloc`, and is called for you when your object is removed from memory.
+
+          ```objectivec
+            -(void) dealloc {
+              fclose(myFileHandle);
+              [myDatabaseConnection close];
+            }
+          ```
+
+          Use the dealloc method to teardown resources used only by your object, as well as remove any global references to your object that will no longer be valid when it leaves memory.
+        - >
+          Each Objective C class can have a number of instance variables, and a number of properties. __Instance variables__ are variables available internally to a given instance of an Objective C object; __properties__ are the public facing API of a given object.
+
+          ```objectivec
+
+            @interface MyClass : NSObject {
+              int anInstanceVariable;
+              NSString * anotherInstanceVariable;
+            }
+
+            @property NSNumber * thisNumberIsAvailableToOtherClasses;
+
+            @end
+          ```
+        - >
+          You can modify instance variable scope if you want the instance variables themselves to be visible outside the instance. The default scope is `@protected`, but you can also use `@public` and `@private`.
+
+          ```objectivec
+            @interface MyClass : NSObject {
+              @public
+              int anInstanceVariable;
+
+              @private
+              NSString * anotherInstanceVariable;
+              NSNumber * someNumber;
+
+              @protected
+              NSDictionary * aDictionary;
+            }
+
+            @end
+          ```
+        - >
+          Objective C objects are "just" structs, so if you intend to access a public instance variable, you can do so by using the `->` operator.
+
+          ```objectivec
+            MyClass * c = [[MyClass alloc] init];
+            NSLog(@"Some int: %i", c->anInstanceVariable);
+          ```
+
+          The `->` operator looks up the member variable of the struct pointed to by a pointer.
+        - >
+          The delegate pattern allows for an object to notify its `delegate` that some event has occurred, or to query its `delegate` for more information. If we were to implement this pattern ourselves, it would look like this:
+
+          ```objectivec
+
+            @protocol SimpleURLDownloader
+
+            -(void) downloadFinishedWithString:(NSString *) content;
+
+            @end
+
+            @interface SimpleURLDownloader : NSObject
+
+            @property(weak) id<SimpleURLDownloaderDelegate> delegate;
+
+            @end
+          ```
+        - >
+          ```objectivec
+            @implementation SimpleURLDownloader
+
+            -(void) downloadUrl:(NSURL *) url {
+              NSString * urlResponse = MagicallyDownloadData();
+              [self.delegate downloadFinishedWithString:urlResponse];
+            }
+
+            @end
+          ```
+        - >
+          ```objectivec
+            -(void) viewDidLoad {
+              SimpleURLDownloader * dl = [[SimpleURLDownloader alloc] init];
+              dl.delegate = self;
+              [dl downloadUrl:[NSURL URLWithString:@"http://google.com/"]];
+            }
+
+            -(void) downloadFinishedWithString:(NSString *) content {
+              NSLog(@"Just downloaded google, %@", content);
+            }
+          ```
+    - "iOS App Structure":
+        - >
+          An iOS app shares common ancestry with Mac OS apps; they are "bundles" (NSBundle) that can contain many resources. So far, we've used the `[NSBundle mainBundle]` accessor to grab a reference to the bundle that contains our app; this reference allows us to query for information included with our app.
+
+          ```objectivec
+            [[NSBundle mainBundle] pathForResource:@"file" ofType:@"json"];
+            [[NSBundle mainBundle] classNamed:@"MyOwnClass"];
+          ```
+        - >
+          You can inspect the physical layout of an iOS app by opening its contents as seen by the simulator:
+
+          <% figure("App contents") do %>
+            <%= graphic("AppContents.png", 0.5) %>
+          <% end %>
+
+          These apps live in `~/Library/Application Support/iPhone Simulator/<Simulator Version>`.
+        - >
+          Along with an `NSBundle` that is associated with our app, there is a `UIApplication`. While the `NSBundle` refers to primarily filesystem items associated with our app, the `UIApplication` is our reference to the currently running instance.
+
+          ```objectivec
+            [[UIApplication sharedApplication] setStatusBarHidden:YES
+              withAnimation:UIStatusBarAnimationFade];
+          ```
+        - >
+          A UIApplication is created automatically for you when your application is started up. When XCode creates a project for you, it will also automatically create a UIApplication delegate (`UIApplicationDelegate` protocol) that responds to UIApplication events.
+
+          ```objectivec
+            - (BOOL)application:(UIApplication *)application
+              didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+          ```
+        - >
+          The methods provided by UIApplicationDelegate are meant to help you handle the transition between application states: active, inactive, background and terminated.
+
+
+          Your application will usually be rejected if you don't suspend operation correctly in cases where a phone call is received or the app is backgrounded.
+        - >
+          Your application has access to a number of sandboxed directories. While you don't have write access to anything in the bundle root, you can write to the Documents directory, the Caches directory and the tmp directory.
+
+
+          Directory paths should be looked up via specific helpers:
+
+          ```objectivec
+            NSArray * docDirs = NSSearchPathForDirectoriesInDomains(NSDocumentsDirectory, NSUserDomainMask, YES);
+            NSString * actualDir = [docDirs objectAtIndex:0];
+
+            NSString * tmpDir = NSTemporaryDirectory();
+          ```
+        - >
+          Your application may be rejected if you store anything other than user generated content in the Documents directory. Furthermore, the tmp and cache directories have "undefined" clearing schedules, so you cannot guarantee that files placed there will stay there for any length of time.
+        - >
+          You can use traditional C file access functions (`fopen`, `fread`) to manage file access, or you can use convenience functions provided by the `NSFileManager`, `NSInputStream` and `NSOutputStream` classes.
+
+
+          Classes like NSData and NSString also have convenience methods like `initWithContentsOfFile:` and `writeToFile:atomically:` to make dealing with the filesystem easier.
+    - "Lab 9":
+        - >
+          Create a new "Single View" project
+          <% figure("Create a new project") do %>
+            <%= graphic("NewProject.png", 0.5) %>
+          <% end %>
+        - >
+          Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+          <% figure("Select UINavigationController in the Object library") do %>
+            <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+          <% end %>
+        - >
+          Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+          <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+            <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+          <% end %>
+        - >
+          Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+          <% figure("Add a new subclass of UITableViewController") do %>
+            <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+          <% figure("Change subclass to new UITableViewController") do %>
+            <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
+
+          ```
+            http://bootstrapping-ios.com/echoWait?names=one&\
+                                                names=two&\
+                                                names=three
+          ```
+
+          Using the `writeToFile:atomically:` method of NSData, write the response of the URL to the `NSCachesDirectory` directory. In your `viewDidLoad` method, check for the existence of this file before attempting to perform the network request, and if it exists, load it instead of the network version.
+        - >
+          <% figure("Put it on the App Store!") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
