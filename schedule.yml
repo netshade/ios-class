@@ -1748,7 +1748,7 @@ presentations:
           In the `viewDidLoad` method of your `UITableViewController`, initialize a request to the URL:
 
           ```
-            http://bootstrapping-ios.com/echoWait?names=one&\
+            http://www.bootstrapping-ios.com/echoWait?names=one&\
                                                 names=two&\
                                                 names=three
           ```
@@ -1758,3 +1758,106 @@ presentations:
           <% figure("Put it on the App Store!") do %>
             <%= graphic("distinguishedyay.jpg", 0.5) %>
           <% end %>
+        - >
+          _One more thing_: Find the cache JSON file in your simulator filesystem.
+    - "User Input":
+        - >
+          iOS user input typically consists of the following two views:
+
+          * `UITextField`: A single line piece of editable text
+
+          * `UITextView`: A multi line text editor
+
+
+        - >
+          These views form the foundation of most user text input, and their simplest use is plain, unadorned text.
+
+          <% figure("Simple UITextField") do %>
+            <%= graphic("SimpleUITextField.png") %>
+          <% end %>
+
+          However, they can also display attributed strings (`NSAttributedString`), strings which specify special formatting information like bold text, font, files attached to character ranges and more.
+        - >
+          UITextViews and UITextFields also support custom keyboards. You can specify a custom keyboard (`inputView`) or keyboard accessory (`inputAccessoryView`) which you can use to add special formatting instructions to your user input.
+
+          <% figure("Custom keyboard accessory") do %>
+            <%= graphic("CustomKeyboardAccessory.png", 0.5) %>
+          <% end %>
+    - "Lab 10":
+        - >
+          Create a new "Single View" project
+          <% figure("Create a new project") do %>
+            <%= graphic("NewProject.png", 0.5) %>
+          <% end %>
+        - >
+          Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+          <% figure("Select UINavigationController in the Object library") do %>
+            <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+          <% end %>
+        - >
+          Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+          <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+            <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+          <% end %>
+        - >
+          Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+          <% figure("Add a new subclass of UITableViewController") do %>
+            <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+          <% figure("Change subclass to new UITableViewController") do %>
+            <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Using the `NSFileManager` object, query the NSDocumentsDirectory for the list of files it contains (`contentsOfDirectoryAtPath:error:`). Use this list to populate your tableview.
+        - >
+          Create a detail view that contains a UITextField for a title, and a UITextView for a body. Connect these via IBOutlets to the view controller for this detail view.
+
+          <% figure("Add UITextField and UITextView to Detail view") do %>
+            <%= graphic("DetailInputLayout.png", 0.5) %>
+          <% end %>
+        - >
+          Add an NSString property called `path` to the Detail View Controller.
+        - >
+          Add a "Bar Button Item" to the right hand side of the navigation bar of your table view controller. Change it's text to "New".
+
+          <% figure("Bar Button Item") do %>
+            <%= graphic("BarButtonItem.png", 0.5) %>
+          <% end %>
+
+          Connect the `action` triggered segue of this outlet to the detail view controller.
+        - >
+          Connect the `selection` triggered segue of the table view controller cell to the detail view controller. Select the segue itself and change its identifier to "ExistingItem".
+
+          <% figure("Change Segue Identifier") do %>
+            <%= graphic("SegueIdentifier.png", 0.5) %>
+          <% end %>
+        - >
+          In the `prepareForSegue:sender:` method of the Table View Controller, check the segue to see if its identifier is equal to "ExistingItem" (`isEqualToString:`). If the identifier is equal, set the path property of the detail view controller equal to the path of the file that the user has selected.
+        - >
+          Add a "Bar Button Item" to the right hand side of the detail view controller and change its text to "Save". Connect it to an IBAction on the Detail View Controller called `doSave:`.
+        - >
+          In the `viewDidLoad` method of the Detail View Controller, check to see if the path property has a value. If it does, set the title text field's text property equal to the filename in the path, and the body text view's text property equal to the contents of that file.
+        - >
+          In the `doSave:` method of the Detail View Controller, check to see if the title property has a string length > 0. If it does, write the contents of the body view to a path equal to the documents directory + the name in the title view.
+        - >
+          Add code to the table view controller to reload the table whenever the view goes from a hidden to an appearing state `viewDidAppear:`.
+        - >
+          <% figure("Put it on the App Store!") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
+        - >
+          _One more thing_: Serialize the content as a JSON hash instead of a flat file. Put the title and body in the JSON file, and extract it as such when you open the file. Use string methods like `stringByAppendingPathComponent:`, `stringByAppendingPathExtension:` and `stringByReplacingOccurrencesOfString:withString:` to format your pathnames correctly.
+        - >
+          _One smaller thing_: When the user saves the content, tell the current navigation controller that you want it to pop the currently visible view controller off its view stack.  `popViewControllerAnimated:`.
+
+
+
+
+
+
+
+
