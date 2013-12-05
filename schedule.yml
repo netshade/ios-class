@@ -1876,6 +1876,7 @@ presentations:
 
           * An object model (`NSManagedObjectModel`) which describes a __schema__.
 
+
           <% figure("NSManagedObjectModel as seen in XCode") do %>
             <%= graphic("CoreDataObjectModel.png", 0.5) %>
           <% end %>
@@ -1898,6 +1899,7 @@ presentations:
 
           You can create precomputed fetch requests in the data model, and retrieve them later by name, or create fetch requests from strings you specify at runtime.
         - >
+
           ```objectivec
             NSFetchRequest * preMadeRequest = [aManagedObjectModel fetchRequestByName:@"exampleRequest"];
             NSFetchRequest * preMadeRequestWArgs = [aManagedObjectModel fetchRequestByName:@"exampleParamRequest",
@@ -1908,6 +1910,7 @@ presentations:
               [NSPredicate predicateWithFormat:@"(age > 21) AND company IN %@", @[@"IBM", @"AMZ"]]];
 
             NSArray * results = [objectContext executeFetchRequest:adHocRequest error:nil];
+          ```
         - >
           Predicates (`NSPredicate`) are the language used to describe how a fetch request should be performed. You can test for membership in a set, general equality, range inclusion, string matching and more.
 
@@ -1946,6 +1949,7 @@ presentations:
 
             @implementation AModelObject
             @dynamic name;
+            @end
           ```
         - >
           NSManagedObjects have their properties represented by NSStrings, NSNumbers, NSDate and NSData. You can also specify special properties that are transformed using a value transformer (default is NSKeyedArchiver and NSKeyedUnarchiver) or have transient values generated at access time.
