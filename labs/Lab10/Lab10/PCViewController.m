@@ -17,6 +17,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Goddammit apple
+    
     if(self.path){
         NSString * title = [[self.path componentsSeparatedByString:@"/"] lastObject];
         NSString * body = [NSString stringWithContentsOfFile:self.path encoding:NSUTF8StringEncoding error:nil];
@@ -35,6 +37,18 @@
         [body writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
         [[self navigationController] popViewControllerAnimated:YES];
     }
+}
+
+
+
+-(void) textViewDidEndEditing:(UITextView *)textView
+{
+}
+
+-(void) textViewDidBeginEditing:(UITextView *)textView
+{
+    self.heightConstraint.constant -= 104;
+    
 }
 
 - (void)didReceiveMemoryWarning

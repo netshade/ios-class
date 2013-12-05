@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PCViewController : UIViewController
+@interface PCViewController : UIViewController<UITextViewDelegate>
 
 @property NSString * path;
 
 @property IBOutlet UITextField * titleField;
 @property IBOutlet UITextView * bodyView;
+@property IBOutlet UIScrollView * scrollView;
+@property IBOutlet NSLayoutConstraint * heightConstraint;
 
 -(IBAction) doSave:(id)sender;
 
