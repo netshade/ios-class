@@ -1704,7 +1704,10 @@ presentations:
           Directory paths should be looked up via specific helpers:
 
           ```objectivec
-            NSArray * docDirs = NSSearchPathForDirectoriesInDomains(NSDocumentsDirectory, NSUserDomainMask, YES);
+            NSArray * docDirs = NSSearchPathForDirectoriesInDomains(
+                                  NSDocumentsDirectory,
+                                  NSUserDomainMask,
+                                  YES);
             NSString * actualDir = [docDirs objectAtIndex:0];
 
             NSString * tmpDir = NSTemporaryDirectory();
@@ -1853,11 +1856,361 @@ presentations:
           _One more thing_: Serialize the content as a JSON hash instead of a flat file. Put the title and body in the JSON file, and extract it as such when you open the file. Use string methods like `stringByAppendingPathComponent:`, `stringByAppendingPathExtension:` and `stringByReplacingOccurrencesOfString:withString:` to format your pathnames correctly.
         - >
           _One smaller thing_: When the user saves the content, tell the current navigation controller that you want it to pop the currently visible view controller off its view stack.  `popViewControllerAnimated:`.
+        - >
+          _One other thing_: Adjust the UITextView to the keyboard appearance
+
+          _Thanks Apple!_: [Apple Tech-Note on Fixing UIScrollViews and Auto-Layout](https://developer.apple.com/library/ios/technotes/tn2154/_index.html#//apple_ref/doc/uid/DTS40013309)
+        - >
+          We'll adjust the keyboard appearance by adding a auto layout constraint between the UITextView and its superview. Then we'll add an IBOutlet of type NSLayoutConstraint to our detail view controller, connect it with the height constraint we created, and adjust its `constant` value at keyboard appearance time.
+    - "Core Data":
+        - >
+          Core Data is a way to map objects and object relationships into some persistent store. It also provides the ability to fetch data subsets from the store using "Fetch Requests", expressions similar in function to SQL statements.
+        - >
+          Core Data is not SQL.
+        - >
+          Core Data can be backed by XML (Mac OS only), binary blobs on the filesystem, or SQLite.
+        - >
+          Core Data is not SQL.
+        - >
+          Core Data has four components that make up most of its operations:
+
+          * An object model (`NSManagedObjectModel`) which describes a __schema__.
+
+          <% figure("NSManagedObjectModel as seen in XCode") do %>
+            <%= graphic("CoreDataObjectModel.png", 0.5) %>
+          <% end %>
+        - >
+          * A persistent store coordinator (`NSPersistentStoreCoordinator`) which manages operations with the persistent store.
+
+          This object is the one responsible for writing to disk or memory.
+        - >
+          * A managed object context (`NSManagedObjectContext`), which translates object operations into commands to be issued to the NSPersistentStoreCoordinator.
+
+          This is the object which sees the most use in Core Data, as it will be responsible for handling the `save:` and `delete` calls.
+        - >
+          * The translation between the persistent store and the logical object (`NSEntityDescription`) which can be used to generate new persistent instances of an object ( `insertNewObjectForEntityForName:inManagedObjectContext:` ) as well as query what properties belong to a given Entity.
+        - >
+          Core Data supports automatic migration when it's able to infer how to do so correctly. Simple additions and removals are possible; complex migrations may require more complex manual steps using tools like migration identifiers or custom migrations.
+
+          You can request automatic migration from the NSPersistentStore coordinator by initializing it with the options `NSMigratePersistentStoresAutomaticallyOption` and `NSInferMappingModelAutomaticallyOption` set to `@(YES)` in the options dictionary.
+        - >
+          Core Data also supports the concept of "Fetch Requests", which provide ways to query the persistent store for a set of objects. If you are using the SQLite store, these will be translated into a roughly equivalent SQL, otherwise the entire object graph and index will be inspected.
+
+          You can create precomputed fetch requests in the data model, and retrieve them later by name, or create fetch requests from strings you specify at runtime.
+        - >
+          ```objectivec
+            NSFetchRequest * preMadeRequest = [aManagedObjectModel fetchRequestByName:@"exampleRequest"];
+            NSFetchRequest * preMadeRequestWArgs = [aManagedObjectModel fetchRequestByName:@"exampleParamRequest",
+              @"search string", @(200)];
+
+            NSFetchRequest * adHocRequest = [[NSFetchRequest alloc] initWithEntityName:@"SomeManagedObjectModel"];
+            [adHocRequest setPredicate:
+              [NSPredicate predicateWithFormat:@"(age > 21) AND company IN %@", @[@"IBM", @"AMZ"]]];
+
+            NSArray * results = [objectContext executeFetchRequest:adHocRequest error:nil];
+        - >
+          Predicates (`NSPredicate`) are the language used to describe how a fetch request should be performed. You can test for membership in a set, general equality, range inclusion, string matching and more.
+
+          The `Predicate Programming Guide` in the iOS documentation offers a very detailed review of the full functionality provided by predicates.
+        - >
+          The typical Core Data setup process looks like:
+
+          ```objectivec
+            NSString * docDir = NSSearchPathForDirectoriesInDomains
+            (NSDocumentDirectory, NSUserDomainMask, YES)[0];
+            NSString * dbPath = [docDir
+              stringByAppendingPathComponent:@"example.sqlite"];
+            self.objectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+            self.coordinator = [[NSPersistentStoreCoordinator alloc]
+              initWithManagedObjectModel:self.objectModel];
+            [self.coordinator
+              addPersistentStoreWithType:NSSQLiteStoreType
+              configuration:nil
+              URL:[NSURL fileURLWithPath:dbPath]
+              options:nil
+              error:nil];
+            self.mainContext = [[NSManagedObjectContext alloc] init];
+            self.mainContext.persistentStoreCoordinator = self.coordinator;
+          ```
+        - >
+          NSManagedObjectContext is considered __NOT__ thread safe; Apple recommends allocating a separate NSManagedObjectContext per thread if you must access Core Data concurrently.
+        - >
+          The final result of a Core Data query is a grouping of NSManagedObjects. NSManagedObjects are the logical objects that you create when interacting with Core Data.
+
+          The properties of an NSManagedObject are what are reflected in the persistent store, and are marked as `@dynamic` in their implementation to reflect that their behavior is fulfilled at runtime.
+        - >
+          ```objectivec
+            @interface AModelObject: NSManagedObject
+            @property(strong, nonatomic) NSString * name;
+            @end
+
+            @implementation AModelObject
+            @dynamic name;
+          ```
+        - >
+          NSManagedObjects have their properties represented by NSStrings, NSNumbers, NSDate and NSData. You can also specify special properties that are transformed using a value transformer (default is NSKeyedArchiver and NSKeyedUnarchiver) or have transient values generated at access time.
+        - >
+          You can also specify object relationships like one-to-one, one-to-many and many-to-many. They can be unidirectional or bidirectional, and Core Data will attempt to maintain object graph consistency.
+        - >
+          In order to initialize a new instance of a model, you need to tell the `NSEntityDescription` for a given model class to insert it using a given object context:
+
+          ```objectivec
+            MyModel * m = [NSEntityDescription
+              insertNewObjectForEntityForName:@"MyModel"
+              inManagedObjectContext:myObjectContext];
+          ```
+        - >
+          Changes to a model are queued and recorded based on your interaction with their properties. Once you've changed their values, a call to `[myObjectContext save:&error]` will attempt to commit all your changes.
+
+          ```objectivec
+            MyModel * m = self.results[0];
+            m.name = @"New Name";
+
+            MyModel * o = self.results[1];
+            m.name = @"New Name 2";
+
+            [myContext save:nil];
+          ```
+        - >
+          A managed object context can also delete objects using the `deleteObject:` method.
+    - "Lab 11":
+        - >
+          Create a new "Single View" project
+          <% figure("Create a new project") do %>
+            <%= graphic("NewProject.png", 0.5) %>
+          <% end %>
+        - >
+          Open the project's storyboard and add a new "UINavigationController" to the storyboard.
+          <% figure("Select UINavigationController in the Object library") do %>
+            <%= graphic("UINavigationControllerInLibrary.png", 0.5) %>
+          <% end %>
+        - >
+          Drag the storyboard's "initial scene" arrow from the default view controller scene to the UINavigationController you placed.
+          <% figure("Drag the initial scene arrow to the UINavigationController") do %>
+            <%= graphic("DragInitialSceneArrow.png", 0.25) %>
+          <% end %>
+        - >
+          Add a new subclass of NSObject to your project that is a subclass of "UITableViewController".
+
+          <% figure("Add a new subclass of UITableViewController") do %>
+            <%= graphic("NewSubclassOfUITableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Change the subclass of the UITableViewController connected to your UINavigationController in Storyboard to the UITableViewController you created.
+
+          <% figure("Change subclass to new UITableViewController") do %>
+            <%= graphic("ChangeSubclassToTableViewController.png", 0.5) %>
+          <% end %>
+        - >
+          Add a new Core Data model to your project.
+
+          <% figure("Create the Core Data model") do %>
+            <%= graphic("NewCoreDataDataModel.png", 0.5) %>
+          <% end %>
+        - >
+          Add a new Entity called "Person", and add the following attributes to "Person":
+
+          * Name (String)
 
 
+          * Birthdate (Date)
 
 
+          * Vegetarian (Boolean)
 
 
+          * Salary (Float)
+        - >
+          Add a new "NSManagedObject" class to your project, and have it map to the "Person" entity you created.
+
+          <% figure("Add the NSManagedObject subclass") do %>
+            <%= graphic("NewManagedObjectSubclass.png", 0.5) %>
+          <% end %>
+        - >
+          Create a new detail view controller, and add a UITextField (name), UISlider (salary), UISwitch (vegetarian) and UIDatePicker (birthdate) to its view.
+
+          Connect each of these controls via IBOutlets to the detail view controller.
+
+          <% figure("Example of detail view") do %>
+            <%= graphic("ExampleControls.png", 0.5) %>
+          <% end %>
+        - >
+          Add a property to the detail view controller for a Person object.
+        - >
+          Add a "Save" Bar Button Item to the right hand side of the detail view controller's UINavigationItem.
+        - >
+          Connect the selected segue from the UITableView of your table view controller to the detail view controller. Label the segue as "ExistingItem".
+        - >
+          Add a "New" Bar Button Item to the right hand side of the table view controller's UINavigationItem. Connect it's triggered segue outlet to the detail view controller.
+        - >
+          Initialize your Core Data connection in your application delegate and assign the NSManagedObjectContext to a property.
+        - >
+          In your table view controller, create a method that will returns an NSArray of all current Core Data objects:
+
+          ```objectivec
+            PCAppDelegate * appDelegate = (PCAppDelegate *)[[UIApplication sharedApplication]
+                delegate];
+            NSFetchRequest * request = [[NSFetchRequest alloc]
+                initWithEntityName:@"Person"];
+            return [[appDelegate mainContext]
+                executeFetchRequest:request error:nil];
+          ```
+
+          You will need to access your application delegate in order to get a reference to the NSManagedObjectContext.
+        - >
+          Change the `prepareForSegue:sender:` method of your tableview such that if the segue it is being called for has the identifier "ExistingItem", the currently selected object is passed to the detail view controller.
+        - >
+          Change your detail view controller such that each property of the Person object is reflected by the controls in `viewDidLoad`.
+
+          __Note__ that you will want to check if the Person object is nil before doing this. It should be assumed if Person is nil when `viewDidLoad` is called, then you intend to create a new person.
+        - >
+          Create an `IBAction` called `doSave:` on your detail view controller that has code similar to the following:
+
+          ```objectivec
+            -(IBAction) doSave:(id) sender {
+              Person * p = self.subject;
+              PCAppDelegate * d = (PCAppDelegate *)[[UIApplication sharedApplication]
+                delegate];
+              NSManagedObjectContext * mainContext = [d mainContext];
+              if(!p){
+                  p = [NSEntityDescription
+                    insertNewObjectForEntityForName:@"Person"
+                    inManagedObjectContext:mainContext];
+              }
+              // sets properties from views
+              [mainContext save:nil];
+            }
+          ```
+
+          Connect the "Save" button on the detail view controller to this method.
+        - >
+          Change your table view controller such that it reloads its data whenever `viewWillAppear:` is called on it.
+        - >
+          <% figure("Halfway there :)") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
+        - >
+          UISearchBar and UISearchDisplayController work in concert to provide an easy search results display on top of your own controls.
+        - >
+          UISearchBar handles the user input, while UISearchDisplayController controls its own UITableView to show you specific results.
+        - >
+          Adding the "Search Bar and Search Display Controller" to your table view controller makes it a table view delegate and datasource of the Search Display Controller as well as the table view it controls.
+        - >
+          Drag a "Search Bar and Search Display Controller" to your table view controller in Storyboard.
+
+          <% figure("The Search Bar and Search Display Controller") do %>
+            <%= graphic("SearchBarAndSearchDisplayController.png", 0.5) %>
+          <% end %>
+        - >
+          Modify your table view controller code and add an NSArray property that will hold your search results, as well as a boolean flag to indicate you are currently searching.
+
+          ```objectivec
+            @property NSArray * searchResults;
+            @property BOOL isSearching;
+          ```
+
+          Also add the `UISearchBarDelegate` and `UISearchDisplayDelegate` protocols to your table view controller.
+        - >
+          In the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:`, check if the tableView passed to the method == `self.searchDisplayController.searchResultsTableView`.
+
+          If it does, use the searchResults array to get the value you need, as opposed to the array of all results.
+        - >
+          * Add the method `searchBar:textDidChange:`, and fill the searchResults array with the results of an NSFetchRequest that used that string as a search term.
+
+
+          * Add the method `searchDisplayController:didShowSearchResultsTableView:` and `searchDisplayController:didHideSearchResultsTableView:`, and turn the isSearching attribute to true when the results are shown, and false when they are hidden.
+
+
+          * Change your `prepareForSegue:identifier:` method to get the currently selected row from `self.searchDisplayController.searchResultsTableView` as opposed to `self.tableView` if self.isSearching is true.
+        - >
+          Mostly there
+          <% figure("Put it on the App Store!") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
+        - >
+          _One more thing_: Add a button to the detail view to make it delete the record.
+    - "Blocks, Grand Central Dispatch, Threading":
+        - >
+          Apple introduced blocks with Objective C as a way to make certain types of programming easier.
+
+          Blocks are functionally very similar to Ruby blocks or JavaScript function objects.
+
+          ```objectivec
+            int multiplier = 7;
+            int (^myBlock)(int) = ^(int num) {
+                return num * multiplier;
+            };
+            assert(myBlock(3)==21);
+          ```
+        - >
+          ```objectivec
+            int multiplier = 7;
+            int (^myBlock)(int) = ^(int num) {
+                return num * multiplier;
+            };
+          ```
+
+          <% figure("Blocks explained") do %>
+            <%= graphic("blocks.jpg", 0.5) %>
+          <% end %>
+        - >
+          Blocks may carry references to the stack and heap based on what variables were referred in their body. This can cause unpredictable memory effects; in order to help guide ARC, you can use variable qualifiers like `__weak` and `__strong` to indicate the type of ownership a variable you would like to use in a block should have.
+
+          ```objectivec
+            __weak MyClass * weakSelf = self;
+            void (^weakRefBlock)() = ^() {
+              if(!weakSelf) return;
+              return [weakSelf tryMethod];
+            };
+          ```
+        - >
+          Blocks may be stored in ivars, passed as method arguments, and generally treated as just another C-type.
+
+          See: [http://fuckingblocksyntax.com/](http://fuckingblocksyntax.com/).
+        - >
+          Grand Central Dispatch was introduced along with blocks with the primary goal of making concurrency easy.
+        - >
+          GCD adds the concept of serial and concurrent queues that process blocks on available threads.
+
+          __Serial__ queues process blocks one-by-one in the order that they are received. Only one serial queue is created for you (the main queue), but you can create others with `dispatch_queue_create`.
+
+          __Concurrent__ queues process an undefined number of blocks concurrently. Four concurrent queues with different priority levels are created for you (HIGH, DEFAULT, LOW, BACKGROUND). You cannot create concurrent queues.
+        - >
+          GCD also has several concurrency structures like semaphores (`dispatch_semaphore_t`), groups (`dispatch_group_t`, for batching) and barriers (`dispatch_barrier_t`, for concurrent synchronization).
+        - >
+          GCD also provides `select()` like functionality that can trigger blocks whenever an IO object is ready to be read from / written to. (`dispatch_source_create`)
+        - >
+          A common pattern you'll see in concurrent code is performing a double dispatch, wherein code is executed in a background thread, and then the results submitted to the UI on the main thread:
+
+          ```objectivec
+            dispatch_async(dispatch_get_global_queue(
+                DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                NSString * result = PerformAnExpensiveOperation();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                  self.resultsLabel.text = result;
+                });
+            })
+          ```
+    - "Lab 12":
+        - >
+          Create a table view controller and hook it up. :)
+        - >
+          In your `viewDidLoad` method, add code that does the following (replacing the comments with actual code):
+
+          ```objectivec
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+              // synchronously request data from a json url
+              // decode it
+              dispatch_async(dispatch_get_main_queue(), ^{
+                // assign the decoded results to a property
+                // reload the table view
+              });
+            });
+          ```
+        - >
+          Run the app!
+          <% figure("Put it on the App Store!") do %>
+            <%= graphic("distinguishedyay.jpg", 0.5) %>
+          <% end %>
 
 
