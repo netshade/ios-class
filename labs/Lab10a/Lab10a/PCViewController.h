@@ -7,7 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface PCViewController : UIViewController
+
+@interface BasicAnnotation : NSObject<MKAnnotation>
+
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString * title;
+@property (nonatomic, copy) NSString * subtitle;
+@property (nonatomic, copy) NSURL * imageUrl;
+@property int annotationIndex;
+@end
+
+@interface PCViewController : UIViewController<MKMapViewDelegate,
+NSURLConnectionDataDelegate>
+
+@property IBOutlet MKMapView * mapView;
+@property NSMutableData * buffer;
+@property NSArray * coordinates;
+@property BasicAnnotation * selectedAnnotation;
 
 @end

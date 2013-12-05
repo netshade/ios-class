@@ -21,6 +21,8 @@
 		586B439B1850C56C00DC186C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 586B437D1850C56C00DC186C /* UIKit.framework */; };
 		586B43A31850C56C00DC186C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 586B43A11850C56C00DC186C /* InfoPlist.strings */; };
 		586B43A51850C56C00DC186C /* Lab10aTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 586B43A41850C56C00DC186C /* Lab10aTests.m */; };
+		586B43AF1850C57F00DC186C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 586B43AE1850C57F00DC186C /* MapKit.framework */; };
+		586B43B21850CC7500DC186C /* PCImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 586B43B11850CC7500DC186C /* PCImageViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,9 @@
 		586B43A01850C56C00DC186C /* Lab10aTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lab10aTests-Info.plist"; sourceTree = "<group>"; };
 		586B43A21850C56C00DC186C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		586B43A41850C56C00DC186C /* Lab10aTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lab10aTests.m; sourceTree = "<group>"; };
+		586B43AE1850C57F00DC186C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		586B43B01850CC7500DC186C /* PCImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCImageViewController.h; sourceTree = "<group>"; };
+		586B43B11850CC7500DC186C /* PCImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCImageViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				586B43AF1850C57F00DC186C /* MapKit.framework in Frameworks */,
 				586B437C1850C56C00DC186C /* CoreGraphics.framework in Frameworks */,
 				586B437E1850C56C00DC186C /* UIKit.framework in Frameworks */,
 				586B437A1850C56C00DC186C /* Foundation.framework in Frameworks */,
@@ -101,6 +107,7 @@
 		586B43781850C56C00DC186C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				586B43AE1850C57F00DC186C /* MapKit.framework */,
 				586B43791850C56C00DC186C /* Foundation.framework */,
 				586B437B1850C56C00DC186C /* CoreGraphics.framework */,
 				586B437D1850C56C00DC186C /* UIKit.framework */,
@@ -119,6 +126,8 @@
 				586B438F1850C56C00DC186C /* PCViewController.m */,
 				586B43911850C56C00DC186C /* Images.xcassets */,
 				586B43801850C56C00DC186C /* Supporting Files */,
+				586B43B01850CC7500DC186C /* PCImageViewController.h */,
+				586B43B11850CC7500DC186C /* PCImageViewController.m */,
 			);
 			path = Lab10a;
 			sourceTree = "<group>";
@@ -253,6 +262,7 @@
 				586B43861850C56C00DC186C /* main.m in Sources */,
 				586B43901850C56C00DC186C /* PCViewController.m in Sources */,
 				586B438A1850C56C00DC186C /* PCAppDelegate.m in Sources */,
+				586B43B21850CC7500DC186C /* PCImageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,4 +10,7 @@
 
 @interface PCImageViewController : UIViewController
 
+@property IBOutlet UIImageView * imageView;
+@property UIImage * image;
+
 @end
