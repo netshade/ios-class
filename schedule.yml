@@ -1862,6 +1862,20 @@ presentations:
           _Thanks Apple!_: [Apple Tech-Note on Fixing UIScrollViews and Auto-Layout](https://developer.apple.com/library/ios/technotes/tn2154/_index.html#//apple_ref/doc/uid/DTS40013309)
         - >
           We'll adjust the keyboard appearance by adding a auto layout constraint between the UITextView and its superview. Then we'll add an IBOutlet of type NSLayoutConstraint to our detail view controller, connect it with the height constraint we created, and adjust its `constant` value at keyboard appearance time.
+    - "Review Concepts: Advanced Filesystem":
+        - >
+          *  Build a UITableView app that loads remote content from this URL:
+
+
+          ```
+          http://api.flickr.com/services/
+              feeds/photos_public.gne?
+              format=json&nojsoncallback=1&tags=indianapolis
+          ```
+
+          * Download each image specified in the JSON, and cache it in the caches directory.
+
+          * Load the images from the filesystem  when displaying them in the UITableView
     - "Core Data":
         - >
           Core Data is a way to map objects and object relationships into some persistent store. It also provides the ability to fetch data subsets from the store using "Fetch Requests", expressions similar in function to SQL statements.
