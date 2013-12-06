@@ -1915,15 +1915,20 @@ presentations:
         - >
 
           ```objectivec
-            NSFetchRequest * preMadeRequest = [aManagedObjectModel fetchRequestByName:@"exampleRequest"];
-            NSFetchRequest * preMadeRequestWArgs = [aManagedObjectModel fetchRequestByName:@"exampleParamRequest",
+            NSFetchRequest * preMadeRequest = [aManagedObjectModel
+              fetchRequestByName:@"exampleRequest"];
+            NSFetchRequest * preMadeRequestWArgs = [aManagedObjectModel
+              fetchRequestByName:@"exampleParamRequest",
               @"search string", @(200)];
 
-            NSFetchRequest * adHocRequest = [[NSFetchRequest alloc] initWithEntityName:@"SomeManagedObjectModel"];
+            NSFetchRequest * adHocRequest = [[NSFetchRequest alloc]
+              initWithEntityName:@"SomeManagedObjectModel"];
             [adHocRequest setPredicate:
-              [NSPredicate predicateWithFormat:@"(age > 21) AND company IN %@", @[@"IBM", @"AMZ"]]];
+              [NSPredicate predicateWithFormat:@"(age > 21) AND company IN %@",
+              @[@"IBM", @"AMZ"]]];
 
-            NSArray * results = [objectContext executeFetchRequest:adHocRequest error:nil];
+            NSArray * results = [objectContext
+            executeFetchRequest:adHocRequest error:nil];
           ```
         - >
           Predicates (`NSPredicate`) are the language used to describe how a fetch request should be performed. You can test for membership in a set, general equality, range inclusion, string matching and more.
@@ -2209,6 +2214,28 @@ presentations:
                 });
             })
           ```
+        - >
+          Many APIs will use Grand Central Dispatch in the background in order to fulfill some behavior. Some may let you specify where your block will be called,
+
+          ```objectivec
+            [[NSNotificationCenter defaultCenter]
+              addObserverForName:@"UserPausedGame"
+              object:nil
+              queue:nil
+              usingBlock:^{
+              [self.gameTimer pause];
+            }]
+          ```
+        - >
+          While others have very specific threads they must run your block on:
+
+          ```objectivec
+            [UIView animateWithDuration:10.0
+                    animations:^{
+              self.titleView.alpha = 0;
+              self.activityView.center = CGPointMake(20., 20.);
+                      }];
+          ```
     - "Lab 12":
         - >
           Create a table view controller and hook it up. :)
@@ -2230,5 +2257,79 @@ presentations:
           <% figure("Put it on the App Store!") do %>
             <%= graphic("distinguishedyay.jpg", 0.5) %>
           <% end %>
+    - "Building and Testing":
+      - >
+        The final product of the labs we've been making so far has been a "Target".  Targets may be an iOS app, a static library, your test suite, or the result of a custom script that you've defined.  They are the end result of a build process.
 
+        <% figure("List of Targets") do %>
+          <%= graphic("TargetsList.png", 0.5) %>
+        <% end %>
+      - >
+        Each file in our app can belong to one of many targets. Application source should generally belong to the "app target", while test files should only belong in the test target.
+
+        <% figure("The targets a particular file belongs to") do %>
+          <% graphic("TargetMembership.png", 0.5) %>
+        <% end %>
+      - >
+        Builds typically have two default configurations: "Debug" and "Release".
+
+        * Debug is intended for local development and cases where you need easier post mortem debugging. You can conditionally check if you are in DEBUG configuration by using the macro:
+
+
+        ```objectivec
+          #if DEBUG
+            // some code to only perform in DEBUG configuration
+          #endif
+        ```
+
+
+        * Release is intended for deployment to customer devices. Automatic compiler optimizations are turned on for this build configuration. AppStore and AdHoc builds are typically done via release.
+      - >
+        You can manage which build configuration is being used for a particular action by changing it in the "Scheme". A "Scheme" represents a different action intended for your target: "Build", "Run", "Test", "Profile", "Analyze" and "Archive" are all default schemes created for you.
+
+        <% figure("Scheme editor") do %>
+          <%= graphic("SchemeEditor.png", 0.5) %>
+        <% end %>
+
+        \menu{Product > Scheme > Edit Scheme}
+      - >
+        The default schemes:
+
+        * Build: The phase which creates our binary
+
+        * Run: Loading on the simulator or device, and optionally debugging
+
+        * Test: Running our a test target and ensuring all the test assertions pass
+
+        * Profile: Running our binary under a profiling Instrument, and observing specific behavior
+
+        * Analyze: Statically analyze our source code and attempt to find common mistakes for us
+
+        * Archive: Package our app into a file that can be deployed via the App Store (.ipa file)
+      - >
+        Our testing process is initiated via the Test scheme, and runs all of the files in our Test target. Each Test file has a `-setup` and `-tearDown` method which handle setup before each test.
+
+        Each of these tests will be run by XCode on your specified simulator or device.
+
+        The Unit Testing behavior in XCode uses very simple assertion macros, like `XCTAssertEquals`, `XCTAssertNoThrows`. There is no expansive default testing framework that provides for things like framework convenience methods, mocking or expectations.
+      - >
+        ```objectivec
+          -(void) setUp {
+            self.tokenFromConfigFile = [NSString
+            stringWithContentsOfFile:@"./tokenfile"];
+          }
+          -(void) tearDown {}
+
+          -(void) testASimpleValue {
+            XCTAssertEqualObjects([MyUtility token],
+              tokenFromConfigFile, @"Tokens should be equal");
+          }
+        ```
+      - >
+        In order to add better testing behavior, there a variety of frameworks to make testing behavior easier. `OCMock` ([ocmock.org](http://ocmock.org/)) is one of the simpler and less intrusive ways easily add things like message expectations, stubbing and method replacement to your tests.
+      - >
+        OCMock creates "stub proxy" and "expectation proxy" objects from your own objects that can mock behavior, or receive and forward behavior based on your instructions.
+      - >
+        See:
+        https://github.com/netshade/TestingExample
 
